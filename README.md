@@ -1,54 +1,83 @@
 # TFB — The F1 Bulletin
 
-A Formula 1 stats and live-timing site built with Next.js 14 (App Router) + TypeScript.
+Formula 1 stats, standings, and session tracking, built with Next.js 14 and two free public F1 APIs — no backend, no database, no API keys.
+
+> **🚧 Status: in active development.** Core pages are up and the API integrations work, but this isn't a finished product yet. Expect rough edges, incomplete states, and breaking changes while it's being built out. See [Known limitations](#known-limitations) and [Roadmap](#roadmap) below before relying on it for anything.
+
+## What's here
+
+- **Home** — hero, this weekend's session schedule, a championship standings snippet, and the latest race result
+- **Live Dashboard** — session classification (live where available, otherwise the most recent completed session), race control messages, weather
+- **Standings** — full drivers' and constructors' tables for the current season
+- **Articles** — static editorial placeholder grid (no CMS yet)
 
 ## Data sources
 
-- **[OpenF1](https://openf1.org/)** — live and recent session data (positions, intervals, weather,
-  race control). Free, no key required, but only covers 2023-onward and has tight rate limits, so
-  every call is cached via Next's `fetch` `revalidate`.
-- **[Jolpica](https://github.com/jolpica/jolpica-f1)** — Ergast-compatible historical data (drivers'
-  and constructors' standings, race results, schedules) back to 1950.
+| Source | Used for | Auth | Coverage |
+|---|---|---|---|
+| [OpenF1](https://openf1.org/) | Session classification, weather, race control | None (free tier) | 2023–present |
+| [Jolpica](https://github.com/jolpica/jolpica-f1) (Ergast-compatible) | Standings, results, schedules | None | 1950–present |
 
-## Structure
+**Important caveat on OpenF1:** its free tier is historical-only — a session's data becomes available roughly 30 minutes after it ends. True live, in-progress timing requires OpenF1's paid Sponsor plan. This app is built to handle that gracefully: during a live session, the dashboard shows an explicit notice instead of a blank table, and fills in automatically once the session goes historical. If you have (or add) sponsor-tier access, wiring in real live timing is straightforward — see [Roadmap](#roadmap).
 
-```
-app/
-  page.tsx           Homepage — hero, session ticker, standings snippet, latest result, articles
-  dashboard/page.tsx  Live dashboard — live timing when a session is running, else last classification
-  standings/page.tsx  Full drivers' & constructors' standings
-  articles/page.tsx   Editorial grid (static placeholder copy)
-  layout.tsx          Root layout, fonts, header/footer
-  globals.css         Design tokens & all page styles
-lib/
-  openf1.ts     OpenF1 client
-  jolpica.ts    Jolpica client
-  ticker.ts     Builds the session ticker from the season schedule
-  teamColors.ts Constructor → brand color mapping
-components/
-  Header.tsx, Footer.tsx, SessionTicker.tsx, StandingsPanels.tsx
-```
+## Tech stack
 
-## Fonts
+- [Next.js 14](https://nextjs.org/) (App Router, TypeScript)
+- Self-hosted fonts via [Fontsource](https://fontsource.org/) — Titillium Web, Inter, JetBrains Mono
+- No CSS framework — hand-written design system in `app/globals.css`
+- No database — all data is fetched server-side from the two APIs above, cached with Next's `fetch` revalidation
 
-- **Titillium Web** — display face (closest freely-licensable match to F1's proprietary
-  "Formula1 Display" typeface, which cannot be used outside official F1 properties)
-- **Inter** — body copy
-- **JetBrains Mono** — data, timestamps, labels
-
-## Running locally
+## Getting started
 
 ```bash
+git clone <this-repo>
+cd tfb-f1
 npm install
 npm run dev
 ```
 
-Then open http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000). No environment variables or API keys are required.
 
-## Notes
+## Project structure
 
-- No API keys needed for either data source.
-- OpenF1 has no data before 2023 — the dashboard will show "no session" outside that range until a
-  live weekend begins.
-- Team colors for brand-new 2026 entrants (Cadillac, Audi) are mapped by name-matching since Jolpica
-  may not yet have stable `constructorId`s for them.
+```
+app/
+  page.tsx               Homepage
+  dashboard/page.tsx     Live/last-session dashboard
+  standings/page.tsx     Full championship standings
+  articles/page.tsx      Editorial grid (placeholder content)
+  layout.tsx             Root layout, fonts, header/footer
+  globals.css            Design tokens and all page styles
+lib/
+  openf1.ts              OpenF1 API client
+  jolpica.ts             Jolpica API client
+  ticker.ts              Builds the session ticker from the season schedule
+  teamColors.ts          Constructor → brand color mapping
+components/
+  Header.tsx, Footer.tsx, SessionTicker.tsx, StandingsPanels.tsx
+```
+
+## Known limitations
+
+- Live in-session timing doesn't populate on OpenF1's free tier (see above)
+- Articles are static placeholder content — there's no CMS or data source behind them yet
+- No driver or team profile pages yet
+- No historical season browsing (standings only shows the current season)
+- Team colors for brand-new entrants are matched by name rather than a stable ID, since Jolpica may not have assigned one yet
+- No test coverage yet
+
+## Roadmap
+
+- [ ] Driver and constructor profile pages
+- [ ] Historical season browsing (pick any year, 1950–present)
+- [ ] Real live-timing source (either OpenF1 sponsor tier or an alternative feed)
+- [ ] Replace placeholder articles with real content or a lightweight CMS
+- [ ] Basic test coverage
+
+## Disclaimer
+
+This is an independent, unofficial project. It is not affiliated with, endorsed by, or connected to Formula 1, FOM, the FIA, or any team. Data is provided by OpenF1 and Jolpica under their respective terms of use.
+
+## License
+
+[MIT](./LICENSE)
