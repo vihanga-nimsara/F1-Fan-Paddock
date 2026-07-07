@@ -23,10 +23,7 @@ function fmtTime(date: Date) {
 export function buildTicker(races: JolpicaRaceSchedule[]): { raceName: string; sessions: TickerSession[] } | null {
   const now = Date.now();
 
-  // A "race weekend" spans from its first practice (or ~2 days before the race
-  // if no time data) through the race itself. Find the first weekend whose
-  // race date+time is still in the future, or is within the last day (so the
-  // weekend doesn't disappear the moment the race finishes).
+  // Find the first weekend whose race date+time is still in the future, or within the last day
   const candidate = races.find((r) => {
     const raceDateTime = new Date(`${r.date}T${r.time ?? '00:00:00Z'}`);
     return raceDateTime.getTime() > now - 24 * 60 * 60 * 1000;
@@ -52,17 +49,21 @@ export function buildTicker(races: JolpicaRaceSchedule[]): { raceName: string; s
     .sort((a, b) => a.startsAt.getTime() - b.startsAt.getTime());
 
   let nextAssigned = false;
+  
   for (const s of sessions) {
     const start = s.startsAt.getTime();
     const end = start + SESSION_DURATION_MS;
+
     if (now >= start && now <= end) {
       s.status = 'live';
-      nextAssigned = true;
+      nextAssigned = true; // A live session counts as the active focus point
     } else if (now > end) {
       s.status = 'done';
     } else if (!nextAssigned) {
       s.status = 'next';
-      nextAssigned = true;
+      nextAssigned = true; // The absolute earliest future session gets flagged as next
+    } else {
+      s.status = 'upcoming'; // All chronologically successive future blocks remain upcoming
     }
   }
 

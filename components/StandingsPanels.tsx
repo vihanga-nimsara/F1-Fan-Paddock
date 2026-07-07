@@ -32,7 +32,8 @@ export function DriverStandingsPanel({
   return (
     <div className="standings-panel">
       <h3 className="panel-title">
-        Drivers&rsquo; <span className="count">{countLabel ?? `${rows.length} DRIVERS`}</span>
+        <span>Drivers&rsquo; Standings</span>
+        <span className="count">{countLabel ?? `${rows.length} DRIVERS`}</span>
       </h3>
       <table className="standings-table">
         <tbody>
@@ -41,7 +42,7 @@ export function DriverStandingsPanel({
               <td className="pos-cell">{r.position}</td>
               <td>
                 <div className="driver-cell">
-                  <span className="team-tick" style={{ background: getTeamColor(r.team) }} />
+                  <span className="team-tick" style={{ background: getTeamColor(r.team) || 'var(--muted-dim)' }} />
                   <div>
                     <div className="driver-name">{r.name}</div>
                     <div className="team-label">{r.team}</div>
@@ -70,7 +71,8 @@ export function ConstructorStandingsPanel({ rows, countLabel }: { rows: Construc
   return (
     <div className="standings-panel">
       <h3 className="panel-title">
-        Constructors&rsquo; <span className="count">{countLabel ?? `${rows.length} TEAMS`}</span>
+        <span>Constructors&rsquo; Standings</span>
+        <span className="count">{countLabel ?? `${rows.length} TEAMS`}</span>
       </h3>
       <table className="standings-table">
         <tbody>
@@ -79,10 +81,10 @@ export function ConstructorStandingsPanel({ rows, countLabel }: { rows: Construc
               <td className="pos-cell">{r.position}</td>
               <td>
                 <div className="driver-cell">
-                  <span className="team-tick" style={{ background: getTeamColor(r.name) }} />
+                  <span className="team-tick" style={{ background: getTeamColor(r.name) || 'var(--muted-dim)' }} />
                   <div>
                     <div className="driver-name">{r.name}</div>
-                    <div className="team-label">{r.subtitle}</div>
+                    {r.subtitle && <div className="team-label">{r.subtitle}</div>}
                   </div>
                 </div>
               </td>

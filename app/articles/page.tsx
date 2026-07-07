@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const ARTICLES = [
   {
     tag: 'Technical',
@@ -15,7 +17,7 @@ const ARTICLES = [
     tag: 'History',
     accent: 'var(--green)',
     title: 'Every Champion Since 1950, Ranked By Era',
-    dek: 'Comparing eras is never fair, but here\u2019s our attempt anyway.',
+    dek: 'Comparing eras is never fair, but here’s our attempt anyway.',
   },
   {
     tag: 'Driver Profiles',
@@ -32,7 +34,7 @@ const ARTICLES = [
   {
     tag: 'Breaking',
     accent: 'var(--red)',
-    title: 'What Changes Under Next Year\u2019s Regulations',
+    title: 'What Changes Under Next Year’s Regulations',
     dek: 'A plain-language look at the ruleset teams are already designing around.',
   },
 ];
@@ -40,23 +42,28 @@ const ARTICLES = [
 export default function ArticlesPage() {
   return (
     <>
-      <header className="page-header">
+      <header className="page-header wrap">
         <span className="eyebrow">Articles</span>
         <h1>From The Paddock</h1>
         <p>Analysis, race reports, and history — written by the TFB staff.</p>
       </header>
 
-      <section className="articles" style={{ paddingTop: 'clamp(24px,4vw,40px)' }}>
+      <section className="articles wrap" style={{ paddingTop: 'clamp(24px,4vw,40px)' }}>
         <div className="article-grid">
-          {ARTICLES.map((a) => (
-            <a href="#" className="article-card" key={a.title} style={{ ['--card-accent' as string]: a.accent }}>
+          {ARTICLES.map((a, idx) => (
+            <Link 
+              href={`/articles/${idx}`} 
+              className="article-card" 
+              key={a.title} 
+              style={{ ['--card-accent' as string]: a.accent }}
+            >
               <div className="card-visual" />
               <div className="card-body">
                 <span className="card-tag">{a.tag}</span>
                 <h3>{a.title}</h3>
                 <p>{a.dek}</p>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </section>

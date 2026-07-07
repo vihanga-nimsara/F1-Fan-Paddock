@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&family=Titillium+Web:wght@700;900&display=swap');
+
+
 :root {
   --tarmac: #0e1013;
   --surface: #171b20;
@@ -12,10 +15,10 @@
   --green: #3ecf8e;
   --red: #e0524f;
 
-  --font-display: 'Titillium Web', sans-serif;
+
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-
+--font-display: 'Formula1 Display-Regular', 'Titillium Web', sans-serif;
   --t-mercedes: #00a19c;
   --t-ferrari: #e8002d;
   --t-mclaren: #ff8000;
@@ -28,6 +31,17 @@
   --t-astonmartin: #00594f;
   --t-cadillac: #c9a227;
 }
+
+@font-face {
+  font-family: "Formula1 Display-Regular";
+  src: url("https://db.onlinewebfonts.com/t/7a45cffcf1eee0797d566deb425ebaa9.eot");
+  src: url("https://db.onlinewebfonts.com/t/7a45cffcf1eee0797d566deb425ebaa9.eot?#iefix") format("embedded-opentype"),
+       url("https://db.onlinewebfonts.com/t/7a45cffcf1eee0797d566deb425ebaa9.woff2") format("woff2"),
+       url("https://db.onlinewebfonts.com/t/7a45cffcf1eee0797d566deb425ebaa9.woff") format("woff"),
+       url("https://db.onlinewebfonts.com/t/7a45cffcf1eee0797d566deb425ebaa9.ttf") format("truetype"),
+       url("https://db.onlinewebfonts.com/t/7a45cffcf1eee0797d566deb425ebaa9.svg#Formula1 Display-Regular") format("svg");
+}
+
 
 * {
   margin: 0;
