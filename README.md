@@ -41,20 +41,34 @@ Open [http://localhost:3000](http://localhost:3000). No environment variables or
 ## Project structure
 
 ```
-app/
-  page.tsx               Homepage
-  dashboard/page.tsx     Live/last-session dashboard
-  standings/page.tsx     Full championship standings
-  articles/page.tsx      Editorial grid (placeholder content)
-  layout.tsx             Root layout, fonts, header/footer
-  globals.css            Design tokens and all page styles
-lib/
-  openf1.ts              OpenF1 API client
-  jolpica.ts             Jolpica API client
-  ticker.ts              Builds the session ticker from the season schedule
-  teamColors.ts          Constructor → brand color mapping
-components/
-  Header.tsx, Footer.tsx, SessionTicker.tsx, StandingsPanels.tsx
+.
+├── .gitignore
+├── README.md
+├── LICENSE
+├── next.config.mjs
+├── package.json
+├── package-lock.json
+├── tsconfig.json
+├── app/
+│   ├── globals.css          Design tokens and all page styles
+│   ├── layout.tsx           Root layout, fonts, header/footer
+│   ├── page.tsx             Homepage
+│   ├── articles/
+│   │   └── page.tsx         Editorial grid (placeholder content)
+│   ├── dashboard/
+│   │   └── page.tsx         Live/last-session dashboard
+│   └── standings/
+│       └── page.tsx         Full championship standings
+├── components/
+│   ├── Footer.tsx
+│   ├── Header.tsx
+│   ├── SessionTicker.tsx
+│   └── StandingsPanels.tsx
+└── lib/
+    ├── jolpica.ts           Jolpica API client
+    ├── openf1.ts            OpenF1 API client
+    ├── teamColors.ts        Constructor → brand color mapping
+    └── ticker.ts            Builds the session ticker from the season schedule
 ```
 
 ## Known limitations
