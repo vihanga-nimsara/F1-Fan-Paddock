@@ -3,16 +3,47 @@
 import Link from 'next/link';
 import NextImage from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 interface HeaderProps {
-  badgeText: string | null;
+  badgeText: string | null; // Pass the event name or target ISO date string here
   isLive: boolean;
+  nextRaceDate?: string; // Optional: Pass a date string like '2026-07-12T13:00:00Z'
 }
 
-export default function Header({ badgeText, isLive }: HeaderProps) {
+export default function Header({ badgeText, isLive, nextRaceDate }: HeaderProps) {
   const pathname = usePathname();
+  const [countdown, setCountdown] = useState('');
 
   const isActive = (path: string) => pathname === path;
+
+  // Countdown calculations for the non-live states
+  useEffect(() => {
+    if (isLive || !nextRaceDate) return;
+
+    const calculateTimeLeft = () => {
+      const difference = +new Date(nextRaceDate) - +new Date();
+      if (difference <= 0) {
+        setCountdown('RACE WEEKEND');
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+
+      if (days > 0) {
+        setCountdown(`${days}D ${hours}H UNTIL`);
+      } else {
+        setCountdown(`${hours}H ${minutes}M UNTIL`);
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, [isLive, nextRaceDate]);
 
   return (
     <>
@@ -25,7 +56,7 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
           position: 'fixed',
           top: 0,
           left: 0,
-          zIndex: 50,
+          zIndex: 100,
         }}
       />
 
@@ -38,24 +69,25 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
           backgroundColor: '#15151E',
           color: '#ffffff',
           borderBottom: '1px solid #1F1F27',
-          zIndex: 40,
-          height: '76px', // Increased header height slightly to comfortably frame the premium logo
+          zIndex: 90,
+          height: '76px',
           display: 'flex',
           alignItems: 'center',
+          fontFamily: 'inherit', // Uses your CSS font configuration
         }}
       >
         <div
           style={{
             width: '100%',
-            maxWidth: '1400px',
+            maxWidth: '95%', // Liquid UI constraint scaling
             margin: '0 auto',
-            padding: '0 2rem',
+            padding: '0 5%', 
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
           }}
         >
-          {/* Brand Logo Link (Text Removed, Crisp High-Definition Scaling) */}
+          {/* Brand Logo Link */}
           <Link
             href="/"
             style={{
@@ -64,23 +96,25 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
               textDecoration: 'none',
               padding: '4px 0',
               transition: 'transform 0.2s ease',
+              zIndex: 95, // Ensures the link area sits cleanly on top
+              position: 'relative',
             }}
             onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.03)')}
             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           >
             <div
               style={{
-                width: '110px', // Enlarged signature size to make it pop beautifully
-                height: '156px',  
+                width: '110px', 
+                height: '68px', // Fixed the bounding box height overflow covering structural layout areas
                 flexShrink: 0,
+                position: 'relative',
               }}
             >
               <NextImage
                 src="/F1-Fan-Paddock.png"
                 alt="F1 Fan Paddock Logo"
-                width={110} 
-                height={156}
-                style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+                fill
+                style={{ objectFit: 'contain' }}
                 priority
               />
             </div>
@@ -92,7 +126,7 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '2.5rem',
+              gap: 'clamp(1rem, 2.5vw, 2.5rem)', // Fluid spacing layout
             }}
           >
             {[
@@ -112,8 +146,10 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
                   textDecoration: 'none',
                   position: 'relative',
                   padding: '0.5rem 0',
+                  fontFamily: 'inherit',
                   color: isActive(link.path) ? '#E10600' : '#E4E4E7',
                   transition: 'color 0.2s ease',
+                  zIndex: 95,
                 }}
               >
                 {link.name}
@@ -125,7 +161,7 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
                       bottom: 0,
                       left: 0,
                       width: '100%',
-                      height: '3px', // Thicker racing accent track underline
+                      height: '3px',
                       backgroundColor: '#E10600',
                       transform: 'skewX(-12deg)',
                     }}
@@ -135,8 +171,8 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
             ))}
           </nav>
 
-          {/* Premium Live Badge Component */}
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* Premium Dynamic Badge Component */}
+          <div style={{ display: 'flex', alignItems: 'center', zIndex: 95 }}>
             {badgeText && (
               <div
                 style={{
@@ -149,6 +185,7 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
                   fontWeight: 900,
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
+                  fontFamily: 'inherit',
                   border: isLive
                     ? '1px solid rgba(225, 6, 0, 0.6)'
                     : '1px solid #27272A',
@@ -170,7 +207,6 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
                   }}
                 />
                 
-                {/* Standard css keyframe inject hack for inline styles */}
                 {isLive && (
                   <style>{`
                     @keyframes pulse {
@@ -181,7 +217,7 @@ export default function Header({ badgeText, isLive }: HeaderProps) {
                   `}</style>
                 )}
 
-                <span>{isLive ? 'LIVE' : 'UPCOMING'}</span>
+                <span>{isLive ? 'LIVE' : countdown}</span>
 
                 <span style={{ color: '#3F3F46' }}>|</span>
 
