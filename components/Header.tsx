@@ -146,7 +146,7 @@ export default function Header({ badgeText, isLive, nextRaceDate }: HeaderProps)
                   textDecoration: 'none',
                   position: 'relative',
                   padding: '0.5rem 0',
-                  fontFamily: 'inherit',
+                  fontFamily: 'Formula1 Display-Regular',
                   color: isActive(link.path) ? '#E10600' : '#E4E4E7',
                   transition: 'color 0.2s ease',
                   zIndex: 95,

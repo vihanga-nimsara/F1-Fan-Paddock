@@ -130,7 +130,7 @@ export default async function HomePage() {
           </div>
 
           {/* Diagnostic Stats Panel */}
-          <div style={{ flex: '0 1 340px', width: '100%', background: 'rgba(21, 21, 30, 0.65)', backdropFilter: 'blur(10px)', webkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(39, 39, 58, 0.5)', padding: '1.15rem', borderRadius: '3px', fontFamily: 'var(--font-mono, monospace)', fontSize: '0.65rem', boxSizing: 'border-box' }}>
+          <div style={{ flex: '0 1 340px', width: '100%', background: 'rgba(21, 21, 30, 0.65)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(39, 39, 58, 0.5)', padding: '1.15rem', borderRadius: '3px', fontFamily: 'var(--font-mono, monospace)', fontSize: '0.65rem', boxSizing: 'border-box' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', color: '#888893', borderBottom: '1px solid rgba(39, 39, 58, 0.5)', paddingBottom: '0.5rem', marginBottom: '0.5rem', fontWeight: 700 }}>
               <span>WORKSTATION FEED</span>
               <span style={{ color: '#10B981', display: 'flex', alignItems: 'center', gap: '4px' }}>

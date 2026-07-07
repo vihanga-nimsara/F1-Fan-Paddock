@@ -43,7 +43,7 @@ export default function ArticlesPage() {
   return (
     <>
       <header className="page-header wrap">
-        <span className="eyebrow">Articles</span>
+        
         <h1>From The Paddock</h1>
         <p>Analysis, race reports, and history — written by the TFB staff.</p>
       </header>
