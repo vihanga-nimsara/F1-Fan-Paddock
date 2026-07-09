@@ -1,6 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from 'next';
 
-// Self-hosted fonts (no runtime dependency on Google Fonts).
+// Self-hosted fonts
 import '@fontsource/titillium-web/400.css';
 import '@fontsource/titillium-web/600.css';
 import '@fontsource/titillium-web/700.css';
@@ -14,14 +15,17 @@ import '@fontsource/jetbrains-mono/600.css';
 import '@fontsource/jetbrains-mono/700.css';
 
 import './globals.css';
-import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
 import Footer from '@/components/Footer';
 import { getLatestSession, getMeeting, isSessionLive } from '@/lib/openf1';
 
 export const metadata: Metadata = {
-  title: 'TFB — The F1 Bulletin',
+  title: 'F1 Fan Paddock',
   description:
     'Live sessions, championship standings, and race analysis, built on OpenF1 and historical Jolpica data.',
+  other: {
+    'format-detection': 'telephone=no, date=no, address=no, email=no',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -36,10 +40,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en">
-      <body>
-        <Header badgeText={badge} isLive={live} />
-        <main>{children}</main>
-        <Footer />
+      <body style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#0B0C10' }}>
+        <Sidebar badgeText={badge} isLive={live} />
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+          <main style={{ flex: 1 }}>{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

@@ -1,11 +1,36 @@
+// app/page.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import SessionTicker from '@/components/SessionTicker';
 import { DriverStandingsPanel, ConstructorStandingsPanel } from '@/components/StandingsPanels';
 import { getDriverStandings, getConstructorStandings, getSeasonSchedule, getLastRaceResult } from '@/lib/jolpica';
 import { buildTicker } from '@/lib/ticker';
+import { CountdownCard } from '@/components/CountdownCard';
+import WeatherCard from '@/components/WeatherCard';
 
 export const revalidate = 120;
+
+interface ExploreCard {
+  title: string;
+  description: string;
+  href: string;
+  accent: string;
+  icon: React.ReactNode;
+}
+
+interface GridLeader {
+  category: string;
+  driver: string;
+  value: number;
+  accent: string;
+}
+
+interface PodiumDriver {
+  position: number;
+  name: string;
+  team: string;
+  teamColor: string;
+}
 
 export default async function HomePage() {
   const [driverStandings, constructorStandings, schedule, lastRace] = await Promise.all([
@@ -36,233 +61,429 @@ export default async function HomePage() {
   const gap = leader && second ? Number(leader.points) - Number(second.points) : null;
   const nextRace = schedule.find((r) => new Date(`${r.date}T${r.time ?? '00:00:00Z'}`).getTime() > Date.now());
 
+  const racesCompleted = lastRace ? Number(lastRace.round) : 9;
+  const totalRaces = 22;
+
+  const exploreCards: ExploreCard[] = [
+    { title: 'Drivers', description: 'Full driver profiles, career stats, and championship points.', href: '/drivers', accent: '#E10600', icon: <TrophyIcon /> },
+    { title: 'Constructors', description: 'Team standings, constructor history, and win tallies.', href: '/constructors', accent: '#6CD3BF', icon: <ConstructorsIcon /> },
+    { title: 'Circuits', description: 'Track layouts, lap records, and racing history.', href: '/circuits', accent: '#F59E0B', icon: <FlagIcon /> },
+    { title: 'Results', description: 'Detailed race results, timings, and sprint data.', href: '/results', accent: '#10B981', icon: <ClockIcon /> },
+  ];
+
+  const gridLeaders: GridLeader[] = [
+    { category: 'Wins', driver: 'Lewis Hamilton', value: 106, accent: '#F59E0B' },
+    { category: 'Podiums', driver: 'Lewis Hamilton', value: 207, accent: '#A1A1AA' },
+    { category: 'Poles', driver: 'Lewis Hamilton', value: 104, accent: '#3B82F6' },
+  ];
+
+  const lastPodium: PodiumDriver[] = [
+    { position: 1, name: 'Charles Leclerc', team: 'Ferrari', teamColor: '#E80020' },
+    { position: 2, name: 'George Russell', team: 'Mercedes', teamColor: '#6CD3BF' },
+    { position: 3, name: 'Lewis Hamilton', team: 'Ferrari', teamColor: '#E80020' },
+  ];
+
   return (
-    <div style={{ backgroundColor: '#09090B', color: '#FAFAFA', minHeight: '100vh', fontFamily: 'var(--font-body, system-ui, sans-serif)' }}>
+    <div style={{ 
+      backgroundColor: '#0B0C10', 
+      color: '#FAFAFA', 
+      minHeight: '100vh', 
+      fontFamily: 'var(--font-body, system-ui, sans-serif)' 
+    }}>
       
-      {/* ---------- CUSTOM HARDWARE ACCELERATED ANIMATION MATRIX ---------- */}
+      {/* ─── ANIMATIONS ─── */}
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes telemetryFadeIn {
-          from { opacity: 0; transform: translateY(12px); }
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes vectorSlide {
-          from { transform: translateX(30px); opacity: 0; }
-          to { transform: translateX(0); opacity: 0.08; }
+        @keyframes pulseLive {
+          0%, 100% { opacity: 0.5; box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.4); }
+          50% { opacity: 1; box-shadow: 0 0 8px 2px rgba(225, 6, 0, 0.6); }
         }
-        .animate-fade {
-          animation: telemetryFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .animate-fade-in {
+          animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          opacity: 0;
         }
-        .paddock-card {
-          transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
-        }
-        .paddock-card:hover {
-          transform: translateY(-4px) scale(1.01) !important;
-          border-color: #3F3F46 !important;
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
-        }
-        .btn-interactive {
-          transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease !important;
-        }
-        .btn-interactive:hover {
-          background-color: #FFFFFF !important;
-          color: #09090B !important;
-          border-color: #FFFFFF !important;
-        }
-        .btn-interactive:active {
-          transform: scale(0.98);
-        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
       `}} />
 
-      {/* ---------- HERO / MAIN TELEMETRY CONTROL MATRIX ---------- */}
-      <section style={{ position: 'relative', overflow: 'hidden', padding: '5rem 0 4rem 0', background: 'radial-gradient(circle at 85% 30%, #18181B 0%, #09090B 70%)', borderBottom: '1px solid #27272A' }}>
-        <svg style={{ position: 'absolute', right: 0, top: 0, width: '50%', height: '100%', pointerEvents: 'none', animation: 'vectorSlide 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards' }} viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          <path fill="none" stroke="#E10600" strokeWidth="2" d="M -50 410 C 220 390, 300 210, 560 230 S 800 400, 1010 260 S 1160 110, 1320 130" />
-          <path fill="none" stroke="#38BDF8" strokeWidth="1" strokeDasharray="6 4" d="M -50 470 C 260 450, 360 300, 610 310 S 860 450, 1060 330 S 1190 190, 1320 210" />
-        </svg>
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 1: HERO
+          ═══════════════════════════════════════════════════════════ */}
+      <section style={{ 
+        position: 'relative', 
+        overflow: 'hidden', 
+        padding: 'clamp(6rem, 12vw, 10rem) 0 clamp(3rem, 6vw, 5rem)',
+        backgroundColor: '#0B0C10',
+        borderBottom: '1px solid #1F1F27', 
+      }}>
+        {/* Background Image */}
+        <div style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 0 }}>
+          <Image
+            src="/Hero-BG.png"
+            alt="Hero Background"
+            fill
+            priority
+            style={{ objectFit: 'cover', objectPosition: 'right 35%' }}
+          />
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to right, #0B0C10 10%, rgba(11, 12, 16, 0.9) 40%, rgba(11, 12, 16, 0.3) 70%, rgba(11, 12, 16, 0.6) 100%)'
+          }} />
+        </div>
 
-        <div className="animate-fade" style={{ maxWidth: '1360px', margin: '0 auto', padding: '0 2rem', boxSizing: 'border-box', display: 'grid', gridTemplateColumns: '1fr minmax(340px, 420px)', gap: '4rem', alignItems: 'center' }}>
-          <div>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.75rem', fontWeight: 700, fontFamily: 'var(--font-mono, monospace)', textTransform: 'uppercase', letterSpacing: '0.15em', color: '#E10600', marginBottom: '1rem' }}>
-              <span style={{ width: '6px', height: '6px', backgroundColor: '#E10600', transform: 'rotate(45deg)' }} />
-              {nextRace ? `LIVE DATASTREAM // RD ${nextRace.round} · ${nextRace.raceName}` : 'CHAMPIONSHIP DATA PLATFORM'}
-            </span>
-            
-            <h1 style={{ fontSize: 'clamp(2.25rem, 4vw, 3.5rem)', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.03em', lineHeight: 1.05, margin: 0 }}>
-              {leader ? (
-                <>
-                  {leader.Driver.familyName} LEADS BY <span style={{ color: '#E10600', display: 'inline-block', transform: 'skewX(-6deg)' }}>{gap}</span> {gap === 1 ? 'POINT' : 'POINTS'}
-                </>
-              ) : (
-                <>LIVE PERFORMANCE &amp; GRID MONITOR</>
-              )}
-            </h1>
+        <div className="animate-fade-in" style={{ 
+          maxWidth: '1360px', 
+          margin: '0 auto', 
+          padding: '0 clamp(1rem, 4vw, 3rem)', 
+          position: 'relative', 
+          zIndex: 2 
+        }}>
+          <span style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            gap: '0.5rem', 
+            fontSize: '0.75rem', 
+            fontWeight: 800, 
+            fontFamily: 'var(--font-mono, monospace)', 
+            textTransform: 'uppercase', 
+            letterSpacing: '0.15em', 
+            color: '#E10600', 
+            marginBottom: '1rem' 
+          }}>
+            <span style={{ 
+              width: '8px', 
+              height: '8px', 
+              backgroundColor: '#E10600', 
+              borderRadius: '50%',
+              animation: 'pulseLive 2s infinite',
+            }} />
+            {nextRace ? `2026 SEASON · LIVE` : 'CHAMPIONSHIP DATA PLATFORM'}
+          </span>
+          
+          <h1 style={{ 
+            fontSize: 'clamp(2rem, 4vw, 3rem)', 
+            fontFamily: 'var(--font-display, sans-serif)', 
+            fontWeight: 900, 
+            textTransform: 'uppercase', 
+            letterSpacing: '-0.03em', 
+            lineHeight: 1.05, 
+            margin: 0,
+            color: '#FFFFFF',
+          }}>
+            Formula 1 Statistics &amp; History
+          </h1>
 
-            <p style={{ fontSize: '0.9375rem', color: '#A1A1AA', lineHeight: '1.6', maxWidth: '600px', margin: '1.25rem 0 0 0' }}>
-              {leader && second
-                ? `${leader.Driver.givenName} ${leader.Driver.familyName} dominates the global sequence ranking arrays. Structural tracking computations running active telemetry frames.`
-                : 'Active live engine diagnostics feed framing structural track data arrays instantly.'}
-            </p>
-          </div>
-
-          {/* Pit Wall Diagnostic Widget */}
-          <div style={{ background: '#141416', border: '1px solid #27272A', padding: '1.25rem', borderRadius: '4px', fontFamily: 'var(--font-mono, monospace)', fontSize: '0.75rem', boxShadow: '0 4px 20px rgba(0,0,0,0.3)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', color: '#71717A', borderBottom: '1px solid #27272A', paddingBottom: '0.5rem', marginBottom: '0.75rem', fontWeight: 700 }}>
-              <span>CORE SYSTEM FEED</span>
-              <span style={{ color: '#10B981', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span style={{ width: '6px', height: '6px', backgroundColor: '#10B981', borderRadius: '50%' }} /> CONNECTED
-              </span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0.375rem 0' }}>
-              <span style={{ color: '#A1A1AA' }}>API ENDPOINT</span>
-              <span style={{ color: '#FFFFFF', fontWeight: 600 }}>JOLPICA_ENGINE</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0.375rem 0' }}>
-              <span style={{ color: '#A1A1AA' }}>REVALIDATION CYCLE</span>
-              <span style={{ color: '#FFFFFF', fontWeight: 600 }}>{revalidate}s INTERVAL</span>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '0.375rem 0' }}>
-              <span style={{ color: '#A1A1AA' }}>TRACK TIMING DATA</span>
-              <span style={{ color: '#E10600', fontWeight: 700 }}>LIVE SYNCHRONIZED</span>
-            </div>
-          </div>
+          <p style={{ 
+            fontSize: '0.9375rem', 
+            color: '#A1A1AA', 
+            margin: '0.75rem 0 0 0' 
+          }}>
+            Round {racesCompleted} of {totalRaces} · Last race: {lastRace?.raceName || 'British GP'}
+          </p>
         </div>
       </section>
 
-      {/* ---------- LIVE TICKER SYSTEM ---------- */}
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 2: TOP STATS BAR
+          ═══════════════════════════════════════════════════════════ */}
+      <section style={{ width: '100%', padding: '0 clamp(20px, 4vw, 48px)', boxSizing: 'border-box', margin: '32px 0' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', maxWidth: '1360px', margin: '0 auto' }}>
+          <TopStatCard 
+            label="Championship Leader" 
+            title={leader ? `${leader.Driver.givenName} ${leader.Driver.familyName}` : 'Kimi Antonelli'} 
+            subtitle={leader ? `${leader.points} pts · ${leader.wins || 5} wins` : '179 pts · 5 wins'} 
+            accent="#6CD3BF" 
+            icon={<TrophyIcon />} 
+          />
+          <TopStatCard 
+            label="Constructor Leader" 
+            title="Mercedes" 
+            subtitle="333 pts · 7 wins" 
+            accent="#6CD3BF" 
+            icon={<ConstructorsIcon />} 
+          />
+          <TopStatCard 
+            label="Races Completed" 
+            title="9 / 22" 
+            subtitle="41% of the season" 
+            accent="#E10600" 
+            icon={<FlagIcon />} 
+            showProgress 
+            progressValue={41} 
+          />
+          <TopStatCard 
+            label="Next Race" 
+            title="Belgian GP" 
+            subtitle="Spa · 19 July 2026" 
+            accent="#F59E0B" 
+            icon={<ClockIcon />} 
+            countdown 
+          />
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 3: SESSION TICKER
+          ═══════════════════════════════════════════════════════════ */}
       {ticker && (
-        <div style={{ borderBottom: '1px solid #27272A', backgroundColor: '#141416' }}>
-          <div style={{ maxWidth: '1360px', margin: '0 auto', padding: '0 2rem', boxSizing: 'border-box' }}>
+        <div style={{ borderBottom: '1px solid #1F1F27', backgroundColor: '#15151E' }}>
+          <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
             <SessionTicker raceName={ticker.raceName} sessions={ticker.sessions} />
           </div>
         </div>
       )}
 
-      {/* ---------- LIVE GRID ACTION MATRIX ---------- */}
-      <section style={{ padding: '4rem 0', background: 'linear-gradient(180deg, #09090B 0%, #141416 100%)' }}>
-        <div className="animate-fade" style={{ maxWidth: '1360px', margin: '0 auto', padding: '0 2rem', boxSizing: 'border-box', display: 'grid', gridTemplateColumns: '1fr minmax(340px, 420px)', gap: '4rem', alignItems: 'start', animationDelay: '0.15s', opacity: 0 }}>
-          
-          {/* LEFT PANELS: LEADERBOARDS */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '3.5rem' }}>
-            <div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px solid #27272A', paddingBottom: '0.75rem', marginBottom: '2rem' }}>
-                <h2 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em', margin: 0 }}>Championship Framework</h2>
-                <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#71717A', fontWeight: 600 }}>{nextRace ? `Ahead of Rd ${nextRace.round}` : 'Current Standings'}</span>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-                {driverRows.length > 0 ? (
-                  <DriverStandingsPanel rows={driverRows} visibleCount={10} countLabel="PROVISIONAL CLASSIFICATION" />
-                ) : (
-                  <div style={{ backgroundColor: '#141416', padding: '2rem', textAlign: 'center', color: '#52525B', border: '1px dashed #27272A', borderRadius: '4px', fontSize: '0.875rem' }}>Awaiting structural driver classification data streams...</div>
-                )}
-
-                {constructorRows.length > 0 ? (
-                  <ConstructorStandingsPanel rows={constructorRows} countLabel="CONSTRUCTOR STANDINGS" />
-                ) : (
-                  <div style={{ backgroundColor: '#141416', padding: '2rem', textAlign: 'center', color: '#52525B', border: '1px dashed #27272A', borderRadius: '4px', fontSize: '0.875rem' }}>Awaiting technical constructor matrix data...</div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT SIDEBAR: LATEST CLASSIFICATION */}
-          {lastRace && (
-            <aside style={{ position: 'sticky', top: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-              <div style={{ borderBottom: '1px solid #27272A', paddingBottom: '0.75rem' }}>
-                <h2 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em', margin: 0 }}>Track Timing Result</h2>
-                <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#E10600', fontWeight: 700 }}>ROUND {lastRace.round} TOP 5</span>
-              </div>
-
-              <div style={{ backgroundColor: '#141416', border: '1px solid #27272A', borderTop: '3px solid #E10600', padding: '1.5rem', borderRadius: '4px', boxShadow: '0 4px 24px rgba(0,0,0,0.2)' }}>
-                
-                <div style={{ position: 'relative', width: '100%', height: '140px', marginBottom: '1.25rem', borderRadius: '2px', overflow: 'hidden' }}>
-                  <Image 
-                    src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&q=80&w=600" 
-                    alt="Formula Race Car Circuit Finish"
-                    fill
-                    sizes="(max-width: 420px) 100vw, 420px"
-                    style={{ objectFit: 'cover', filter: 'brightness(0.7) contrast(1.1)' }}
-                  />
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 30%, #141416 100%)' }} />
-                </div>
-
-                <div style={{ marginBottom: '1rem' }}>
-                  <h3 style={{ fontSize: '1.375rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 900, textTransform: 'uppercase', margin: '0 0 0.25rem 0', letterSpacing: '-0.01em' }}>{lastRace.raceName}</h3>
-                  <div style={{ color: '#71717A', fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{lastRace.Circuit.circuitName}</div>
-                </div>
-                
-                <p style={{ fontSize: '0.8125rem', color: '#A1A1AA', margin: '0 0 1.25rem 0', lineHeight: '1.5' }}>
-                  Official verified race classification. Positions locked by race control.
-                </p>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.25rem' }}>
-                  {lastRace.Results.slice(0, 5).map((r) => (
-                    <div key={r.position} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#1C1C1E', padding: '0.75rem 1rem', borderRadius: '4px', borderLeft: r.position === '1' ? '2px solid #E10600' : 'none' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <div style={{ color: r.position === '1' ? '#E10600' : '#52525B', fontStyle: 'italic', fontFamily: 'var(--font-mono, monospace)', fontWeight: 800, width: '16px' }}>
-                          {r.position}
-                        </div>
-                        <div>
-                          <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#FFFFFF' }}>{r.Driver.familyName}</div>
-                          <div style={{ fontSize: '0.6875rem', color: '#71717A', textTransform: 'uppercase', fontWeight: 600 }}>{r.Constructor.name}</div>
-                        </div>
-                      </div>
-                      <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#A1A1AA' }}>{r.Time?.time ?? r.status}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <Link className="btn-interactive" href="/standings" style={{ display: 'block', textAlign: 'center', backgroundColor: 'transparent', border: '1px solid #27272A', color: '#FFFFFF', padding: '0.75rem', fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', fontWeight: 700, textTransform: 'uppercase', textDecoration: 'none', borderRadius: '4px' }}>
-                  Full Classifications →
-                </Link>
-              </div>
-            </aside>
-          )}
-
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 4: NEXT RACE COUNTDOWN + WEATHER
+          ═══════════════════════════════════════════════════════════ */}
+      <section style={{ width: '100%', padding: '0 clamp(20px, 4vw, 48px)', boxSizing: 'border-box', margin: '32px 0' }}>
+        <div style={{ maxWidth: '1360px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '24px', alignItems: 'stretch' }}>
+          <CountdownCard />
+          <WeatherCard />
         </div>
       </section>
 
-      {/* ---------- PADDOCK STREAM ANALYSIS ---------- */}
-      <section style={{ borderTop: '1px solid #27272A', backgroundColor: '#09090B', padding: '4rem 0' }}>
-        <div className="animate-fade" style={{ maxWidth: '1360px', margin: '0 auto', padding: '0 2rem', boxSizing: 'border-box', animationDelay: '0.3s', opacity: 0 }}>
-          <div style={{ marginBottom: '2.5rem' }}>
-            <h2 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.02em', margin: 0 }}>From The Paddock</h2>
-            <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#71717A', fontWeight: 600 }}>Data &amp; Technical Analysis</span>
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 5: EXPLORE GRID
+          ═══════════════════════════════════════════════════════════ */}
+      <section style={{ width: '100%', padding: '0 clamp(20px, 4vw, 48px)', boxSizing: 'border-box', marginBottom: '32px' }}>
+        <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
+          <div style={{ marginBottom: '24px' }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'var(--font-display, sans-serif)', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
+              Explore
+            </h2>
+            <p style={{ fontSize: '13px', color: '#71717A', margin: 0, fontFamily: 'var(--font-mono, monospace)' }}>
+              Everything the app has to offer
+            </p>
           </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
-            {[
-              { tag: 'Technical', title: 'Reading The Floor: How Teams Chase Ground Effect', desc: 'What separates the fastest configurations through performance sectors this season.', accent: '#E10600', img: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=600' },
-              { tag: 'Race Reports', title: 'Strategy Calls That Decided The Last Five Races', desc: 'Undercuts, safety car phases, and tyre compound windows.', accent: '#F59E0B', img: 'https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&q=80&w=600' },
-              { tag: 'History', title: 'Every Champion Since 1950, Ranked By Era', desc: 'Normalized mechanical and structural cross-era data metrics.', accent: '#10B981', img: 'https://images.unsplash.com/photo-1552664688-cf412ec27db2?auto=format&fit=crop&q=80&w=600' }
-            ].map((art, index) => (
-              <Link 
-                key={index} 
-                href="/articles" 
-                className="paddock-card"
-                style={{ textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', backgroundColor: '#141416', border: '1px solid #27272A', borderRadius: '4px', overflow: 'hidden' }}
-              >
-                <div style={{ height: '160px', position: 'relative', width: '100%' }}>
-                  <Image 
-                    src={art.img} 
-                    alt={art.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    style={{ objectFit: 'cover' }}
-                  />
-                  <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '4px', backgroundColor: art.accent }} />
-                  <div style={{ position: 'absolute', top: '8px', right: '12px', color: 'rgba(255,255,255,0.15)', fontSize: '2.5rem', fontWeight: 900, fontStyle: 'italic', fontFamily: 'var(--font-display, sans-serif)' }}>0{index+1}</div>
-                </div>
-                <div style={{ padding: '1.5rem', flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                  <span style={{ fontSize: '0.6875rem', fontWeight: 800, textTransform: 'uppercase', color: art.accent, fontFamily: 'var(--font-mono, monospace)', letterSpacing: '0.06em', marginBottom: '0.5rem', display: 'block' }}>{art.tag}</span>
-                  <h3 style={{ fontSize: '1.125rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 800, margin: '0 0 0.75rem 0', lineHeight: 1.3, textTransform: 'uppercase', color: '#FFFFFF' }}>{art.title}</h3>
-                  <p style={{ color: '#A1A1AA', fontSize: '0.8125rem', lineHeight: 1.5, margin: 0, marginTop: 'auto' }}>{art.desc}</p>
-                </div>
-              </Link>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
+            {exploreCards.map((card, idx) => (
+              <ExploreCard key={idx} card={card} />
             ))}
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 6: STANDINGS (DRIVERS + CONSTRUCTORS)
+          ═══════════════════════════════════════════════════════════ */}
+      <section style={{ padding: '4rem 0', background: 'linear-gradient(180deg, #0B0C10 0%, #15151E 100%)' }}>
+        <div style={{ maxWidth: '1360px', margin: '0 auto', padding: '0 clamp(1rem, 4vw, 3rem)', boxSizing: 'border-box' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr minmax(320px, 380px)', gap: '3rem', alignItems: 'start' }}>
+            
+            {/* LEFT: DRIVER STANDINGS */}
+            <div className="animate-fade-in delay-2">
+              <SectionHeader title="Drivers Championship" subtitle="" />
+              <div style={{ marginBottom: '2rem' }}>
+                <Link href="/standings" style={{ 
+                  fontSize: '12px', 
+                  fontWeight: 800, 
+                  fontFamily: 'var(--font-mono, monospace)', 
+                  color: '#E10600', 
+                  textDecoration: 'none',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  float: 'right',
+                  marginTop: '-40px',
+                }}>
+                  View all →
+                </Link>
+              </div>
+              {driverRows.length > 0 ? (
+                <DriverStandingsPanel rows={driverRows} visibleCount={22} />
+              ) : (
+                <EmptyState message="No driver standings available" />
+              )}
+            </div>
+
+            {/* RIGHT: CONSTRUCTOR STANDINGS */}
+            <div className="animate-fade-in delay-3">
+              <SectionHeader title="Constructors" subtitle="" />
+              {constructorRows.length > 0 ? (
+                <ConstructorStandingsPanel rows={constructorRows} />
+              ) : (
+                <EmptyState message="No constructor standings available" />
+              )}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════
+          SECTION 7: GRID LEADERS + LAST RACE PODIUM
+          ═══════════════════════════════════════════════════════════ */}
+      <section style={{ width: '100%', padding: '0 clamp(20px, 4vw, 48px)', boxSizing: 'border-box', marginBottom: '48px' }}>
+        <div style={{ maxWidth: '1360px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '24px', alignItems: 'start' }}>
+          
+          {/* Grid Leaders */}
+          <div style={{ background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)', border: '1px solid #1F1F27', borderRadius: '12px', padding: '24px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: 'var(--font-display, sans-serif)', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
+                Grid Leaders
+              </h3>
+              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: 'var(--font-mono, monospace)' }}>
+                All-time · active drivers
+              </p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {gridLeaders.map((leader, idx) => (
+                <GridLeaderRow key={idx} leader={leader} />
+              ))}
+            </div>
+          </div>
+
+          {/* Last Race Podium */}
+          <div style={{ background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)', border: '1px solid #1F1F27', borderRadius: '12px', padding: '24px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: 'var(--font-display, sans-serif)', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
+                Last Race Podium
+              </h3>
+              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: 'var(--font-mono, monospace)' }}>
+                {lastRace?.raceName || 'British GP'} · Round {lastRace?.round || 9}
+              </p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {lastPodium.map((driver) => (
+                <PodiumRow key={driver.position} driver={driver} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
+
+// ═════════════════════════════════════════════════════════════════
+// SUB-COMPONENTS
+// ═════════════════════════════════════════════════════════════════
+
+function SectionHeader({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: 'space-between', 
+      alignItems: 'baseline', 
+      borderBottom: '2px solid #E10600', 
+      paddingBottom: '0.75rem', 
+      marginBottom: '1.5rem' 
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{ width: '4px', height: '24px', backgroundColor: '#E10600', borderRadius: '2px' }} />
+        <h2 style={{ 
+          fontSize: '1.1rem', 
+          fontFamily: 'var(--font-display, sans-serif)', 
+          fontWeight: 900, 
+          textTransform: 'uppercase', 
+          letterSpacing: '0.02em', 
+          margin: 0,
+          color: '#FFFFFF',
+        }}>{title}</h2>
+      </div>
+      {subtitle && <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#71717A', fontWeight: 700, letterSpacing: '0.05em' }}>{subtitle}</span>}
+    </div>
+  );
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <div style={{ 
+      backgroundColor: '#15151E', 
+      padding: '2.5rem', 
+      textAlign: 'center', 
+      color: '#52525B', 
+      border: '1px dashed #1F1F27', 
+      borderRadius: '8px', 
+      fontSize: '0.875rem',
+      fontWeight: 600,
+    }}>
+      {message}
+    </div>
+  );
+}
+
+function ExploreCard({ card }: { card: ExploreCard }) {
+  return (
+    <Link href={card.href} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <div style={{
+        background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)',
+        border: '1px solid #1F1F27',
+        borderRadius: '12px',
+        padding: '20px',
+        height: '100%',
+        boxSizing: 'border-box',
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: card.accent, background: `${card.accent}16`, border: `1px solid ${card.accent}30` }}>
+            {card.icon}
+          </div>
+          <h3 style={{ fontSize: '15px', fontWeight: 900, color: '#FFFFFF', margin: 0, textTransform: 'uppercase' }}>{card.title}</h3>
+        </div>
+        <p style={{ fontSize: '12px', color: '#71717A', margin: 0, lineHeight: 1.5 }}>{card.description}</p>
+      </div>
+    </Link>
+  );
+}
+
+function GridLeaderRow({ leader }: { leader: GridLeader }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: '#0B0C10', border: '1px solid #1F1F27', borderRadius: '8px', borderLeft: `3px solid ${leader.accent}` }}>
+      <div>
+        <div style={{ fontSize: '10px', fontWeight: 900, color: leader.accent, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{leader.category}</div>
+        <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{leader.driver}</div>
+      </div>
+      <span style={{ fontSize: '20px', fontWeight: 900, color: leader.accent }}>{leader.value}</span>
+    </div>
+  );
+}
+
+function PodiumRow({ driver }: { driver: PodiumDriver }) {
+  const posColors: Record<number, string> = { 1: '#F59E0B', 2: '#A1A1AA', 3: '#CD7F32' };
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', background: '#0B0C10', border: '1px solid #1F1F27', borderRadius: '8px', borderLeft: `3px solid ${posColors[driver.position]}` }}>
+      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: posColors[driver.position], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 900, color: '#000' }}>
+        {driver.position}
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{driver.name}</div>
+        <div style={{ fontSize: '11px', color: '#71717A', textTransform: 'uppercase' }}>{driver.team}</div>
+      </div>
+      <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: driver.teamColor }} />
+    </div>
+  );
+}
+
+// Minimal placeholder implementations for missing sub-components/icons used in this file
+function TopStatCard(props: any) {
+  const { label, title, subtitle, accent, icon, showProgress, progressValue, countdown } = props;
+  return (
+    <div style={{ background: '#15151E', border: '1px solid #1F1F27', borderRadius: 12, padding: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div>
+          <div style={{ fontSize: 12, color: '#A1A1AA', fontWeight: 800 }}>{label}</div>
+          <div style={{ fontSize: 16, fontWeight: 900, color: '#FFF' }}>{title}</div>
+          {subtitle && <div style={{ fontSize: 12, color: '#71717A' }}>{subtitle}</div>}
+        </div>
+        <div>{icon}</div>
+      </div>
+      {showProgress && (
+        <div style={{ marginTop: 12, height: 8, background: '#0B0C10', borderRadius: 8 }}>
+          <div style={{ width: `${progressValue || 0}%`, height: '100%', background: accent || '#E10600', borderRadius: 8 }} />
+        </div>
+      )}
+      {countdown && <div style={{ marginTop: 8, fontSize: 12, color: '#A1A1AA' }}>Starts in: —</div>}
+    </div>
+  );
+}
+
+function TrophyIcon() { return <div style={{ width: 36, height: 36, background: '#6CD3BF', borderRadius: 8 }} /> }
+function ConstructorsIcon() { return <div style={{ width: 36, height: 36, background: '#6CD3BF', borderRadius: 8 }} /> }
+function FlagIcon() { return <div style={{ width: 36, height: 36, background: '#E10600', borderRadius: 8 }} /> }
+function ClockIcon() { return <div style={{ width: 36, height: 36, background: '#F59E0B', borderRadius: 8 }} /> }

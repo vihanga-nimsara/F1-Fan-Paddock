@@ -159,11 +159,11 @@ This palette creates the look of a high-end motorsport dashboard.
 - [app/layout.tsx](app/layout.tsx): root layout, metadata, shared header/footer, and top-level data fetching
 - [app/page.tsx](app/page.tsx): home page with hero, standings preview, and last-race result panel
 - [app/dashboard/page.tsx](app/dashboard/page.tsx): dashboard-style page for weekend and session context
-- [app/standings/page.tsx](app/standings/page.tsx): standings and article-style presentation
+- [app/standings/page.tsx](app/driver-standings/page.tsx): standings and article-style presentation
 - [app/articles/page.tsx](app/articles/page.tsx): editorial content landing page
 
 ### Components
-- [components/Header.tsx](components/Header.tsx): fixed header, navigation, live badge, and countdown logic
+- [components/Header.tsx](components/Sidebar.tsx): fixed header, navigation, live badge, and countdown logic
 - [components/Footer.tsx](components/Footer.tsx): footer shell and branding details
 - [components/SessionTicker.tsx](components/SessionTicker.tsx): weekend session timeline UI
 - [components/StandingsPanels.tsx](components/StandingsPanels.tsx): driver/constructor standing display panels
