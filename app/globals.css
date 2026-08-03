@@ -34,6 +34,13 @@
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
   --font-display: 'Formula1 Display-Regular', 'Titillium Web', sans-serif;
+  --font-secondary: var(--font-mono);
+
+  /* ─── Accent Colors ─── */
+  --purple: #8B5CF6;
+  --red: #E10600;
+  --amber: #F59E0B;
+  --green: #10B981;
 
   /* ─── 2026 Team Colors (Official) ─── */
   --t-mercedes: #6CD3BF;
@@ -246,6 +253,15 @@ nav.main-nav a.is-active {
   50% {
     opacity: 0.6;
     box-shadow: 0 0 0 5px rgba(225, 6, 0, 0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
   }
 }
 

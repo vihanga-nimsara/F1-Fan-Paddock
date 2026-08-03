@@ -73,7 +73,7 @@ function SeasonCard({ season }: { season: Season }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "var(--font-mono)",
+          fontFamily: "var(--font-secondary)",
           fontSize: 11,
           fontWeight: 900,
           color: "var(--muted)",
@@ -85,7 +85,7 @@ function SeasonCard({ season }: { season: Season }) {
       <div style={{ padding: 24 }}>
         <div
           style={{
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-secondary)",
             fontSize: 10,
             color: "var(--muted-dim)",
             textTransform: "uppercase",
@@ -120,11 +120,11 @@ function SeasonCard({ season }: { season: Season }) {
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ fontSize: 13, color: "var(--muted)" }}>Races</span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, fontWeight: 700, color: "var(--text-secondary)" }}>{season.races}</span>
+            <span style={{ fontFamily: "var(--font-secondary)", fontSize: 13, fontWeight: 700, color: "var(--text-secondary)" }}>{season.races}</span>
           </div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ fontSize: 13, color: "var(--muted)" }}>Poles</span>
-            <span style={{ fontFamily: "var(--font-mono)", fontSize: 13, fontWeight: 700, color: "var(--text-secondary)" }}>{season.poles}</span>
+            <span style={{ fontFamily: "var(--font-secondary)", fontSize: 13, fontWeight: 700, color: "var(--text-secondary)" }}>{season.poles}</span>
           </div>
         </div>
 
@@ -140,7 +140,7 @@ function SeasonCard({ season }: { season: Season }) {
         >
           <span
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               fontSize: 10,
               color: "var(--muted-dim)",
               textTransform: "uppercase",
@@ -152,7 +152,7 @@ function SeasonCard({ season }: { season: Season }) {
           </span>
           <span
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               fontSize: 10,
               fontWeight: 800,
               letterSpacing: "0.8px",
@@ -275,7 +275,7 @@ export default function SeasonsPage() {
                 padding: "10px 16px",
                 fontSize: 12,
                 color: "var(--muted)",
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 letterSpacing: "0.5px",
                 textTransform: "uppercase",
                 fontWeight: 700,
@@ -299,7 +299,7 @@ export default function SeasonsPage() {
                 padding: "10px 16px",
                 fontSize: 12,
                 color: "var(--muted)",
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 letterSpacing: "0.5px",
                 textTransform: "uppercase",
                 fontWeight: 700,
@@ -349,7 +349,7 @@ export default function SeasonsPage() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 6,
-                      fontFamily: "var(--font-mono)",
+                      fontFamily: "var(--font-secondary)",
                       fontSize: 10,
                       fontWeight: 800,
                       letterSpacing: "1.5px",
@@ -366,7 +366,7 @@ export default function SeasonsPage() {
                   </span>
                   <span
                     style={{
-                      fontFamily: "var(--font-mono)",
+                      fontFamily: "var(--font-secondary)",
                       fontSize: 11,
                       color: "var(--muted-dim)",
                       letterSpacing: "1px",
@@ -397,7 +397,7 @@ export default function SeasonsPage() {
                   <div>
                     <div
                       style={{
-                        fontFamily: "var(--font-mono)",
+                        fontFamily: "var(--font-secondary)",
                         fontSize: 10,
                         color: "var(--muted-dim)",
                         textTransform: "uppercase",
@@ -415,7 +415,7 @@ export default function SeasonsPage() {
                   <div>
                     <div
                       style={{
-                        fontFamily: "var(--font-mono)",
+                        fontFamily: "var(--font-secondary)",
                         fontSize: 10,
                         color: "var(--muted-dim)",
                         textTransform: "uppercase",
@@ -433,7 +433,7 @@ export default function SeasonsPage() {
                   <div>
                     <div
                       style={{
-                        fontFamily: "var(--font-mono)",
+                        fontFamily: "var(--font-secondary)",
                         fontSize: 10,
                         color: "var(--muted-dim)",
                         textTransform: "uppercase",
@@ -450,7 +450,7 @@ export default function SeasonsPage() {
                 </div>
               </div>
               <Link
-                href="/seasons/2026"
+                href="/driver-standings"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -516,7 +516,7 @@ export default function SeasonsPage() {
             </h2>
             <span
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 12,
                 color: "var(--muted-dim)",
                 textTransform: "uppercase",

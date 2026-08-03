@@ -5,8 +5,7 @@ import ClassificationLink from '@/components/ClassificationLink';
 import { DriverStandingsPanel, ConstructorStandingsPanel } from '@/components/StandingsPanels';
 import { getDriverStandings, getConstructorStandings, getSeasonSchedule, getLastRaceResult } from '@/lib/jolpica';
 import { buildTicker } from '@/lib/ticker';
-import LiveCountdown from '@/components/LiveCountdown';
-import { getRaceWeekendForecast, type WeatherDay } from '@/lib/weather';
+import NextRacePanel from "@/components/NextRacePanel";
 
 export const revalidate = 120;
 
@@ -14,7 +13,12 @@ export const revalidate = 120;
 const SECTION_GAP = '48px';
 
 // ─── Types for future sections ───
-
+interface WeatherDay {
+  day: string;
+  temp: number;
+  condition: 'sunny' | 'cloudy' | 'rain' | 'drizzle';
+  rainChance: number;
+}
 
 interface ExploreCard {
   title: string;
@@ -46,8 +50,6 @@ export default async function HomePage() {
     getLastRaceResult(),
   ]);
 
-  
-
   const ticker = buildTicker(schedule);
 
   const driverRows = driverStandings.map((d) => ({
@@ -69,25 +71,22 @@ export default async function HomePage() {
   const gap = leader && second ? Number(leader.points) - Number(second.points) : null;
   const nextRace = schedule.find((r) => new Date(`${r.date}T${r.time ?? '00:00:00Z'}`).getTime() > Date.now());
 
-  const raceLat = nextRace?.Circuit?.Location?.lat ? Number(nextRace.Circuit.Location.lat) : 50.4372;
-  const raceLon = nextRace?.Circuit?.Location?.long ? Number(nextRace.Circuit.Location.long) : 5.9714;
-  const raceDateISO = nextRace
-    ? `${nextRace.date}T${nextRace.time ?? '13:00:00Z'}`
-    : '2026-07-19T13:00:00Z';
-
-  const weatherForecast: WeatherDay[] = await getRaceWeekendForecast(raceLat, raceLon, raceDateISO);
-
-  
+  // ─── Future Data (static for now, replace with API calls) ───
+  const weatherForecast: WeatherDay[] = [
+    { day: 'FRI', temp: 30, condition: 'sunny', rainChance: 41 },
+    { day: 'SAT', temp: 29, condition: 'drizzle', rainChance: 51 },
+    { day: 'SUN', temp: 28, condition: 'cloudy', rainChance: 35 },
+  ];
 
   const exploreCards: ExploreCard[] = [
-    { title: 'Drivers', description: 'Full driver profiles, career stats, championship points, wins and podiums for every F1 driver.', href: '/drivers', accent: '#E10600', icon: <DriversIcon /> },
+    { title: 'Drivers', description: 'Full driver profiles, career stats, championship points, wins and podiums for every F1 driver.', href: '/driver-standings', accent: '#E10600', icon: <DriversIcon /> },
     { title: 'Constructors', description: 'Team standings, constructor history, win tallies and cumulative points across seasons.', href: '/constructors', accent: '#6CD3BF', icon: <ConstructorsIcon /> },
     { title: 'Circuits', description: 'Track profiles, layout maps, lap records and race-by-race history.', href: '/circuits', accent: '#F59E0B', icon: <CircuitsIcon /> },
     { title: 'Races', description: 'Detailed race results, qualifying times, lap leaders, fastest laps and sprint data.', href: '/results', accent: '#10B981', icon: <RacesIcon /> },
     { title: 'Seasons', description: 'Season-by-season standings, qualifying stats, race records and championship battles.', href: '/seasons', accent: '#8B5CF6', icon: <SeasonsIcon /> },
-    { title: 'Calendar', description: 'Full race calendar with dates, times, circuits and upcoming event schedules.', href: '/calendar', accent: '#3B82F6', icon: <CalendarIcon /> },
-    { title: 'Statistics', description: 'All-time leaderboards across wins, podiums, poles, streaks and head-to-heads.', href: '/stats', accent: '#EC4899', icon: <StatsIcon /> },
-    { title: 'Trends', description: 'Live streaks, current championship pace and recent-form snapshots.', href: '/trends', accent: '#14B8A6', icon: <TrendsIcon /> },
+    { title: 'Calendar', description: 'Full race calendar with dates, times, circuits and upcoming event schedules.', href: '/circuits', accent: '#3B82F6', icon: <CalendarIcon /> },
+    { title: 'Statistics', description: 'All-time leaderboards across wins, podiums, poles, streaks and head-to-heads.', href: '/statistics', accent: '#EC4899', icon: <StatsIcon /> },
+    { title: 'Trends', description: 'Live streaks, current championship pace and recent-form snapshots.', href: '/moments', accent: '#14B8A6', icon: <TrendsIcon /> },
   ];
 
   const gridLeaders: GridLeader[] = [
@@ -219,7 +218,7 @@ export default async function HomePage() {
               gap: '0.5rem',
               fontSize: '0.75rem',
               fontWeight: 800,
-              fontFamily: 'var(--font-mono, monospace)',
+              fontFamily: 'var(--font-secondary)',
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
               color: '#E10600',
@@ -248,7 +247,7 @@ export default async function HomePage() {
             }}>
               {leader ? (
                 <>
-                  {leader.Driver.familyName} <span style={{ color: '#A1A1AA' }}>LEADS BY</span> <span style={{ color: '#E10600', display: 'inline-block', transform: 'skewX(-6deg)' }}>{gap}</span> <span style={{ color: '#A1A1AA', fontSize: '0.6em' }}>{gap === 1 ? 'POINT' : 'POINTS'}</span>
+                  {leader.Driver.familyName} <span style={{ color: '#ffffff' }}>LEADS BY</span> <span style={{ color: '#E10600', display: 'inline-block', transform: 'skewX(-6deg)' }}>{gap}</span> <span style={{ color: '#ffffff', fontSize: '0.6em' }}>{gap === 1 ? 'POINT' : 'POINTS'}</span>
                 </>
               ) : (
                 <>CHAMPIONSHIP TELEMETRY HUB</>
@@ -311,77 +310,33 @@ export default async function HomePage() {
             showProgress
             progressValue={41}
           />
-          <TopStatCard 
-  label="Next Race" 
-  title="Belgian GP" 
-  subtitle="Spa-Francorchamps · Round 10" 
-  accent="#F59E0B" 
-  icon={<ClockIcon />} 
-/>
+          <TopStatCard
+            label="Next Race"
+            title="Belgian GP"
+            subtitle="Spa-Francorchamps · Round 10"
+            accent="#F59E0B"
+            icon={<ClockIcon />}
+          />
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 3: SESSION TICKER
           Status: ✅ COMPLETE
-          ═══════════════════════════════════════════════════════════ */}
+          ═══════════════════════════════════════════════════════════ 
       {ticker && (
         <div style={{ borderBottom: '1px solid #1F1F27', backgroundColor: '#15151E', width: '100%', boxSizing: 'border-box', marginBottom: SECTION_GAP }}>
           <div style={{ maxWidth: '1360px', margin: '0 auto', boxSizing: 'border-box' }}>
             <SessionTicker raceName={ticker.raceName} sessions={ticker.sessions} />
           </div>
         </div>
-      )}
+      )}*/}
 
       {/* ═══════════════════════════════════════════════════════════
           SECTION 4: NEXT RACE COUNTDOWN + WEATHER
           Status: 🚧 PLACEHOLDER (needs real countdown logic)
           ═══════════════════════════════════════════════════════════ */}
-      <section style={{ width: '100%', padding: '0 clamp(20px, 4vw, 48px)', boxSizing: 'border-box', marginBottom: SECTION_GAP }}>
-        <div style={{ maxWidth: '1360px', margin: '0 auto', display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '24px', alignItems: 'stretch' }}>
-          {/* Countdown */}
-          <div style={{ background: 'linear-gradient(135deg, #15151E 0%, #0F1016 100%)', border: '1px solid #1F1F27', borderRadius: '12px', padding: '32px', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '280px' }}>
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: 'linear-gradient(90deg, #E10600 0%, transparent 60%)' }} />
-            <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(225, 6, 0, 0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-
-            <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-                <span style={{ fontSize: '11px', fontWeight: 900, fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#E10600' }}>Next Race</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, fontFamily: '"JetBrains Mono", monospace', color: '#3F3F46' }}>·</span>
-                <span style={{ fontSize: '11px', fontWeight: 800, fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#F59E0B' }}>Round 10</span>
-              </div>
-              <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 900, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 8px 0', textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                Belgian GP
-              </h2>
-              <p style={{ fontSize: '14px', color: '#71717A', margin: '0 0 4px 0', fontFamily: '"JetBrains Mono", monospace' }}>Spa-Francorchamps</p>
-              <p style={{ fontSize: '13px', color: '#52525B', margin: 0, fontFamily: '"JetBrains Mono", monospace' }}>Spa, Belgium · 19 July 2026 · 06:30 PM</p>
-            </div>
-
-            <div style={{ display: 'flex', gap: '16px', marginTop: '28px' }}>
-              <BigCountdownUnit value={11} label="DAYS" />
-              <BigCountdownSeparator />
-              <BigCountdownUnit value={19} label="HRS" />
-              <BigCountdownSeparator />
-              <BigCountdownUnit value={42} label="MIN" />
-              <BigCountdownSeparator />
-              <BigCountdownUnit value={8} label="SEC" />
-            </div>
-          </div>
-
-          {/* Weather */}
-          <div style={{ background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)', border: '1px solid #1F1F27', borderRadius: '12px', padding: '32px', display: 'flex', flexDirection: 'column' }}>
-            <h3 style={{ fontSize: '13px', fontWeight: 800, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 20px 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              Race Weekend Forecast
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1, justifyContent: 'center' }}>
-              {weatherForecast.map((day) => (
-                <WeatherRow key={day.day} day={day} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <NextRacePanel nextRace={nextRace ?? null}/>
       {/* ═══════════════════════════════════════════════════════════
           SECTION 5: EXPLORE GRID
           Status: 🚧 PLACEHOLDER (static data, needs links)
@@ -389,10 +344,10 @@ export default async function HomePage() {
       <section style={{ width: '100%', padding: '0 clamp(20px, 4vw, 48px)', boxSizing: 'border-box', marginBottom: SECTION_GAP }}>
         <div style={{ maxWidth: '1360px', margin: '0 auto' }}>
           <div style={{ marginBottom: '24px' }}>
-            <h2 style={{ fontSize: '20px', fontWeight: 900, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
+            <h2 style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'var(--font-display)', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
               Explore
             </h2>
-            <p style={{ fontSize: '13px', color: '#71717A', margin: 0, fontFamily: '"JetBrains Mono", monospace' }}>
+            <p style={{ fontSize: '13px', color: '#71717A', margin: 0, fontFamily: '"Inter", sans-serif' }}>
               Everything the app has to offer
             </p>
           </div>
@@ -451,10 +406,10 @@ export default async function HomePage() {
           {/* Grid Leaders */}
           <div style={{ background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)', border: '1px solid #1F1F27', borderRadius: '12px', padding: '24px' }}>
             <div style={{ marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: 'var(--font-display)', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
                 Grid Leaders
               </h3>
-              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: '"JetBrains Mono", monospace' }}>
+              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: '"Inter", sans-serif' }}>
                 All-time · active drivers
               </p>
             </div>
@@ -468,10 +423,10 @@ export default async function HomePage() {
           {/* Last Race Podium */}
           <div style={{ background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)', border: '1px solid #1F1F27', borderRadius: '12px', padding: '24px' }}>
             <div style={{ marginBottom: '20px' }}>
-              <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
+              <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: 'var(--font-display)', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
                 Last Race Podium
               </h3>
-              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: '"JetBrains Mono", monospace' }}>
+              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: '"Inter", sans-serif' }}>
                 British GP · Round 9
               </p>
             </div>
@@ -508,7 +463,7 @@ function StatPill({ label, value, type }: { label: string; value: string; type: 
   return (
     <div style={{ background: s.bg, border: s.border, borderRadius: '6px', padding: '8px 16px', display: 'flex', alignItems: 'center', gap: '8px' }}>
       <span style={{ fontSize: '0.6875rem', color: s.labelColor, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.1em' }}>{label}</span>
-      <span style={{ fontSize: '0.875rem', fontWeight: 700, color: s.valueColor, fontFamily: '"JetBrains Mono", monospace' }}>{value}</span>
+      <span style={{ fontSize: '0.875rem', fontWeight: 700, color: s.valueColor, fontFamily: '"Inter", sans-serif' }}>{value}</span>
     </div>
   );
 }
@@ -520,10 +475,10 @@ function TopStatCard({ label, title, subtitle, accent, icon, showProgress, progr
       <div style={{ position: 'absolute', top: '-30px', right: '-30px', width: '80px', height: '80px', background: `radial-gradient(circle, ${accent}08 0%, transparent 70%)`, pointerEvents: 'none' }} />
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '14px' }}>
         <span style={{ color: accent }}>{icon}</span>
-        <span style={{ fontSize: '10px', fontWeight: 800, fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.15em', textTransform: 'uppercase', color: accent }}>{label}</span>
+        <span style={{ fontSize: '10px', fontWeight: 800, fontFamily: '"Inter", sans-serif', letterSpacing: '0.15em', textTransform: 'uppercase', color: accent }}>{label}</span>
       </div>
-      <h3 style={{ fontSize: '18px', fontWeight: 900, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{title}</h3>
-      <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: '"JetBrains Mono", monospace', fontWeight: 500 }}>{subtitle}</p>
+      <h3 style={{ fontSize: '18px', fontWeight: 900, fontFamily: 'var(--font-display)', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{title}</h3>
+      <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: '"Inter", sans-serif', fontWeight: 500 }}>{subtitle}</p>
       {showProgress && (
         <div style={{ marginTop: '14px', height: '4px', backgroundColor: '#1F1F27', borderRadius: '2px', overflow: 'hidden' }}>
           <div style={{ height: '100%', width: `${progressValue}%`, background: `linear-gradient(90deg, ${accent} 0%, ${accent}cc 100%)`, borderRadius: '2px', transition: 'width 1s ease', boxShadow: `0 0 8px ${accent}40` }} />
@@ -544,9 +499,9 @@ function SmallCountdownUnit({ value, label, accent }: { value: number; label: st
   return (
     <div style={{ textAlign: 'center' }}>
       <div style={{ background: '#0B0C10', border: '1px solid #1F1F27', borderRadius: '6px', padding: '8px 12px', minWidth: '44px', marginBottom: '4px' }}>
-        <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: '20px', fontWeight: 900, color: '#FFFFFF', display: 'block', lineHeight: 1 }}>{String(value).padStart(2, '0')}</span>
+        <span style={{ fontFamily: '"Inter", sans-serif', fontSize: '20px', fontWeight: 900, color: '#FFFFFF', display: 'block', lineHeight: 1 }}>{String(value).padStart(2, '0')}</span>
       </div>
-      <span style={{ fontSize: '9px', fontWeight: 800, fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.1em', color: accent, textTransform: 'uppercase' }}>{label}</span>
+      <span style={{ fontSize: '9px', fontWeight: 800, fontFamily: '"Inter", sans-serif', letterSpacing: '0.1em', color: accent, textTransform: 'uppercase' }}>{label}</span>
     </div>
   );
 }
@@ -556,9 +511,9 @@ function BigCountdownUnit({ value, label }: { value: number; label: string }) {
     <div style={{ textAlign: 'center', flex: 1 }}>
       <div style={{ background: 'linear-gradient(180deg, #0B0C10 0%, #15151E 100%)', border: '1px solid #27272A', borderRadius: '10px', padding: '16px 8px', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '60%', height: '40%', background: 'radial-gradient(ellipse, rgba(225, 6, 0, 0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
-        <span style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 900, color: '#FFFFFF', display: 'block', lineHeight: 1, position: 'relative', zIndex: 1 }}>{String(value).padStart(2, '0')}</span>
+        <span style={{ fontFamily: '"Inter", sans-serif', fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 900, color: '#FFFFFF', display: 'block', lineHeight: 1, position: 'relative', zIndex: 1 }}>{String(value).padStart(2, '0')}</span>
       </div>
-      <span style={{ fontSize: '10px', fontWeight: 800, fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.15em', color: '#E10600', textTransform: 'uppercase', marginTop: '8px', display: 'block' }}>{label}</span>
+      <span style={{ fontSize: '10px', fontWeight: 800, fontFamily: '"Inter", sans-serif', letterSpacing: '0.15em', color: '#E10600', textTransform: 'uppercase', marginTop: '8px', display: 'block' }}>{label}</span>
     </div>
   );
 }
@@ -566,7 +521,7 @@ function BigCountdownUnit({ value, label }: { value: number; label: string }) {
 function BigCountdownSeparator() {
   return (
     <div style={{ display: 'flex', alignItems: 'center', paddingBottom: '20px' }}>
-      <span style={{ fontSize: '24px', fontWeight: 900, color: '#3F3F46', fontFamily: '"JetBrains Mono", monospace' }}>:</span>
+      <span style={{ fontSize: '24px', fontWeight: 900, color: '#3F3F46', fontFamily: '"Inter", sans-serif' }}>:</span>
     </div>
   );
 }
@@ -582,16 +537,16 @@ function WeatherRow({ day }: { day: WeatherDay }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: '#0B0C10', border: '1px solid #1F1F27', borderRadius: '8px', transition: 'all 0.2s ease' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <span style={{ fontSize: '14px', fontWeight: 900, fontFamily: '"JetBrains Mono", monospace', color: '#FFFFFF', width: '36px' }}>{day.day}</span>
+        <span style={{ fontSize: '14px', fontWeight: 900, fontFamily: '"Inter", sans-serif', color: '#FFFFFF', width: '36px' }}>{day.day}</span>
         <span style={{ color: config.color }}><SunIcon /></span>
       </div>
       <div style={{ textAlign: 'right' }}>
-        <span style={{ fontSize: '18px', fontWeight: 900, fontFamily: '"JetBrains Mono", monospace', color: '#FFFFFF', display: 'block', lineHeight: 1.2 }}>{day.temp}°C</span>
-        <span style={{ fontSize: '11px', color: '#71717A', fontFamily: '"JetBrains Mono", monospace' }}>{config.label}</span>
+        <span style={{ fontSize: '18px', fontWeight: 900, fontFamily: '"Inter", sans-serif', color: '#FFFFFF', display: 'block', lineHeight: 1.2 }}>{day.temp}°C</span>
+        <span style={{ fontSize: '11px', color: '#71717A', fontFamily: '"Inter", sans-serif' }}>{config.label}</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginLeft: '16px' }}>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#3B82F6' }}><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" /></svg>
-        <span style={{ fontSize: '12px', fontWeight: 700, fontFamily: '"JetBrains Mono", monospace', color: '#3B82F6' }}>{day.rainChance}%</span>
+        <span style={{ fontSize: '12px', fontWeight: 700, fontFamily: '"Inter", sans-serif', color: '#3B82F6' }}>{day.rainChance}%</span>
       </div>
     </div>
   );
@@ -608,7 +563,7 @@ function ExploreCard({ card }: { card: ExploreCard }) {
           </div>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3F3F46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
         </div>
-        <h4 style={{ fontSize: '15px', fontWeight: 900, fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>{card.title}</h4>
+        <h4 style={{ fontSize: '15px', fontWeight: 900, fontFamily: 'var(--font-display)', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>{card.title}</h4>
         <p style={{ fontSize: '12px', color: '#71717A', margin: 0, lineHeight: 1.5 }}>{card.description}</p>
       </div>
     </Link>
@@ -623,10 +578,10 @@ function SectionHeader({ title, subtitle, meta }: { title: string; subtitle: str
           <div style={{ width: '4px', height: '24px', backgroundColor: '#E10600', borderRadius: '2px' }} />
           <h2 style={{ fontSize: '1.25rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.02em', margin: 0, color: '#FFFFFF' }}>{title}</h2>
         </div>
-        {subtitle && <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#71717A', fontWeight: 700, letterSpacing: '0.05em' }}>{subtitle}</span>}
+        {subtitle && <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-secondary)', color: '#71717A', fontWeight: 700, letterSpacing: '0.05em' }}>{subtitle}</span>}
       </div>
       {meta && (
-        <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#E10600', fontWeight: 800, letterSpacing: '0.1em', marginLeft: '16px' }}>{meta}</span>
+        <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-secondary)', color: '#E10600', fontWeight: 800, letterSpacing: '0.1em', marginLeft: '16px' }}>{meta}</span>
       )}
     </div>
   );
@@ -637,18 +592,18 @@ function LastRaceCard({ lastRace }: { lastRace: any }) {
     <div style={{ backgroundColor: '#15151E', border: '1px solid #1F1F27', borderTop: '3px solid #E10600', padding: '1.5rem', borderRadius: '8px', boxSizing: 'border-box', boxShadow: '0 4px 24px rgba(0,0,0,0.3)', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: '-50%', right: '-50%', width: '100%', height: '100%', background: 'radial-gradient(circle, rgba(225, 6, 0, 0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <h3 style={{ fontSize: '1.375rem', fontFamily: 'var(--font-display, sans-serif)', fontWeight: 900, textTransform: 'uppercase', margin: '0 0 0.25rem 0', color: '#FFFFFF', letterSpacing: '-0.01em' }}>{lastRace.raceName}</h3>
-      <p style={{ color: '#71717A', fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', textTransform: 'uppercase', margin: '0 0 1.25rem 0', fontWeight: 700, letterSpacing: '0.05em' }}>{lastRace.Circuit.circuitName}</p>
+      <p style={{ color: '#71717A', fontSize: '0.75rem', fontFamily: 'var(--font-secondary)', textTransform: 'uppercase', margin: '0 0 1.25rem 0', fontWeight: 700, letterSpacing: '0.05em' }}>{lastRace.Circuit.circuitName}</p>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
         {lastRace.Results.slice(0, 5).map((r: any) => (
           <div key={r.position} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundColor: r.position === '1' ? 'rgba(225, 6, 0, 0.08)' : '#1A1B23', padding: '0.75rem 1rem', borderRadius: '6px', borderLeft: r.position === '1' ? '3px solid #E10600' : '3px solid transparent', border: r.position === '1' ? '1px solid rgba(225, 6, 0, 0.2)' : '1px solid #27272A', transition: 'background-color 0.15s ease' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
-              <span style={{ fontFamily: 'var(--font-mono, monospace)', fontWeight: 900, color: r.position === '1' ? '#E10600' : '#52525B', width: '20px', fontSize: '0.875rem', fontStyle: 'italic' }}>{r.position}</span>
+              <span style={{ fontFamily: 'var(--font-secondary)', fontWeight: 900, color: r.position === '1' ? '#E10600' : '#52525B', width: '20px', fontSize: '0.875rem', fontStyle: 'italic' }}>{r.position}</span>
               <div>
                 <div style={{ fontSize: '0.875rem', fontWeight: 800, color: '#FFFFFF' }}>{r.Driver.familyName}</div>
                 <div style={{ fontSize: '0.6875rem', color: '#71717A', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em' }}>{r.Constructor.name}</div>
               </div>
             </div>
-            <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: r.position === '1' ? '#E10600' : '#A1A1AA', fontWeight: 700 }}>{r.Time?.time ?? r.status}</span>
+            <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-secondary)', color: r.position === '1' ? '#E10600' : '#A1A1AA', fontWeight: 700 }}>{r.Time?.time ?? r.status}</span>
           </div>
         ))}
       </div>
@@ -661,10 +616,10 @@ function GridLeaderRow({ leader }: { leader: GridLeader }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: '#0B0C10', border: '1px solid #1F1F27', borderRadius: '8px', borderLeft: `3px solid ${leader.accent}`, transition: 'all 0.2s ease' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        <span style={{ fontSize: '10px', fontWeight: 900, fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.15em', textTransform: 'uppercase', color: leader.accent }}>{leader.category}</span>
+        <span style={{ fontSize: '10px', fontWeight: 900, fontFamily: '"Inter", sans-serif', letterSpacing: '0.15em', textTransform: 'uppercase', color: leader.accent }}>{leader.category}</span>
         <span style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF' }}>{leader.driver}</span>
       </div>
-      <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: '"JetBrains Mono", monospace', color: leader.accent }}>{leader.value}</span>
+      <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: '"Inter", sans-serif', color: leader.accent }}>{leader.value}</span>
     </div>
   );
 }
@@ -674,12 +629,12 @@ function PodiumRow({ driver }: { driver: PodiumDriver }) {
   const posBg: Record<number, string> = { 1: 'rgba(245, 158, 11, 0.08)', 2: 'rgba(161, 161, 170, 0.05)', 3: 'rgba(205, 127, 50, 0.08)' };
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px', background: posBg[driver.position], border: '1px solid #1F1F27', borderRadius: '8px', borderLeft: `3px solid ${posColors[driver.position]}` }}>
-      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: posColors[driver.position], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 900, fontFamily: '"JetBrains Mono", monospace', color: driver.position === 1 ? '#000' : '#FFF' }}>
+      <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: posColors[driver.position], display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 900, fontFamily: '"Inter", sans-serif', color: driver.position === 1 ? '#000' : '#FFF' }}>
         {driver.position}
       </div>
       <div style={{ flex: 1 }}>
         <div style={{ fontSize: '14px', fontWeight: 800, color: '#FFFFFF' }}>{driver.name}</div>
-        <div style={{ fontSize: '11px', color: '#71717A', fontFamily: '"JetBrains Mono", monospace', textTransform: 'uppercase' }}>{driver.team}</div>
+        <div style={{ fontSize: '11px', color: '#71717A', fontFamily: '"Inter", sans-serif', textTransform: 'uppercase' }}>{driver.team}</div>
       </div>
       <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: driver.teamColor, boxShadow: `0 0 6px ${driver.teamColor}60` }} />
     </div>

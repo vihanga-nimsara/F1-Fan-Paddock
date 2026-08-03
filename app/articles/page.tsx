@@ -54,7 +54,7 @@ export default function ArticlesPage() {
           <h1>From formula 1</h1>
           <p style={{
             fontSize: '15px',
-            fontFamily: 'Formula1 Display-Regular',
+            fontFamily: 'var(--font-display)',
             color: '#A1A1AA',
             marginTop: '12px',
             maxWidth: '500px',

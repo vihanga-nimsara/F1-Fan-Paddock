@@ -612,7 +612,7 @@ function TrackSVG({ circuit }: { circuit: Circuit }) {
             display: "inline-flex",
             alignItems: "center",
             gap: 6,
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-secondary)",
             fontSize: 9,
             fontWeight: 900,
             letterSpacing: "1.5px",
@@ -642,7 +642,7 @@ function TrackSVG({ circuit }: { circuit: Circuit }) {
             position: "absolute",
             top: 12,
             left: 12,
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-secondary)",
             fontSize: 9,
             fontWeight: 900,
             letterSpacing: "1.5px",
@@ -707,7 +707,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               fontSize: 11,
               fontWeight: 900,
               color: "var(--muted)",
@@ -719,7 +719,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
 
         <div
           style={{
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-secondary)",
             fontSize: 10,
             letterSpacing: "1.5px",
             color: "var(--f1-red)",
@@ -774,7 +774,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
           <div style={{ background: "var(--surface-raised)", padding: "10px 8px", textAlign: "center" }}>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 9,
                 color: "var(--muted-dim)",
                 textTransform: "uppercase",
@@ -787,7 +787,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
             </div>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 14,
                 fontWeight: 700,
                 color: "var(--text-primary)",
@@ -800,7 +800,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
           <div style={{ background: "var(--surface-raised)", padding: "10px 8px", textAlign: "center" }}>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 9,
                 color: "var(--muted-dim)",
                 textTransform: "uppercase",
@@ -813,7 +813,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
             </div>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 14,
                 fontWeight: 700,
                 color: "var(--text-primary)",
@@ -825,7 +825,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
           <div style={{ background: "var(--surface-raised)", padding: "10px 8px", textAlign: "center" }}>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 9,
                 color: "var(--muted-dim)",
                 textTransform: "uppercase",
@@ -838,7 +838,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
             </div>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 14,
                 fontWeight: 700,
                 color: "var(--text-primary)",
@@ -863,7 +863,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
           <div>
             <div
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 9,
                 color: "var(--muted-dim)",
                 textTransform: "uppercase",
@@ -877,7 +877,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
             <div style={{ fontSize: 12, color: "var(--text-secondary)", fontWeight: 600 }}>
               {circuit.lapRecord !== "—" ? (
                 <>
-                  <span style={{ fontFamily: "var(--font-mono)", fontWeight: 700 }}>{circuit.lapRecord}</span>
+                  <span style={{ fontFamily: "var(--font-secondary)", fontWeight: 700 }}>{circuit.lapRecord}</span>
                   <span style={{ color: "var(--muted)", marginLeft: 4 }}>
                     {circuit.lapRecordHolder} ({circuit.lapRecordYear})
                   </span>
@@ -889,7 +889,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
           </div>
           <div
             style={{
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               fontSize: 9,
               color: "var(--muted-dim)",
               textTransform: "uppercase",
@@ -910,7 +910,7 @@ function CircuitCard({ circuit }: { circuit: Circuit }) {
           <div
             style={{
               marginTop: 10,
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               fontSize: 11,
               color: "var(--muted)",
               fontWeight: 700,
@@ -959,7 +959,7 @@ export default function CircuitsPage() {
       style={{
         padding: "8px 16px",
         borderRadius: 6,
-        fontFamily: "var(--font-mono)",
+        fontFamily: "var(--font-secondary)",
         fontSize: 11,
         fontWeight: 800,
         letterSpacing: "1px",
@@ -1103,7 +1103,7 @@ export default function CircuitsPage() {
             </h2>
             <span
               style={{
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 12,
                 color: "var(--muted-dim)",
                 textTransform: "uppercase",

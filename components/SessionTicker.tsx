@@ -159,7 +159,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               display: 'flex',
               alignItems: 'center',
               gap: '5px',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               whiteSpace: 'nowrap',
             }}
           >
@@ -182,7 +182,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               fontWeight: 900,
               color: '#FFFFFF',
               letterSpacing: '-0.01em',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -196,7 +196,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               fontWeight: 700,
               color: '#3F3F46',
               letterSpacing: '0.06em',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               whiteSpace: 'nowrap',
             }}
           >
@@ -235,7 +235,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               color: '#FFFFFF',
               fontVariantNumeric: 'tabular-nums',
               letterSpacing: '-0.02em',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               textShadow: '0 0 12px rgba(255,255,255,0.12)',
               whiteSpace: 'nowrap',
               lineHeight: 1,
@@ -250,7 +250,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               color: '#4a4a55',
               textTransform: 'uppercase',
               letterSpacing: '0.14em',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               whiteSpace: 'nowrap',
             }}
           >
@@ -356,7 +356,7 @@ function SessionCard({
                 fontWeight: 900,
                 textTransform: 'uppercase',
                 letterSpacing: '0.14em',
-                fontFamily: "'Titillium Web', sans-serif",
+                fontFamily: 'var(--font-display)',
                 textShadow: isLive ? `0 0 6px ${statusColor}40` : 'none',
                 whiteSpace: 'nowrap',
               }}
@@ -375,7 +375,7 @@ function SessionCard({
               letterSpacing: '-0.01em',
               marginBottom: '5px',
               lineHeight: 1.2,
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -393,7 +393,7 @@ function SessionCard({
                 fontWeight: 800,
                 letterSpacing: '0.04em',
                 fontVariantNumeric: 'tabular-nums',
-                fontFamily: "'Titillium Web', sans-serif",
+                fontFamily: 'var(--font-display)',
                 textShadow: isLive ? '0 0 8px rgba(225, 6, 0, 0.3)' : 'none',
                 whiteSpace: 'nowrap',
               }}
@@ -406,7 +406,7 @@ function SessionCard({
                 fontSize: '0.5625rem',
                 fontWeight: 700,
                 letterSpacing: '0.04em',
-                fontFamily: "'Titillium Web', sans-serif",
+                fontFamily: 'var(--font-display)',
                 whiteSpace: 'nowrap',
               }}
             >
@@ -424,7 +424,7 @@ function SessionCard({
                   letterSpacing: '0.1em',
                   border: '1px solid rgba(225, 6, 0, 0.15)',
                   animation: 'onAirPulse 2s ease-in-out infinite',
-                  fontFamily: "'Titillium Web', sans-serif",
+                  fontFamily: 'var(--font-display)',
                   flexShrink: 0,
                   whiteSpace: 'nowrap',
                 }}
@@ -473,7 +473,7 @@ function TimelineLabel({ raceName }: { raceName: string }) {
               color: '#4a4a55',
               textTransform: 'uppercase',
               letterSpacing: '0.14em',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               whiteSpace: 'nowrap',
             }}
           >
@@ -485,7 +485,7 @@ function TimelineLabel({ raceName }: { raceName: string }) {
               fontWeight: 900,
               color: '#FFFFFF',
               letterSpacing: '0.02em',
-              fontFamily: "'Titillium Web', sans-serif",
+              fontFamily: 'var(--font-display)',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
@@ -503,7 +503,7 @@ function TimelineLabel({ raceName }: { raceName: string }) {
             fontSize: '0.5625rem',
             fontWeight: 700,
             letterSpacing: '0.06em',
-            fontFamily: "'Titillium Web', sans-serif",
+            fontFamily: 'var(--font-display)',
             marginLeft: 'auto',
             flexShrink: 0,
             whiteSpace: 'nowrap',
@@ -555,7 +555,7 @@ export default function SessionTicker({ raceName, sessions }: { raceName: string
       style={{
         backgroundColor: '#0B0C10',
         borderBottom: '1px solid rgba(255, 255, 255, 0.02)',
-        fontFamily: "'Titillium Web', sans-serif",
+        fontFamily: 'var(--font-display)',
         fontSize: '0.75rem',
         width: '100%',
         position: 'relative',

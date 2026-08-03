@@ -745,7 +745,7 @@ export default function RaceResultsPage() {
         }
 
         .results-hero-inner {
-          max-width: 1280px;
+          max-width: 1360px;
           margin: 0 auto;
           padding: 48px 24px 32px;
           position: relative;
@@ -823,7 +823,7 @@ export default function RaceResultsPage() {
         .results-filter-btn {
           padding: 8px 16px;
           border-radius: 6px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 800;
           letter-spacing: 1.5px;
@@ -853,7 +853,7 @@ export default function RaceResultsPage() {
 
         /* ===== MAIN ===== */
         .results-main {
-          max-width: 1280px;
+          max-width: 1360px;
           margin: 0 auto;
           padding: 32px 24px 64px;
         }
@@ -871,7 +871,7 @@ export default function RaceResultsPage() {
         }
 
         .results-latest-badge {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 900;
           letter-spacing: 2px;
@@ -884,7 +884,7 @@ export default function RaceResultsPage() {
         }
 
         .results-latest-date {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           color: #71717A;
           font-weight: 700;
@@ -928,7 +928,7 @@ export default function RaceResultsPage() {
         }
 
         .results-latest-round {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           font-weight: 800;
           color: #71717A;
@@ -980,7 +980,7 @@ export default function RaceResultsPage() {
         }
 
         .results-latest-winner-label {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           letter-spacing: 2px;
@@ -1020,7 +1020,7 @@ export default function RaceResultsPage() {
         }
 
         .results-latest-meta-label {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #3F3F46;
@@ -1040,7 +1040,7 @@ export default function RaceResultsPage() {
           background: #E10600;
           color: #ffffff;
           border: none;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 800;
           letter-spacing: 1px;
@@ -1131,7 +1131,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-round {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #3F3F46;
@@ -1146,7 +1146,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-date-day {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 18px;
           font-weight: 900;
           color: #E4E4E7;
@@ -1154,7 +1154,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-date-month {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #71717A;
@@ -1162,7 +1162,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-upcoming-badge {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 9px;
           font-weight: 900;
           letter-spacing: 1px;
@@ -1215,7 +1215,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-winner-label {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #3F3F46;
@@ -1239,7 +1239,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-countdown-label {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #3F3F46;
@@ -1248,7 +1248,7 @@ export default function RaceResultsPage() {
         }
 
         .results-race-countdown-value {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 14px;
           font-weight: 900;
           color: #F59E0B;
@@ -1262,7 +1262,7 @@ export default function RaceResultsPage() {
           align-items: center;
           justify-content: center;
           gap: 8px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           font-weight: 800;
           letter-spacing: 1px;
@@ -1350,7 +1350,7 @@ export default function RaceResultsPage() {
         }
 
         .results-panel-meta-label {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #3F3F46;
@@ -1376,7 +1376,7 @@ export default function RaceResultsPage() {
           grid-template-columns: 60px 2fr 1.5fr 1.5fr 60px;
           gap: 12px;
           padding: 10px 16px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: #3F3F46;
@@ -1423,7 +1423,7 @@ export default function RaceResultsPage() {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-weight: 900;
           font-size: 13px;
         }
@@ -1456,14 +1456,14 @@ export default function RaceResultsPage() {
         }
 
         .results-table-time {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 13px;
           color: #71717A;
           font-weight: 700;
         }
 
         .results-table-points {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 14px;
           font-weight: 900;
           color: #E4E4E7;

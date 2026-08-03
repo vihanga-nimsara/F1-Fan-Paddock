@@ -1,16 +1,14 @@
 // components/WeatherCard.tsx
 'use client';
 
-interface WeatherDay {
-  day: string;
-  temp: number;
-  condition: 'sunny' | 'cloudy' | 'rain' | 'drizzle';
-  rainChance: number;
-}
+import type { WeatherDay } from '@/lib/weather';
 
 interface WeatherCardProps {
   forecast?: WeatherDay[];
   title?: string;
+  subtitle?: string;
+  footer?: string;
+  loading?: boolean;
 }
 
 const DEFAULT_FORECAST: WeatherDay[] = [
@@ -19,44 +17,67 @@ const DEFAULT_FORECAST: WeatherDay[] = [
   { day: 'SUN', temp: 28, condition: 'cloudy', rainChance: 35 },
 ];
 
-export default function WeatherCard({ 
+export default function WeatherCard({
   forecast = DEFAULT_FORECAST,
-  title = 'Race Weekend Forecast'
+  title = 'Race Weekend Forecast',
+  subtitle,
+  footer,
+  loading = false,
 }: WeatherCardProps) {
   return (
     <div style={{
       background: 'linear-gradient(180deg, #15151E 0%, #0F1016 100%)',
       border: '1px solid #1F1F27',
-      borderRadius: '12px',
-      padding: '24px',
+      borderRadius: '16px',
+      padding: '28px',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
       boxSizing: 'border-box',
     }}>
-      <h3 style={{
-        fontSize: '13px',
-        fontWeight: 800,
-        fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif',
-        color: '#FFFFFF',
-        margin: '0 0 20px 0',
-        textTransform: 'uppercase',
-        letterSpacing: '0.05em',
-      }}>
-        {title}
-      </h3>
-
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px',
-        flex: 1,
-        justifyContent: 'center',
-      }}>
-        {forecast.map((day) => (
-          <WeatherRow key={day.day} day={day} />
-        ))}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '20px' }}>
+        <h3 style={{
+          fontSize: '13px',
+          fontWeight: 800,
+          fontFamily: 'var(--font-display)',
+          color: '#FFFFFF',
+          margin: 0,
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em',
+        }}>
+          {title}
+        </h3>
+        {subtitle && (
+          <span style={{ fontSize: '10px', fontFamily: 'var(--font-display)', color: '#52525B', textTransform: 'uppercase', letterSpacing: '0.1em', textAlign: 'right', whiteSpace: 'nowrap' }}>
+            {subtitle}
+          </span>
+        )}
       </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1, justifyContent: 'center' }}>
+        {loading
+          ? Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} style={{
+                padding: '14px 16px',
+                background: '#0B0C10',
+                border: '1px solid #1F1F27',
+                borderRadius: '10px',
+                animation: 'pulse 1.5s ease-in-out infinite',
+                animationDelay: `${i * 0.2}s`,
+              }}>
+                <div style={{ height: '22px', background: '#1F1F27', borderRadius: '4px', width: '60%' }} />
+              </div>
+            ))
+          : forecast.map((day) => (
+              <WeatherRow key={day.day} day={day} />
+            ))}
+      </div>
+
+      {footer && (
+        <p style={{ fontSize: '10px', fontFamily: 'var(--font-display)', color: '#3F3F46', margin: '16px 0 0 0', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          {footer}
+        </p>
+      )}
     </div>
   );
 }
@@ -69,7 +90,7 @@ function WeatherRow({ day }: { day: WeatherDay }) {
     drizzle: { color: '#60A5FA', icon: <DrizzleIcon />, label: 'Drizzle' },
   };
 
-  const config = conditionConfig[day.condition];
+  const config = conditionConfig[day.condition] || conditionConfig.cloudy;
 
   return (
     <div style={{
@@ -96,7 +117,7 @@ function WeatherRow({ day }: { day: WeatherDay }) {
         <span style={{
           fontSize: '14px',
           fontWeight: 900,
-          fontFamily: '"JetBrains Mono", monospace',
+          fontFamily: 'var(--font-display)',
           color: '#FFFFFF',
           width: '36px',
         }}>
@@ -111,7 +132,7 @@ function WeatherRow({ day }: { day: WeatherDay }) {
         <span style={{
           fontSize: '18px',
           fontWeight: 900,
-          fontFamily: '"JetBrains Mono", monospace',
+          fontFamily: 'var(--font-display)',
           color: '#FFFFFF',
           display: 'block',
           lineHeight: 1.2,
@@ -121,7 +142,7 @@ function WeatherRow({ day }: { day: WeatherDay }) {
         <span style={{
           fontSize: '11px',
           color: '#71717A',
-          fontFamily: '"JetBrains Mono", monospace',
+          fontFamily: 'var(--font-display)',
         }}>
           {config.label}
         </span>
@@ -139,7 +160,7 @@ function WeatherRow({ day }: { day: WeatherDay }) {
         <span style={{
           fontSize: '12px',
           fontWeight: 700,
-          fontFamily: '"JetBrains Mono", monospace',
+          fontFamily: 'var(--font-display)',
           color: '#3B82F6',
         }}>
           {day.rainChance}%

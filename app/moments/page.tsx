@@ -175,7 +175,7 @@ export default function TrendsPage() {
                 <h1>Iconic Moments</h1>
                 <p style={{
                     fontSize: '15px',
-                    fontFamily: 'Formula1 Display-Regular',
+                    fontFamily: 'var(--font-display)',
                     color: '#A1A1AA',
                     marginTop: '12px',
                     maxWidth: '500px',
@@ -390,7 +390,7 @@ export default function TrendsPage() {
         .trends-filter-btn {
           padding: 8px 16px;
           border-radius: 4px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 800;
           letter-spacing: 1.5px;
@@ -526,7 +526,7 @@ export default function TrendsPage() {
           background: rgba(0, 0, 0, 0.85);
           padding: 4px 10px;
           border-radius: 4px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 700;
           color: white;
@@ -540,7 +540,7 @@ export default function TrendsPage() {
           background: var(--f1-red);
           padding: 4px 12px;
           border-radius: 4px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 900;
           letter-spacing: 1.5px;
@@ -566,7 +566,7 @@ export default function TrendsPage() {
         }
 
         .trends-tag {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           letter-spacing: 1px;
@@ -577,7 +577,7 @@ export default function TrendsPage() {
         }
 
         .trends-tag-year {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           letter-spacing: 1px;
@@ -635,7 +635,7 @@ export default function TrendsPage() {
           align-items: center;
           gap: 6px;
           color: var(--text-dim);
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           font-weight: 700;
         }
@@ -751,7 +751,7 @@ export default function TrendsPage() {
 
         .trends-form-group label {
           display: block;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 800;
           color: var(--muted-dim);
@@ -801,7 +801,7 @@ export default function TrendsPage() {
         .trends-tag-option {
           padding: 6px 14px;
           border-radius: 100px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 800;
           letter-spacing: 0.5px;
@@ -834,7 +834,7 @@ export default function TrendsPage() {
           flex: 1;
           padding: 12px;
           border-radius: 6px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           font-weight: 800;
           letter-spacing: 1px;

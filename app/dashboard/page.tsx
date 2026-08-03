@@ -5,7 +5,7 @@ import SessionTicker from '@/components/SessionTicker';
 import { DriverStandingsPanel, ConstructorStandingsPanel } from '@/components/StandingsPanels';
 import { getDriverStandings, getConstructorStandings, getSeasonSchedule, getLastRaceResult } from '@/lib/jolpica';
 import { buildTicker } from '@/lib/ticker';
-import { CountdownCard } from '@/components/CountdownCard';
+import CountdownCard from '@/components/CountdownCard';
 import WeatherCard from '@/components/WeatherCard';
 
 export const revalidate = 120;
@@ -65,7 +65,7 @@ export default async function HomePage() {
   const totalRaces = 22;
 
   const exploreCards: ExploreCard[] = [
-    { title: 'Drivers', description: 'Full driver profiles, career stats, and championship points.', href: '/drivers', accent: '#E10600', icon: <TrophyIcon /> },
+    { title: 'Drivers', description: 'Full driver profiles, career stats, and championship points.', href: '/driver-standings', accent: '#E10600', icon: <TrophyIcon /> },
     { title: 'Constructors', description: 'Team standings, constructor history, and win tallies.', href: '/constructors', accent: '#6CD3BF', icon: <ConstructorsIcon /> },
     { title: 'Circuits', description: 'Track layouts, lap records, and racing history.', href: '/circuits', accent: '#F59E0B', icon: <FlagIcon /> },
     { title: 'Results', description: 'Detailed race results, timings, and sprint data.', href: '/results', accent: '#10B981', icon: <ClockIcon /> },
@@ -149,7 +149,7 @@ export default async function HomePage() {
             gap: '0.5rem', 
             fontSize: '0.75rem', 
             fontWeight: 800, 
-            fontFamily: 'var(--font-mono, monospace)', 
+            fontFamily: 'var(--font-secondary, monospace)', 
             textTransform: 'uppercase', 
             letterSpacing: '0.15em', 
             color: '#E10600', 
@@ -257,7 +257,7 @@ export default async function HomePage() {
             <h2 style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'var(--font-display, sans-serif)', color: '#FFFFFF', margin: '0 0 6px 0', textTransform: 'uppercase', letterSpacing: '-0.01em' }}>
               Explore
             </h2>
-            <p style={{ fontSize: '13px', color: '#71717A', margin: 0, fontFamily: 'var(--font-mono, monospace)' }}>
+            <p style={{ fontSize: '13px', color: '#71717A', margin: 0, fontFamily: 'var(--font-secondary, monospace)' }}>
               Everything the app has to offer
             </p>
           </div>
@@ -280,10 +280,10 @@ export default async function HomePage() {
             <div className="animate-fade-in delay-2">
               <SectionHeader title="Drivers Championship" subtitle="" />
               <div style={{ marginBottom: '2rem' }}>
-                <Link href="/standings" style={{ 
+                <Link href="/driver-standings" style={{ 
                   fontSize: '12px', 
                   fontWeight: 800, 
-                  fontFamily: 'var(--font-mono, monospace)', 
+                  fontFamily: 'var(--font-secondary, monospace)', 
                   color: '#E10600', 
                   textDecoration: 'none',
                   letterSpacing: '0.1em',
@@ -327,7 +327,7 @@ export default async function HomePage() {
               <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: 'var(--font-display, sans-serif)', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
                 Grid Leaders
               </h3>
-              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: 'var(--font-mono, monospace)' }}>
+              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: 'var(--font-secondary, monospace)' }}>
                 All-time · active drivers
               </p>
             </div>
@@ -344,7 +344,7 @@ export default async function HomePage() {
               <h3 style={{ fontSize: '16px', fontWeight: 900, fontFamily: 'var(--font-display, sans-serif)', color: '#FFFFFF', margin: '0 0 4px 0', textTransform: 'uppercase' }}>
                 Last Race Podium
               </h3>
-              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: 'var(--font-mono, monospace)' }}>
+              <p style={{ fontSize: '12px', color: '#71717A', margin: 0, fontFamily: 'var(--font-secondary, monospace)' }}>
                 {lastRace?.raceName || 'British GP'} · Round {lastRace?.round || 9}
               </p>
             </div>
@@ -387,7 +387,7 @@ function SectionHeader({ title, subtitle }: { title: string; subtitle: string })
           color: '#FFFFFF',
         }}>{title}</h2>
       </div>
-      {subtitle && <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-mono, monospace)', color: '#71717A', fontWeight: 700, letterSpacing: '0.05em' }}>{subtitle}</span>}
+      {subtitle && <span style={{ fontSize: '0.75rem', fontFamily: 'var(--font-secondary, monospace)', color: '#71717A', fontWeight: 700, letterSpacing: '0.05em' }}>{subtitle}</span>}
     </div>
   );
 }

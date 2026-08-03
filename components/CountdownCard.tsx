@@ -123,7 +123,7 @@ function WheelDigit({ value, label }: { value: number; label: string }) {
         
         {/* Animated digit */}
         <span
-          className={`font-mono text-2xl sm:text-3xl font-black text-white tabular-nums relative z-10 transition-all duration-300 ${
+          className={`ont-secondary text-2xl sm:text-3xl font-black text-white tabular-nums relative z-10 transition-all duration-300 ${
             isChanging ? 'translate-y-[-8px] opacity-40 scale-95' : 'translate-y-0 opacity-100 scale-100'
           }`}
           style={{ textShadow: '0 0 16px rgba(255,255,255,0.1)' }}
@@ -131,7 +131,7 @@ function WheelDigit({ value, label }: { value: number; label: string }) {
           {display}
         </span>
       </div>
-      <span className="text-[10px] font-bold tracking-[0.16em] text-[#4a4a55] uppercase font-mono">
+      <span className="text-[10px] font-bold tracking-[0.16em] text-[#4a4a55] uppercase ont-secondary">
         {label}
       </span>
     </div>
@@ -157,7 +157,7 @@ function SessionBadge({ status }: { status: Session['status'] }) {
   const c = config[status];
 
   return (
-    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-black tracking-wider uppercase font-mono ${c.bg} ${c.text}`}>
+    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-black tracking-wider uppercase ont-secondary ${c.bg} ${c.text}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${c.dot} ${status === 'live' ? 'animate-pulse shadow-[0_0_6px_#E10600]' : ''}`} />
       {c.label}
     </span>
@@ -266,12 +266,12 @@ function CountdownCard() {
 
       <div className="relative z-10">
         <div className="flex items-center gap-3 mb-4">
-          <span className="flex items-center gap-2 text-[11px] font-black tracking-[0.15em] uppercase font-mono text-[#E10600]">
+          <span className="flex items-center gap-2 text-[11px] font-black tracking-[0.15em] uppercase ont-secondary text-[#E10600]">
             <span className="w-2 h-2 rounded-full bg-[#E10600] animate-pulse shadow-[0_0_8px_#E10600]" />
             Next Race
           </span>
-          <span className="text-[#3F3F46] font-mono text-xs">·</span>
-          <span className="text-[11px] font-black tracking-[0.1em] uppercase font-mono text-[#F59E0B]">
+          <span className="text-[#3F3F46] ont-secondary text-xs">·</span>
+          <span className="text-[11px] font-black tracking-[0.1em] uppercase ont-secondary text-[#F59E0B]">
             Round 10
           </span>
         </div>
@@ -281,8 +281,8 @@ function CountdownCard() {
         </h2>
 
         <div className="space-y-1">
-          <p className="text-sm text-[#71717A] font-mono">Spa-Francorchamps</p>
-          <p className="text-xs text-[#52525B] font-mono">Spa, Belgium · 19 July 2026 · 15:00 CEST</p>
+          <p className="text-sm text-[#71717A] ont-secondary">Spa-Francorchamps</p>
+          <p className="text-xs text-[#52525B] ont-secondary">Spa, Belgium · 19 July 2026 · 15:00 CEST</p>
         </div>
       </div>
 
@@ -323,7 +323,7 @@ function WeatherCard() {
         <h3 className="text-sm font-black uppercase tracking-wider text-white font-[var(--font-display)]">
           Weekend Forecast
         </h3>
-        <span className="text-[10px] font-mono text-[#52525B] uppercase tracking-wider">Spa, BE</span>
+        <span className="text-[10px] ont-secondary text-[#52525B] uppercase tracking-wider">Spa, BE</span>
       </div>
 
       <div className="flex flex-col gap-3 flex-1 justify-center">
@@ -336,26 +336,26 @@ function WeatherCard() {
             >
               <div className="flex items-center gap-4">
                 <div className="w-10 text-center">
-                  <span className="text-sm font-black font-mono text-white block">{day.day}</span>
-                  <span className="text-[10px] font-mono text-[#52525B]">{day.date}</span>
+                  <span className="text-sm font-black ont-secondary text-white block">{day.day}</span>
+                  <span className="text-[10px] ont-secondary text-[#52525B]">{day.date}</span>
                 </div>
                 <div className={`p-2 rounded-lg ${cfg.bg} text-[${cfg.color}]`} style={{ color: cfg.color }}>
                   {cfg.icon}
                 </div>
                 <div>
-                  <span className="text-lg font-black font-mono text-white block leading-tight">{day.temp}°C</span>
-                  <span className="text-[11px] text-[#71717A] font-mono">{cfg.label}</span>
+                  <span className="text-lg font-black ont-secondary text-white block leading-tight">{day.temp}°C</span>
+                  <span className="text-[11px] text-[#71717A] ont-secondary">{cfg.label}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5 text-[#3B82F6]">
                   <DropletIcon />
-                  <span className="text-xs font-bold font-mono">{day.rainChance}%</span>
+                  <span className="text-xs font-bold ont-secondary">{day.rainChance}%</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-[#71717A]">
                   <WindIcon />
-                  <span className="text-xs font-bold font-mono">{day.windSpeed}</span>
+                  <span className="text-xs font-bold ont-secondary">{day.windSpeed}</span>
                 </div>
               </div>
             </div>
@@ -363,7 +363,7 @@ function WeatherCard() {
         })}
       </div>
 
-      <p className="text-[10px] text-[#3F3F46] font-mono mt-4 text-center">
+      <p className="text-[10px] text-[#3F3F46] ont-secondary mt-4 text-center">
         Historical avg: 20°C · 34% rain chance in July
       </p>
     </div>
@@ -393,17 +393,17 @@ function CircuitCard() {
           { label: 'Lap Record', value: CIRCUIT_INFO.lapRecord },
         ].map((item) => (
           <div key={item.label} className="p-3 bg-[#0B0C10] rounded-lg border border-[#1F1F27]/50">
-            <span className="text-[10px] font-mono text-[#52525B] uppercase tracking-wider block mb-1">{item.label}</span>
-            <span className="text-sm font-black font-mono text-white">{item.value}</span>
+            <span className="text-[10px] ont-secondary text-[#52525B] uppercase tracking-wider block mb-1">{item.label}</span>
+            <span className="text-sm font-black ont-secondary text-white">{item.value}</span>
           </div>
         ))}
       </div>
 
       <div className="mt-3 p-3 bg-[#0B0C10] rounded-lg border border-[#1F1F27]/50">
-        <span className="text-[10px] font-mono text-[#52525B] uppercase tracking-wider block mb-1">Lap Record</span>
+        <span className="text-[10px] ont-secondary text-[#52525B] uppercase tracking-wider block mb-1">Lap Record</span>
         <div className="flex items-baseline gap-2">
-          <span className="text-lg font-black font-mono text-[#E10600]">{CIRCUIT_INFO.lapRecord}</span>
-          <span className="text-xs font-mono text-[#71717A]">{CIRCUIT_INFO.lapRecordHolder} · {CIRCUIT_INFO.lapRecordYear}</span>
+          <span className="text-lg font-black ont-secondary text-[#E10600]">{CIRCUIT_INFO.lapRecord}</span>
+          <span className="text-xs ont-secondary text-[#71717A]">{CIRCUIT_INFO.lapRecordHolder} · {CIRCUIT_INFO.lapRecordYear}</span>
         </div>
       </div>
     </div>
@@ -418,7 +418,7 @@ function SessionSchedule() {
           <span className="w-1.5 h-1.5 rounded-full bg-[#E10600] animate-pulse" />
           Session Schedule
         </h3>
-        <span className="text-[10px] font-mono text-[#52525B] uppercase tracking-wider">All times local (CEST)</span>
+        <span className="text-[10px] ont-secondary text-[#52525B] uppercase tracking-wider">All times local (CEST)</span>
       </div>
 
       <div className="space-y-2">
@@ -434,8 +434,8 @@ function SessionSchedule() {
             }`}
           >
             <div className="w-12 text-center">
-              <span className="text-xs font-black font-mono text-white block">{session.day}</span>
-              <span className="text-[10px] font-mono text-[#52525B]">{session.date}</span>
+              <span className="text-xs font-black ont-secondary text-white block">{session.day}</span>
+              <span className="text-[10px] ont-secondary text-[#52525B]">{session.date}</span>
             </div>
 
             <div className="flex-1">
@@ -447,11 +447,11 @@ function SessionSchedule() {
                 </span>
                 <SessionBadge status={session.status} />
               </div>
-              <span className="text-[11px] font-mono text-[#71717A]">{session.duration}</span>
+              <span className="text-[11px] ont-secondary text-[#71717A]">{session.duration}</span>
             </div>
 
             <div className="text-right">
-              <span className={`text-lg font-black font-mono tabular-nums block leading-tight ${
+              <span className={`text-lg font-black ont-secondary tabular-nums block leading-tight ${
                 session.status === 'next' ? 'text-[#F59E0B]' : session.status === 'completed' ? 'text-[#3F3F46]' : 'text-white'
               }`}>
                 {session.time}
@@ -482,8 +482,8 @@ function TrackMapPlaceholder() {
         <h3 className="text-lg font-black uppercase tracking-wider text-white mb-1 font-[var(--font-display)]">
           Circuit Map
         </h3>
-        <p className="text-xs text-[#52525B] font-mono">Spa-Francorchamps · 7.004 km · 19 turns</p>
-        <p className="text-[10px] text-[#3F3F46] font-mono mt-2">Interactive map coming soon</p>
+        <p className="text-xs text-[#52525B] ont-secondary">Spa-Francorchamps · 7.004 km · 19 turns</p>
+        <p className="text-[10px] text-[#3F3F46] ont-secondary mt-2">Interactive map coming soon</p>
       </div>
 
       {/* Decorative corner accents */}
@@ -514,14 +514,14 @@ export default function BelgianGPPage() {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-1 bg-[#E10600]" />
-            <span className="text-xs font-mono font-bold text-[#E10600] uppercase tracking-[0.2em]">
+            <span className="text-xs ont-secondary font-bold text-[#E10600] uppercase tracking-[0.2em]">
               2026 Season · Round 10
             </span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight leading-[0.9] mb-3 font-[var(--font-display)]">
             Belgian <span className="text-[#E10600]">Grand Prix</span>
           </h1>
-          <p className="text-[#71717A] text-sm sm:text-base max-w-xl font-mono leading-relaxed">
+          <p className="text-[#71717A] text-sm sm:text-base max-w-xl ont-secondary leading-relaxed">
             The iconic Spa-Francorchamps circuit returns for Round 10 of the 2026 FIA Formula One World Championship.
           </p>
         </div>
@@ -563,19 +563,19 @@ export default function BelgianGPPage() {
                   : 'bg-[#15151E]/50 border-[#1F1F27]/50 hover:border-[#27272A]'
               }`}
             >
-              <span className="text-[10px] font-mono text-[#52525B] uppercase tracking-wider block mb-1">
+              <span className="text-[10px] ont-secondary text-[#52525B] uppercase tracking-wider block mb-1">
                 {item.label}
               </span>
-              <span className={`text-lg font-black font-mono block ${item.highlight ? 'text-[#E10600]' : 'text-white'}`}>
+              <span className={`text-lg font-black ont-secondary block ${item.highlight ? 'text-[#E10600]' : 'text-white'}`}>
                 {item.value}
               </span>
-              <span className="text-[11px] font-mono text-[#71717A]">{item.sub}</span>
+              <span className="text-[11px] ont-secondary text-[#71717A]">{item.sub}</span>
             </div>
           ))}
         </div>
 
         {/* Footer note */}
-        <p className="text-center text-[10px] font-mono text-[#3F3F46] mt-8 uppercase tracking-wider">
+        <p className="text-center text-[10px] ont-secondary text-[#3F3F46] mt-8 uppercase tracking-wider">
           Data based on historical climate averages · Weather subject to change
         </p>
       </div>

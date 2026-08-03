@@ -105,7 +105,7 @@ export default function DriversDashboardPage() {
       minHeight: '100vh',
       backgroundColor: '#0B0C10',
       color: '#E4E4E7',
-      fontFamily: 'Formula1 Display-Regular',
+      fontFamily: 'var(--font-display)',
     }}>
       {/* ─── Hero Header ─── */}
       <div style={{
@@ -122,7 +122,7 @@ export default function DriversDashboardPage() {
         }} />
 
         <div style={{
-          maxWidth: '1280px',
+          maxWidth: '1360px',
           margin: '0 auto',
           padding: '48px 24px 32px',
           position: 'relative',
@@ -232,7 +232,7 @@ export default function DriversDashboardPage() {
                   color: '#E4E4E7',
                   outline: 'none',
                   transition: 'border-color 0.2s ease',
-                  fontFamily: 'Formula1 Display-Regular',
+                  fontFamily: 'var(--font-display)',
                 }}
                 onFocus={(e) => { e.currentTarget.style.borderColor = '#E10600'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = '#27272A'; }}
@@ -294,7 +294,7 @@ export default function DriversDashboardPage() {
                   color: '#E4E4E7',
                   cursor: 'pointer',
                   outline: 'none',
-                  fontFamily: 'Formula1 Display-Regular',
+                  fontFamily: 'var(--font-display)',
                 }}
               >
                 <option value="pos">Position</option>
@@ -310,7 +310,7 @@ export default function DriversDashboardPage() {
 
       {/* ─── Main Content ─── */}
       <main style={{
-        maxWidth: '1280px',
+        maxWidth: '1360px',
         margin: '0 auto',
         padding: '32px 24px 64px',
       }}>
@@ -372,7 +372,7 @@ export default function DriversDashboardPage() {
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
                     <span style={{
-                      fontFamily: 'monospace',
+                      fontFamily: 'var(--font-secondary)',
                       fontSize: '36px',
                       fontWeight: 900,
                       color: driver.accentColor,
@@ -484,7 +484,7 @@ export default function DriversDashboardPage() {
                   }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                       <span style={{
-                        fontFamily: 'monospace',
+                        fontFamily: 'var(--font-secondary)',
                         fontSize: '28px',
                         fontWeight: 900,
                         color: teamColor,
@@ -516,7 +516,7 @@ export default function DriversDashboardPage() {
                       borderRadius: '6px',
                       backgroundColor: driver.stats.pos === '1' ? '#E10600' : '#1A1B23',
                       color: driver.stats.pos === '1' ? '#ffffff' : '#A1A1AA',
-                      fontFamily: 'monospace',
+                      fontFamily: 'var(--font-secondary)',
                       fontWeight: 900,
                       fontSize: '13px',
                       border: driver.stats.pos === '1' ? 'none' : '1px solid #27272A',
@@ -644,7 +644,7 @@ function StatBox({ title, value, accent }: { title: string; value: string; accen
         {title}
       </span>
       <span style={{
-        fontFamily: 'monospace',
+        fontFamily: 'var(--font-secondary)',
         fontSize: '15px',
         fontWeight: 900,
         color: accent || '#E4E4E7',
@@ -670,7 +670,7 @@ function PodiumMetric({ title, value, highlight }: { title: string; value: strin
         {title}
       </span>
       <span style={{
-        fontFamily: 'monospace',
+        fontFamily: 'var(--font-secondary)',
         fontSize: '18px',
         fontWeight: 900,
         color: highlight ? '#E10600' : '#ffffff',

@@ -1,5 +1,7 @@
 // lib/flags.ts
 
+import codes from './codes.json';
+
 const DEMONYM_TO_ISO: Record<string, string> = {
   british: 'gb',
   dutch: 'nl',

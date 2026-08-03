@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 
 // ─── Types ───
 interface DriverStanding {
@@ -234,7 +234,7 @@ function WheelDigit({ value, label }: { value: number; label: string }) {
           color: '#4a4a55',
           textTransform: 'uppercase',
           letterSpacing: '0.14em',
-          fontFamily: "var(--font-mono)",
+          fontFamily: "var(--font-secondary)",
           flexShrink: 0,
           lineHeight: 1,
         }}
@@ -401,7 +401,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               display: 'flex',
               alignItems: 'center',
               gap: '5px',
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               whiteSpace: 'nowrap',
             }}
           >
@@ -436,7 +436,7 @@ function NextRaceCountdown({ targetDate, raceName }: { targetDate: Date; raceNam
               fontWeight: 700,
               color: 'var(--muted-dim)',
               letterSpacing: '0.06em',
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               whiteSpace: 'nowrap',
             }}
           >
@@ -569,7 +569,7 @@ function SessionCard({
                 fontWeight: 900,
                 textTransform: 'uppercase',
                 letterSpacing: '0.14em',
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 textShadow: isLive ? `0 0 6px ${statusColor}40` : 'none',
                 whiteSpace: 'nowrap',
               }}
@@ -604,7 +604,7 @@ function SessionCard({
                 fontWeight: 800,
                 letterSpacing: '0.04em',
                 fontVariantNumeric: 'tabular-nums',
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 textShadow: isLive ? '0 0 8px rgba(225, 6, 0, 0.3)' : 'none',
                 whiteSpace: 'nowrap',
               }}
@@ -617,7 +617,7 @@ function SessionCard({
                 fontSize: '0.5625rem',
                 fontWeight: 700,
                 letterSpacing: '0.04em',
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 whiteSpace: 'nowrap',
               }}
             >
@@ -635,7 +635,7 @@ function SessionCard({
                   letterSpacing: '0.1em',
                   border: '1px solid rgba(225, 6, 0, 0.15)',
                   animation: 'onAirPulse 2s ease-in-out infinite',
-                  fontFamily: "var(--font-mono)",
+                  fontFamily: "var(--font-secondary)",
                   flexShrink: 0,
                   whiteSpace: 'nowrap',
                 }}
@@ -684,7 +684,7 @@ function TimelineLabel({ raceName }: { raceName: string }) {
               color: '#4a4a55',
               textTransform: 'uppercase',
               letterSpacing: '0.14em',
-              fontFamily: "var(--font-mono)",
+              fontFamily: "var(--font-secondary)",
               whiteSpace: 'nowrap',
             }}
           >
@@ -714,7 +714,7 @@ function TimelineLabel({ raceName }: { raceName: string }) {
             fontSize: '0.5625rem',
             fontWeight: 700,
             letterSpacing: '0.06em',
-            fontFamily: "var(--font-mono)",
+            fontFamily: "var(--font-secondary)",
             marginLeft: 'auto',
             flexShrink: 0,
             whiteSpace: 'nowrap',
@@ -766,7 +766,7 @@ function SessionTicker({ raceName, sessions }: { raceName: string; sessions: Tic
       style={{
         backgroundColor: 'var(--tarmac)',
         borderBottom: '1px solid var(--line)',
-        fontFamily: "var(--font-mono)",
+        fontFamily: "var(--font-secondary)",
         fontSize: '0.75rem',
         width: '100%',
         position: 'relative',
@@ -931,7 +931,7 @@ function StatCard({ label, value, sub, color }: { label: string; value: string |
     >
       <div
         style={{
-          fontFamily: "var(--font-mono)",
+          fontFamily: "var(--font-secondary)",
           fontSize: 10,
           color: "var(--muted-dim)",
           textTransform: "uppercase",
@@ -982,7 +982,7 @@ function BarChart({ data, maxValue, color }: { data: { label: string; value: num
               }}
             />
           </div>
-          <div style={{ width: 50, fontFamily: "var(--font-mono)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", textAlign: "right" }}>
+          <div style={{ width: 50, fontFamily: "var(--font-secondary)", fontSize: 13, fontWeight: 700, color: "var(--text-primary)", textAlign: "right" }}>
             {item.value}
           </div>
         </div>
@@ -1008,7 +1008,7 @@ function PodiumTable({ data }: { data: { pos: number; name: string; team: string
                   letterSpacing: "1.5px",
                   color: "var(--muted-dim)",
                   textAlign: h === "Value" ? "right" : "left",
-                  fontFamily: "var(--font-mono)",
+                  fontFamily: "var(--font-secondary)",
                 }}
               >
                 {h}
@@ -1041,7 +1041,7 @@ function PodiumTable({ data }: { data: { pos: number; name: string; team: string
                     width: 28,
                     height: 28,
                     borderRadius: 4,
-                    fontFamily: "var(--font-mono)",
+                    fontFamily: "var(--font-secondary)",
                     fontWeight: 900,
                     fontSize: 13,
                     background: row.pos === 1 ? "var(--f1-red)" : row.pos === 2 ? "#3A3B40" : row.pos === 3 ? "#CD7F32" : "transparent",
@@ -1059,7 +1059,7 @@ function PodiumTable({ data }: { data: { pos: number; name: string; team: string
                   {teamShortNames[row.teamId] || row.team}
                 </span>
               </td>
-              <td style={{ padding: "10px 16px", fontFamily: "var(--font-mono)", fontWeight: 900, fontSize: 15, textAlign: "right", color: "var(--text-primary)" }}>
+              <td style={{ padding: "10px 16px", fontFamily: "var(--font-secondary)", fontWeight: 900, fontSize: 15, textAlign: "right", color: "var(--text-primary)" }}>
                 {row.value}
                 <span style={{ fontSize: 10, color: "var(--muted)", marginLeft: 4 }}>{row.label}</span>
               </td>
@@ -1084,7 +1084,7 @@ function ConstructorBars({ data }: { data: ConstructorStanding[] }) {
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <span
                   style={{
-                    fontFamily: "var(--font-mono)",
+                    fontFamily: "var(--font-secondary)",
                     fontWeight: 900,
                     fontSize: 14,
                     color: i === 0 ? "var(--f1-red)" : "var(--muted)",
@@ -1097,7 +1097,7 @@ function ConstructorBars({ data }: { data: ConstructorStanding[] }) {
                   {teamShortNames[c.Constructor.constructorId] || c.Constructor.name}
                 </span>
               </div>
-              <span style={{ fontFamily: "var(--font-mono)", fontWeight: 900, fontSize: 14, color: "var(--text-primary)" }}>
+              <span style={{ fontFamily: "var(--font-secondary)", fontWeight: 900, fontSize: 14, color: "var(--text-primary)" }}>
                 {pts}
                 <span style={{ fontSize: 10, color: "var(--muted)", marginLeft: 4 }}>PTS</span>
               </span>
@@ -1321,7 +1321,7 @@ export default function StatisticsPage() {
               style={{
                 padding: "10px 20px",
                 borderRadius: 6,
-                fontFamily: "var(--font-mono)",
+                fontFamily: "var(--font-secondary)",
                 fontSize: 12,
                 fontWeight: 800,
                 letterSpacing: "1px",
@@ -1484,7 +1484,7 @@ export default function StatisticsPage() {
                       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: color, boxShadow: i === 0 ? `0 0 12px ${color}` : "none" }} />
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
                         <div>
-                          <div style={{ fontFamily: "var(--font-mono)", fontSize: 10, color: "var(--muted-dim)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800, marginBottom: 4 }}>
+                          <div style={{ fontFamily: "var(--font-secondary)", fontSize: 10, color: "var(--muted-dim)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800, marginBottom: 4 }}>
                             Position {c.position}
                           </div>
                           <div style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: 20, textTransform: "uppercase", color: "var(--text-primary)" }}>
@@ -1492,7 +1492,7 @@ export default function StatisticsPage() {
                           </div>
                         </div>
                         <div style={{ textAlign: "right" }}>
-                          <div style={{ fontFamily: "var(--font-mono)", fontWeight: 900, fontSize: 24, color: color }}>
+                          <div style={{ fontFamily: "var(--font-secondary)", fontWeight: 900, fontSize: 24, color: color }}>
                             {pts}
                           </div>
                           <div style={{ fontSize: 10, color: "var(--muted-dim)", textTransform: "uppercase", fontWeight: 800 }}>PTS</div>
@@ -1500,12 +1500,12 @@ export default function StatisticsPage() {
                       </div>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "var(--line)", borderRadius: 6, overflow: "hidden" }}>
                         <div style={{ background: "var(--surface-raised)", padding: "10px", textAlign: "center" }}>
-                          <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--muted-dim)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800, marginBottom: 4 }}>Wins</div>
-                          <div style={{ fontFamily: "var(--font-mono)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>{wins}</div>
+                          <div style={{ fontFamily: "var(--font-secondary)", fontSize: 9, color: "var(--muted-dim)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800, marginBottom: 4 }}>Wins</div>
+                          <div style={{ fontFamily: "var(--font-secondary)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>{wins}</div>
                         </div>
                         <div style={{ background: "var(--surface-raised)", padding: "10px", textAlign: "center" }}>
-                          <div style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--muted-dim)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800, marginBottom: 4 }}>Pts/Race</div>
-                          <div style={{ fontFamily: "var(--font-mono)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>
+                          <div style={{ fontFamily: "var(--font-secondary)", fontSize: 9, color: "var(--muted-dim)", textTransform: "uppercase", letterSpacing: "1px", fontWeight: 800, marginBottom: 4 }}>Pts/Race</div>
+                          <div style={{ fontFamily: "var(--font-secondary)", fontSize: 16, fontWeight: 700, color: "var(--text-primary)" }}>
                             {(pts / (stats?.totalRaces || 1)).toFixed(1)}
                           </div>
                         </div>
@@ -1537,7 +1537,7 @@ export default function StatisticsPage() {
                               letterSpacing: "1.5px",
                               color: "var(--muted-dim)",
                               textAlign: "left",
-                              fontFamily: "var(--font-mono)",
+                              fontFamily: "var(--font-secondary)",
                             }}
                           >
                             {h}
@@ -1561,7 +1561,7 @@ export default function StatisticsPage() {
                             onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(225,6,0,0.04)")}
                             onMouseLeave={(e) => (e.currentTarget.style.background = i % 2 === 0 ? "rgba(255,255,255,0.01)" : "transparent")}
                           >
-                            <td style={{ padding: "10px 16px", fontFamily: "var(--font-mono)", fontWeight: 900, color: "var(--muted)" }}>
+                            <td style={{ padding: "10px 16px", fontFamily: "var(--font-secondary)", fontWeight: 900, color: "var(--muted)" }}>
                               {race.round}
                             </td>
                             <td style={{ padding: "10px 16px", fontWeight: 700, fontSize: 14, color: "var(--text-secondary)" }}>
@@ -1577,10 +1577,10 @@ export default function StatisticsPage() {
                                 </span>
                               )}
                             </td>
-                            <td style={{ padding: "10px 16px", fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted)", fontWeight: 700 }}>
+                            <td style={{ padding: "10px 16px", fontFamily: "var(--font-secondary)", fontSize: 12, color: "var(--muted)", fontWeight: 700 }}>
                               {fl ? `${fl.Driver.givenName[0]}. ${fl.Driver.familyName}` : "—"}
                             </td>
-                            <td style={{ padding: "10px 16px", fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--muted)", fontWeight: 700 }}>
+                            <td style={{ padding: "10px 16px", fontFamily: "var(--font-secondary)", fontSize: 12, color: "var(--muted)", fontWeight: 700 }}>
                               {pole ? `${pole.Driver.givenName[0]}. ${pole.Driver.familyName}` : "—"}
                             </td>
                           </tr>

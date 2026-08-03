@@ -8,7 +8,7 @@ export default function ClassificationLink() {
 
   return (
     <Link
-      href="/standings"
+      href="/driver-standings"
       style={{
         display: 'block',
         textAlign: 'center',
@@ -17,7 +17,7 @@ export default function ClassificationLink() {
         color: '#FFFFFF',
         padding: '0.875rem',
         fontSize: '0.75rem',
-        fontFamily: 'var(--font-mono, monospace)',
+        fontFamily: 'var(--font-secondary, monospace)',
         fontWeight: 800,
         textTransform: 'uppercase',
         textDecoration: 'none',

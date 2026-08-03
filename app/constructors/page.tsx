@@ -465,7 +465,7 @@ export default function ConstructorsDashboardPage() {
         }
 
         .constructors-hero-inner {
-          max-width: 1280px;
+          max-width: 1360px;
           margin: 0 auto;
           padding: 48px 24px 32px;
           position: relative;
@@ -607,7 +607,7 @@ export default function ConstructorsDashboardPage() {
 
         /* ===== MAIN ===== */
         .constructors-main {
-          max-width: 1280px;
+          max-width: 1360px;
           margin: 0 auto;
           padding: 32px 24px 64px;
         }
@@ -752,7 +752,7 @@ export default function ConstructorsDashboardPage() {
         }
 
         .constructors-podium-driver-num {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           font-weight: 900;
           margin-left: auto;
@@ -824,7 +824,7 @@ export default function ConstructorsDashboardPage() {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-weight: 900;
           font-size: 13px;
           flex-shrink: 0;
@@ -870,7 +870,7 @@ export default function ConstructorsDashboardPage() {
         }
 
         .constructors-card-points-value {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 20px;
           font-weight: 900;
           line-height: 1;
@@ -921,7 +921,7 @@ export default function ConstructorsDashboardPage() {
         }
 
         .constructors-card-driver-num {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 900;
           margin-left: auto;
@@ -999,7 +999,7 @@ function StatBox({ title, value, accent }: { title: string; value: string; accen
         {title}
       </span>
       <span style={{
-        fontFamily: 'var(--font-mono)',
+        fontFamily: 'var(--font-secondary)',
         fontSize: '15px',
         fontWeight: 900,
         color: accent || '#E4E4E7',
@@ -1025,7 +1025,7 @@ function PodiumStat({ title, value, highlight, accent }: { title: string; value:
         {title}
       </span>
       <span style={{
-        fontFamily: 'var(--font-mono)',
+        fontFamily: 'var(--font-secondary)',
         fontSize: highlight ? '22px' : '18px',
         fontWeight: 900,
         color: highlight ? '#E10600' : (accent || '#ffffff'),

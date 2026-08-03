@@ -44,8 +44,6 @@ export default function Sidebar({ badgeText, isLive, nextRaceDate }: SidebarProp
     { name: 'Moments', path: '/moments', icon: MomentsIcon },
   ];
 
-  const sidebarWidth = collapsed ? '80px' : '260px';
-
   return (
     <>
       {/* Mobile Toggle */}
@@ -97,151 +95,37 @@ export default function Sidebar({ badgeText, isLive, nextRaceDate }: SidebarProp
         />
       )}
 
-      {/* Sidebar */}
-      <aside
-        className={`sidebar-main ${mobileOpen ? 'open' : ''}`}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          bottom: 0,
-          width: sidebarWidth,
-          backgroundColor: '#0B0C10',
-          borderRight: '1px solid #1F1F27',
-          zIndex: 100,
-          display: 'flex',
-          flexDirection: 'column',
-          transition: 'width 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-          overflow: 'hidden',
-        }}
-      >
+      {/* Sidebar Containers */}
+      <aside className={`sidebar-main ${collapsed ? 'collapsed' : ''} ${mobileOpen ? 'open' : ''}`}>
         {/* F1 Red Top Stripe */}
         <div style={{ height: '3px', width: '100%', backgroundColor: '#E10600', flexShrink: 0 }} />
 
         {/* Logo Section */}
-        <div style={{
-          padding: collapsed ? '20px 12px' : '24px 20px',
-          borderBottom: '1px solid #1F1F27',
-          display: 'flex',
-          alignItems: 'center',
-          gap: collapsed ? '0' : '12px',
-          justifyContent: collapsed ? 'center' : 'flex-start',
-          transition: 'all 0.3s ease',
-          flexShrink: 0,
-        }}>
-         <div style={{
-  width: collapsed ? '40px' : '48px',
-  height: collapsed ? '40px' : '48px',
-  borderRadius: '8px',
- 
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0,
-  overflow: 'hidden',
-}}>
-  <img
-    src="/F1-Fan-Paddock.png"
-    alt="F1 Fan Paddock logo"
-    style={{
-      width: 'auto',
-      height: '140%',
-      objectFit: 'cover',
-    }}
-  />
-</div>
-          {!collapsed && (
-            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-              <span style={{
-                fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif',
-                fontSize: '15px',
-                fontWeight: 900,
-                color: '#FFFFFF',
-                letterSpacing: '-0.02em',
-                lineHeight: 1.2,
-                whiteSpace: 'nowrap',
-              }}>
-                F1 Fan Paddock
-              </span>
-              <span style={{
-                fontFamily: '"Inter", sans-serif',
-                fontSize: '9px',
-                fontWeight: 500,
-                color: '#E10600',
-                
-             
-              }}>
-                The F1 Bulletin
-              </span>
-            </div>
-          )}
+        <div className="logo-section">
+          <div className="logo-wrapper">
+            <img src="/F1-Fan-Paddock.png" alt="F1 Fan Paddock logo" className="logo-img" />
+          </div>
+          <div className="logo-text-group">
+            <span className="logo-title">F1 Fan Paddock</span>
+            <span className="logo-subtitle">The F1 Bulletin</span>
+          </div>
         </div>
 
-        {/* Live Badge */}
-{(badgeText || isLive) && (
-  <div style={{
-    margin: collapsed ? '12px 8px' : '16px 16px',
-    padding: collapsed ? '8px' : '10px 14px',
-    borderRadius: '6px',
-    background: isLive ? 'rgba(225, 6, 0, 0.1)' : '#15151E',
-    border: isLive ? '1px solid rgba(225, 6, 0, 0.3)' : '1px solid #1F1F27',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: collapsed ? 'center' : 'flex-start',
-    gap: '8px',
-    flexShrink: 0,
-  }}>
-    <span style={{
-      width: '7px',
-      height: '7px',
-      borderRadius: '50%',
-      backgroundColor: isLive ? '#E10600' : '#71717A',
-      display: 'inline-block',
-      animation: isLive ? 'pulseLive 1.8s infinite' : 'none',
-      flexShrink: 0,
-    }} />
-    {!collapsed && (
-      <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0, gap: '2px' }}>
-        <span style={{
-          fontSize: '10px',
-          fontWeight: 800,
-          color: isLive ? '#E10600' : '#A1A1AA',
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          fontFamily: '"JetBrains Mono", monospace',
-          lineHeight: 1,
-        }}>
-          {isLive ? 'LIVE NOW' : countdown || 'OFF SEASON'}
-        </span>
-
-        {badgeText && (
-          <span style={{
-            fontSize: '11px',
-            fontWeight: 700,
-            color: '#FFFFFF',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            lineHeight: 1.2,
-          }}>
-            {badgeText}
-          </span>
+        {/* Live Status Badge */}
+        {(badgeText || isLive) && (
+          <div className={`live-badge-container ${isLive ? 'is-live' : ''}`}>
+            <span className="live-dot" />
+            <div className="live-text-group">
+              <span className="live-status-label">
+                {isLive ? 'LIVE NOW' : countdown || 'OFF SEASON'}
+              </span>
+              {badgeText && <span className="live-badge-text">{badgeText}</span>}
+            </div>
+          </div>
         )}
-      </div>
-    )}
-  </div>
-)}
 
-        {/* Navigation */}
-        <nav style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2px',
-          padding: collapsed ? '8px 10px' : '8px 12px',
-          overflowY: 'auto',
-          overflowX: 'hidden',
-        }}>
+        {/* Navigation Item Links */}
+        <nav className="sidebar-nav-container">
           {navLinks.map((link) => {
             const active = isActive(link.path);
             const Icon = link.icon;
@@ -250,181 +134,424 @@ export default function Sidebar({ badgeText, isLive, nextRaceDate }: SidebarProp
                 key={link.path}
                 href={link.path}
                 onClick={() => setMobileOpen(false)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: collapsed ? '0' : '14px',
-                  padding: collapsed ? '12px' : '12px 16px',
-                  borderRadius: '8px',
-                  textDecoration: 'none',
-                  transition: 'all 0.2s ease',
-                  backgroundColor: active ? 'rgba(225, 6, 0, 0.1)' : 'transparent',
-                  border: active ? '1px solid rgba(225, 6, 0, 0.2)' : '1px solid transparent',
-                  justifyContent: collapsed ? 'center' : 'flex-start',
-                  position: 'relative',
-                }}
-                onMouseEnter={(e) => {
-                  if (!active) {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.03)';
-                    e.currentTarget.style.borderColor = '#27272A';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!active) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.borderColor = 'transparent';
-                  }
-                }}
+                className={`nav-item-link ${active ? 'active' : ''}`}
               >
-                {active && collapsed && (
-                  <div style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: '20%',
-                    bottom: '20%',
-                    width: '3px',
-                    backgroundColor: '#E10600',
-                    borderRadius: '0 2px 2px 0',
-                  }} />
-                )}
-                <div style={{
-                  color: active ? '#E10600' : '#71717A',
-                  transition: 'color 0.2s ease',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '22px',
-                  height: '22px',
-                  flexShrink: 0,
-                }}>
+                {active && collapsed && <div className="active-indicator-bar" />}
+                <div className="nav-icon-wrapper" style={{ color: active ? '#E10600' : 'inherit' }}>
                   <Icon />
                 </div>
-                {!collapsed && (
-                  <span style={{
-                    fontSize: '13px',
-                    fontWeight: 700,
-                    color: active ? '#FFFFFF' : '#A1A1AA',
-                    fontFamily: '"Formula1 Display-Regular", "Titillium Web", sans-serif',
-                    letterSpacing: '0.02em',
-                    textTransform: 'uppercase',
-                    transition: 'color 0.2s ease',
-                    whiteSpace: 'nowrap',
-                  }}>
-                    {link.name}
-                  </span>
-                )}
+                <span className="nav-text-label">{link.name}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* Collapse Toggle */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          style={{
-            padding: collapsed ? '12px' : '12px 16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: collapsed ? 'center' : 'space-between',
-            color: '#71717A',
-            background: 'none',
-            border: 'none',
-            borderTop: '1px solid #1F1F27',
-            cursor: 'pointer',
-            fontFamily: '"JetBrains Mono", monospace',
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            transition: 'color 0.2s ease',
-            flexShrink: 0,
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = '#E10600'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = '#71717A'; }}
-        >
-          {!collapsed && <span>Collapse</span>}
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            style={{
-              transform: collapsed ? 'rotate(180deg)' : 'rotate(0deg)',
-              transition: 'transform 0.3s ease',
-              flexShrink: 0,
-            }}
-          >
+        {/* Toggle Collapse Bar Component */}
+        <button onClick={() => setCollapsed(!collapsed)} className="collapse-toggle-btn">
+          <span className="toggle-label-text">Collapse</span>
+          <svg className="toggle-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <polyline points="15 18 9 12 15 6" />
           </svg>
         </button>
 
-        {/* Contact & Social */}
-        {!collapsed && (
-          <div style={{
-            padding: '16px',
-            borderTop: '1px solid #1F1F27',
-            flexShrink: 0,
-          }}>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              marginBottom: '12px',
-            }}>
-              <div style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                background: '#15151E',
-                border: '1px solid #1F1F27',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#E10600',
-                flexShrink: 0,
-              }}>
-                <MailIcon />
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <span style={{ fontSize: '12px', fontWeight: 700, color: '#FFFFFF', display: 'block' }}>
-                  Contact
-                </span>
-                <span style={{ fontSize: '10px', color: '#71717A', fontFamily: '"JetBrains Mono", monospace' }}>
-                  Get in touch
-                </span>
-              </div>
+        {/* Updated Unified Match Contact & Social Grid Layout */}
+        <div className="contact-footer-section">
+          <div className="contact-meta-header">
+            <div className="contact-icon-box">
+              <MailIcon />
             </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              <SocialButton icon={GitHubIcon} />
-              <SocialButton icon={TwitterIcon} />
-              <SocialButton icon={InstagramIcon} />
+            <div className="contact-text-labels">
+              <span className="contact-title">Contact</span>
+              <span className="contact-subtitle">Get in touch</span>
             </div>
           </div>
-        )}
+          <div className="social-actions-row">
+            <SocialButton icon={GitHubIcon} />
+            <SocialButton icon={TwitterIcon} />
+            <SocialButton icon={InstagramIcon} />
+          </div>
+        </div>
       </aside>
 
-      {/* Spacer for main content */}
-      <div
-        className="sidebar-spacer"
-        style={{
-          width: sidebarWidth,
-          flexShrink: 0,
-          transition: 'width 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
-        }}
-      />
+      {/* Synchronized Underlay Content Spacer layout panel */}
+      <div className={`sidebar-spacer ${collapsed ? 'collapsed' : ''}`} />
 
-      {/* Animations & Responsive */}
+      {/* Fully Configured Optimization Stylesheets Layer */}
       <style>{`
-        @keyframes pulseLive {
-          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.4); }
-          50% { opacity: 0.6; box-shadow: 0 0 0 5px rgba(225, 6, 0, 0); }
+        /* Core System Root Tokens Configuration Context Mapping */
+        .sidebar-main {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 260px;
+          background-color: #0B0C10;
+          border-right: 1px solid #1F1F27;
+          z-index: 100;
+          display: flex;
+          flex-direction: column;
+          transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+          overflow: hidden;
         }
+        .sidebar-spacer {
+          width: 260px;
+          flex-shrink: 0;
+          transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Collapsed Variant State Transitions Styles */
+        .sidebar-main.collapsed {
+          width: 78px;
+        }
+        .sidebar-spacer.collapsed {
+          width: 78px;
+        }
+
+        /* Core Sections Styles Configuration */
+        .logo-section {
+          padding: 24px 18px;
+          border-bottom: 1px solid #1F1F27;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          transition: padding 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), gap 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+          flex-shrink: 0;
+        }
+        .sidebar-main.collapsed .logo-section {
+          padding: 20px 14px;
+          gap: 0px;
+        }
+        .logo-wrapper {
+          width: 44px;
+          height: 44px;
+          border-radius: 8px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          overflow: hidden;
+          transition: width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .sidebar-main.collapsed .logo-wrapper {
+          width: 38px;
+          height: 38px;
+        }
+        .logo-img {
+          width: auto;
+          height: 140%;
+          object-fit: cover;
+        }
+        .logo-text-group {
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          opacity: 1;
+          transition: opacity 0.25s ease, transform 0.35s ease;
+        }
+        .sidebar-main.collapsed .logo-text-group {
+          opacity: 0;
+          transform: translateX(-15px);
+          pointer-events: none;
+          width: 0;
+        }
+        .logo-title {
+          font-family: var(--font-display);
+          font-size: 15px;
+          font-weight: 900;
+          color: #FFFFFF;
+          letter-spacing: -0.02em;
+          line-height: 1.2;
+          white-space: nowrap;
+        }
+        .logo-subtitle {
+          font-family: "Inter", sans-serif;
+          font-size: 9px;
+          font-weight: 600;
+          color: #E10600;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+
+        /* Improved High Fidelity Live Badge Layout Rules */
+        .live-badge-container {
+          margin: 16px;
+          padding: 12px 14px;
+          border-radius: 8px;
+          background: #12121A;
+          border: 1px solid #1F1F27;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-shrink: 0;
+          transition: margin 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), padding 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s;
+        }
+        .live-badge-container.is-live {
+          background: rgba(225, 6, 0, 0.05);
+          border: 1px solid rgba(225, 6, 0, 0.25);
+          box-shadow: inset 0 0 12px rgba(225, 6, 0, 0.03);
+        }
+        .sidebar-main.collapsed .live-badge-container {
+          margin: 12px 10px;
+          padding: 12px 0px;
+          justify-content: center;
+          gap: 0;
+        }
+        .live-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background-color: #71717A;
+          display: inline-block;
+          flex-shrink: 0;
+        }
+        .live-badge-container.is-live .live-dot {
+          background-color: #E10600;
+          animation: pulseLive 1.6s infinite cubic-bezier(0.4, 0, 0.6, 1);
+        }
+        .live-text-group {
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          gap: 3px;
+          opacity: 1;
+          transition: opacity 0.2s ease;
+        }
+        .sidebar-main.collapsed .live-text-group {
+          opacity: 0;
+          width: 0;
+          pointer-events: none;
+        }
+        .live-status-label {
+          font-size: 10px;
+          font-weight: 800;
+          color: #A1A1AA;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          font-family: var(--font-display);
+          line-height: 1;
+        }
+        .live-badge-container.is-live .live-status-label {
+          color: #E10600;
+        }
+        .live-badge-text {
+          font-size: 11px;
+          font-weight: 700;
+          color: #FFFFFF;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          line-height: 1.2;
+        }
+
+        /* Navigation List Container Interface Area */
+        .sidebar-nav-container {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          padding: 8px 12px;
+          overflow-y: auto;
+          overflow-x: hidden;
+        }
+        .sidebar-main.collapsed .sidebar-nav-container {
+          padding: 8px 10px;
+        }
+        .nav-item-link {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 12px 16px;
+          border-radius: 8px;
+          text-decoration: none;
+          color: #71717A;
+          transition: background-color 0.25s ease, border-color 0.25s ease, padding 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+          border: 1px solid transparent;
+          justify-content: flex-start;
+          position: relative;
+        }
+        .sidebar-main.collapsed .nav-item-link {
+          padding: 12px 0px;
+          justify-content: center;
+          gap: 0;
+        }
+        .nav-item-link:hover {
+          background-color: rgba(255, 255, 255, 0.03);
+          border-color: #1F1F27;
+          color: #A1A1AA;
+        }
+        .nav-item-link.active {
+          background-color: rgba(225, 6, 0, 0.08);
+          border: 1px solid rgba(225, 6, 0, 0.15);
+          color: #FFFFFF !important;
+        }
+        .active-indicator-bar {
+          position: absolute;
+          left: 0;
+          top: 25%;
+          bottom: 25%;
+          width: 3px;
+          background-color: #E10600;
+          border-radius: 0 4px 4px 0;
+        }
+        .nav-icon-wrapper {
+          transition: color 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 22px;
+          height: 22px;
+          flex-shrink: 0;
+        }
+        .nav-text-label {
+          font-size: 12px;
+          font-weight: 700;
+          font-family: var(--font-display);
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+          transition: opacity 0.2s ease, transform 0.3s ease;
+          white-space: nowrap;
+          opacity: 1;
+        }
+        .sidebar-main.collapsed .nav-text-label {
+          opacity: 0;
+          transform: translateX(-10px);
+          pointer-events: none;
+          width: 0;
+        }
+
+        /* Collapse Interface Toggle Controls Configuration */
+        .collapse-toggle-btn {
+          padding: 14px 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #4B4B55;
+          background: none;
+          border: none;
+          border-top: 1px solid #1F1F27;
+          cursor: pointer;
+          font-family: var(--font-display);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          transition: color 0.2s ease, padding 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+          flex-shrink: 0;
+        }
+        .sidebar-main.collapsed .collapse-toggle-btn {
+          padding: 14px 0;
+          justify-content: center;
+        }
+        .collapse-toggle-btn:hover {
+          color: #E10600;
+        }
+        .toggle-label-text {
+          transition: opacity 0.2s ease;
+        }
+        .sidebar-main.collapsed .toggle-label-text {
+          opacity: 0;
+          display: none;
+        }
+        .toggle-chevron {
+          transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+          flex-shrink: 0;
+        }
+        .sidebar-main.collapsed .toggle-chevron {
+          transform: rotate(180deg);
+        }
+
+        /* Cohesive Refined Contact & Footer Section */
+        .contact-footer-section {
+          padding: 16px;
+          border-top: 1px solid #1F1F27;
+          background-color: #08090C;
+          flex-shrink: 0;
+          display: flex;
+          flex-direction: column;
+          transition: padding 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .sidebar-main.collapsed .contact-footer-section {
+          padding: 16px 8px;
+        }
+        .contact-meta-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 12px;
+          transition: justify-content 0.45s, margin-bottom 0.45s;
+        }
+        .sidebar-main.collapsed .contact-meta-header {
+          margin-bottom: 0px;
+          justify-content: center;
+        }
+        .contact-icon-box {
+          width: 32px;
+          height: 32px;
+          border-radius: 6px;
+          background: #12121A;
+          border: 1px solid #1F1F27;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #71717A;
+          flex-shrink: 0;
+        }
+        .contact-text-labels {
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+          opacity: 1;
+          transition: opacity 0.2s ease;
+        }
+        .sidebar-main.collapsed .contact-text-labels {
+          opacity: 0;
+          width: 0;
+          display: none;
+        }
+        .contact-title {
+          font-family: var(--font-display);
+          font-size: 12px;
+          font-weight: 700;
+          color: #A1A1AA;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+        }
+        .contact-subtitle {
+          font-size: 10px;
+          color: #4B4B55;
+        }
+        .social-actions-row {
+          display: flex;
+          gap: 8px;
+          transition: max-height 0.3s, opacity 0.3s, margin-top 0.3s;
+          max-height: 40px;
+          opacity: 1;
+        }
+        .sidebar-main.collapsed .social-actions-row {
+          max-height: 0;
+          opacity: 0;
+          margin-top: 0;
+          overflow: hidden;
+          pointer-events: none;
+        }
+
+        /* Animation Keyframe Parameters */
+        @keyframes pulseLive {
+          0%, 100% {
+            opacity: 1;
+            box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.5);
+          }
+          50% {
+            opacity: 0.4;
+            box-shadow: 0 0 0 6px rgba(225, 6, 0, 0);
+          }
+        }
+
+        /* Responsive Breakpoint Overrides */
         @media (max-width: 1024px) {
           .sidebar-main {
             transform: translateX(-100%);
-            transition: transform 0.3s ease, width 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
           }
           .sidebar-main.open {
             transform: translateX(0);
@@ -432,10 +559,7 @@ export default function Sidebar({ badgeText, isLive, nextRaceDate }: SidebarProp
           .sidebar-spacer {
             display: none !important;
           }
-          .sidebar-mobile-toggle {
-            display: block !important;
-          }
-          .sidebar-mobile-overlay {
+          .sidebar-mobile-toggle, .sidebar-mobile-overlay {
             display: block !important;
           }
         }
@@ -448,7 +572,7 @@ export default function Sidebar({ badgeText, isLive, nextRaceDate }: SidebarProp
 
 function DashboardIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
       <rect x="14" y="14" width="7" height="7" /><rect x="3" y="14" width="7" height="7" />
     </svg>
@@ -457,7 +581,7 @@ function DashboardIcon() {
 
 function DriversIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
     </svg>
   );
@@ -465,7 +589,7 @@ function DriversIcon() {
 
 function ConstructorsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
     </svg>
   );
@@ -473,7 +597,7 @@ function ConstructorsIcon() {
 
 function ResultsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" />
     </svg>
   );
@@ -481,7 +605,7 @@ function ResultsIcon() {
 
 function SeasonsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
     </svg>
   );
@@ -489,7 +613,7 @@ function SeasonsIcon() {
 
 function CircuitsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
     </svg>
   );
@@ -497,7 +621,7 @@ function CircuitsIcon() {
 
 function StatsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" />
     </svg>
   );
@@ -505,7 +629,7 @@ function StatsIcon() {
 
 function MomentsIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
     </svg>
@@ -514,7 +638,7 @@ function MomentsIcon() {
 
 function MailIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
       <polyline points="22,6 12,13 2,6" />
     </svg>
@@ -539,7 +663,7 @@ function TwitterIcon() {
 
 function InstagramIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round">
       <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
@@ -551,27 +675,27 @@ function SocialButton({ icon: Icon }: { icon: React.FC }) {
   return (
     <button
       style={{
-        width: '36px',
-        height: '36px',
-        borderRadius: '8px',
-        background: '#15151E',
+        width: '100%',
+        height: '35px',
+        borderRadius: '6px',
+        background: '#12121A',
         border: '1px solid #1F1F27',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center', // Fixed key camelCase formatting
         color: '#71717A',
         cursor: 'pointer',
         transition: 'all 0.2s ease',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.borderColor = '#E10600';
-        e.currentTarget.style.color = '#E10600';
-        e.currentTarget.style.background = 'rgba(225, 6, 0, 0.08)';
+        e.currentTarget.style.color = '#FFFFFF';
+        e.currentTarget.style.background = 'rgba(225, 6, 0, 0.15)';
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.borderColor = '#1F1F27';
         e.currentTarget.style.color = '#71717A';
-        e.currentTarget.style.background = '#15151E';
+        e.currentTarget.style.background = '#12121A';
       }}
     >
       <Icon />

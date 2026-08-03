@@ -40,9 +40,9 @@ export default function Footer() {
             <nav className="footer-nav-links">
               <Link href="/" className="footer-link">Home</Link>
               <Link href="/dashboard" className="footer-link">Live Dashboard</Link>
-              <Link href="/standings?tab=drivers" className="footer-link">Driver Standings</Link>
-              <Link href="/standings?tab=constructors" className="footer-link">Constructor Standings</Link>
-              <Link href="/trends" className="footer-link">Trends</Link>
+              <Link href="/driver-standings" className="footer-link">Driver Standings</Link>
+              <Link href="/constructors" className="footer-link">Constructor Standings</Link>
+              <Link href="/moments" className="footer-link">Trends</Link>
               <Link href="/articles" className="footer-link">Articles</Link>
             </nav>
           </div>
@@ -105,7 +105,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="footer-bottom">
           <div className="footer-bottom-left">
-            <span className="footer-copyright">© {currentYear} TFB — The F1 Bulletin</span>
+            <span className="footer-copyright">© {currentYear} F1 Fan Paddocks</span>
             <span className="footer-separator">·</span>
             <span className="footer-credit">
               Design & Build by{' '}
@@ -130,6 +130,7 @@ export default function Footer() {
           border-top: 1px solid var(--line);
           position: relative;
           margin-top: auto;
+          
         }
 
         .footer-accent {
@@ -188,13 +189,14 @@ export default function Footer() {
           color: var(--muted);
           margin: 0;
           max-width: 320px;
+          font-family: var(--font-display);
         }
 
         .footer-disclaimer {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: var(--font-mono);
+          font-family: var(--font-display);
           font-size: 11px;
           color: var(--text-dim);
           letter-spacing: 0.3px;
@@ -216,7 +218,7 @@ export default function Footer() {
         }
 
         .footer-nav-title {
-          font-family: var(--font-mono);
+         font-family: var(--font-secondary);
           font-size: 11px;
           font-weight: 800;
           letter-spacing: 2px;
@@ -315,10 +317,11 @@ export default function Footer() {
         }
 
         .footer-copyright {
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 12px;
           color: var(--muted-dim);
           font-weight: 700;
+
         }
 
         .footer-separator {
@@ -327,7 +330,7 @@ export default function Footer() {
         }
 
         .footer-credit {
-          font-family: var(--font-mono);
+       font-family: var(--font-secondary);
           font-size: 12px;
           color: var(--muted-dim);
           font-weight: 700;
@@ -354,7 +357,7 @@ export default function Footer() {
         }
 
         .footer-engine {
-          font-family: var(--font-mono);
+         font-family: var(--font-secondary);
           font-size: 11px;
           color: var(--text-dim);
           letter-spacing: 0.3px;
@@ -364,7 +367,7 @@ export default function Footer() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: var(--font-mono);
+          font-family: var(--font-secondary);
           font-size: 10px;
           font-weight: 900;
           letter-spacing: 1.5px;
