@@ -1,0 +1,153 @@
+@import "tailwindcss";
+
+@theme {
+  /* F1 palette — matches formula1.com */
+  --color-f1red: #e10600;
+  --color-f1red-dark: #b30500;
+  --color-f1red-bright: #ff1e00;
+  --color-f1red-10: #e10600 / 0.1;
+  --color-f1red-15: #e10600 / 0.15;
+  --color-f1red-30: #e10600 / 0.3;
+  --color-f1red-50: #e10600 / 0.5;
+
+  /* Surfaces — LIGHT is the default theme */
+  --color-carbon: #f5f5f7;
+  --color-carbon-deep: #ffffff;
+  --color-carbon-10: rgb(20 20 28 / 0.06);
+  --color-carbon-15: rgb(20 20 28 / 0.1);
+  --color-carbon-20: rgb(20 20 28 / 0.14);
+  --color-carbon-50: rgb(20 20 28 / 0.5);
+  --color-carbon-70: rgb(20 20 28 / 0.7);
+  --color-carbon-90: rgb(20 20 28 / 0.9);
+
+  /* Pebble (text/surface) — LIGHT theme defaults */
+  --color-pebble: #16161d;
+  --color-pebble-5: rgb(20 20 28 / 0.05);
+  --color-pebble-8: rgb(20 20 28 / 0.08);
+  --color-pebble-10: rgb(20 20 28 / 0.1);
+  --color-pebble-15: rgb(20 20 28 / 0.14);
+  --color-pebble-20: rgb(20 20 28 / 0.2);
+  --color-pebble-40: rgb(20 20 28 / 0.4);
+  --color-pebble-50: rgb(20 20 28 / 0.5);
+  --color-pebble-80: rgb(20 20 28 / 0.72);
+  --color-pebble-90: rgb(20 20 28 / 0.9);
+
+  /* Fonts — Bricolage Grotesque for UI/body, Mona Sans for big headlines */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-heading: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-body: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+}
+
+/* Dark theme — enabled by the `.dark` class on <html> (toggled in ThemeToggle) */
+.dark {
+  color-scheme: dark;
+  --color-carbon: #15151e;
+  --color-carbon-deep: #0d0d12;
+  --color-carbon-10: rgb(21 21 30 / 0.1);
+  --color-carbon-15: rgb(21 21 30 / 0.15);
+  --color-carbon-20: rgb(21 21 30 / 0.2);
+  --color-carbon-50: rgb(21 21 30 / 0.5);
+  --color-carbon-70: rgb(21 21 30 / 0.7);
+  --color-carbon-90: rgb(21 21 30 / 0.9);
+
+  --color-pebble: hsl(0 0% 93%);
+  --color-pebble-5: hsl(0 0% 93% / 0.05);
+  --color-pebble-8: hsl(0 0% 93% / 0.08);
+  --color-pebble-10: hsl(0 0% 93% / 0.1);
+  --color-pebble-15: hsl(0 0% 93% / 0.15);
+  --color-pebble-20: hsl(0 0% 93% / 0.2);
+  --color-pebble-40: hsl(0 0% 93% / 0.4);
+  --color-pebble-50: hsl(0 0% 93% / 0.5);
+  --color-pebble-80: hsl(0 0% 93% / 0.78);
+  --color-pebble-90: hsl(0 0% 93% / 0.9);
+}
+
+/* Big display headings use Mona Sans; everything else stays Bricolage */
+.font-headline {
+  font-family: var(--font-mona), "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-carbon);
+    color: var(--color-pebble);
+    font-family: var(--font-body);
+    font-size: 17px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-color: var(--color-carbon);
+    color: var(--color-pebble);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ul,
+  ol {
+    list-style: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-f1red);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .container-pb {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--spacing-lg, 24px);
+  }
+}
+
+/* Header nav visibility */
+@media (min-width: 1000px) {
+  .header-nav {
+    display: flex !important;
+  }
+}
+
+/* Verdict list scrollbar */
+.verdict-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-f1red) hsl(0 0% 100% / 0.1);
+}
+
+.verdict-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.verdict-scroll::-webkit-scrollbar-track {
+  background: hsl(0 0% 100% / 0.1);
+  border-radius: var(--radius-max, 100px);
+}
+
+.verdict-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-f1red);
+  border-radius: var(--radius-max, 100px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
