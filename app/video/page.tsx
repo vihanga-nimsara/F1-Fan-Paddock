@@ -29,7 +29,7 @@ export default function VideoPage() {
           {VIDEOS.map((v) => (
             <article
               key={v.id}
-              className="flex flex-col overflow-hidden rounded-[2px] bg-pebble-5"
+              className="flex flex-col overflow-hidden rounded-xl bg-pebble-5"
             >
               <YouTubePlayer videoId={v.id} className="bg-carbon-deep" />
               <div className="flex flex-col gap-1 px-4 pb-4 pt-3">

@@ -30,7 +30,7 @@ export default function MustWatchVideos({ videos }: { videos: VideoItem[] }) {
             key={v.id}
             type="button"
             onClick={() => setActive(v)}
-            className="group flex flex-col overflow-hidden rounded-[2px] bg-pebble-5 text-left transition-colors duration-200 hover:bg-pebble-8"
+            className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 text-left transition-colors duration-200 hover:bg-pebble-8"
           >
             <div className="relative aspect-video w-full overflow-hidden">
               {/* eslint-disable-next-line @next/no-img-element, @next/next/no-img-element */}
@@ -47,7 +47,7 @@ export default function MustWatchVideos({ videos }: { videos: VideoItem[] }) {
                   </svg>
                 </span>
               </span>
-              <span className="absolute left-3 top-3 rounded-[2px] bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
+              <span className="absolute left-3 top-3 rounded-xl bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
                 Watch
               </span>
             </div>
@@ -76,7 +76,7 @@ export default function MustWatchVideos({ videos }: { videos: VideoItem[] }) {
             <button
               type="button"
               onClick={() => setActive(null)}
-              className="absolute -top-11 right-0 flex items-center gap-1.5 rounded-[2px] bg-carbon-deep/90 px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.1em] text-pebble transition-colors hover:text-f1red"
+              className="absolute -top-11 right-0 flex items-center gap-1.5 rounded-xl bg-carbon-deep/90 px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.1em] text-pebble transition-colors hover:text-f1red"
             >
               <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M6 6l12 12M18 6L6 18" />
@@ -86,7 +86,7 @@ export default function MustWatchVideos({ videos }: { videos: VideoItem[] }) {
             <YouTubePlayer
               videoId={active.id}
               autoplay
-              className="overflow-hidden rounded-[2px] bg-black"
+              className="overflow-hidden rounded-xl bg-black"
             />
             <p className="mt-3 font-display text-sm font-semibold text-pebble">{active.title}</p>
           </div>

@@ -36,7 +36,7 @@ export default async function ReviewsPage() {
           />
 
           {finished.length === 0 ? (
-            <div className="flex w-full flex-col items-center gap-2 rounded-[2px] bg-pebble-5 p-10 text-center">
+            <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
               <span className="text-3xl">🏁</span>
               <p className="m-0 font-body text-sm text-pebble-80">
                 No completed races yet this season. Check back after race day.
@@ -49,11 +49,11 @@ export default async function ReviewsPage() {
                 return (
                   <article
                     key={race.round}
-                    className="flex flex-col gap-3 rounded-[2px] bg-pebble-5 p-5 transition-colors duration-200 hover:bg-pebble-8"
+                    className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-5 transition-colors duration-200 hover:bg-pebble-8"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-f1red font-display text-sm font-semibold text-white">
+                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-f1red font-display text-sm font-semibold text-white">
                           R{race.round}
                         </span>
                         <div className="flex flex-col gap-1">

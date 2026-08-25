@@ -1,38 +1,44 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Switch, LinearProgress, Tooltip } from "@mui/material";
 import {
   getDrivers,
   getLatestSession,
   getLivePositions,
+  getNextRaces,
   type DriverInfo,
   type LivePosition,
   type LiveSession,
+  type Race,
 } from "@/lib/f1";
-import { Switch } from "@base-ui/react/switch";
-import { Progress } from "@base-ui/react/progress";
-import { ScrollArea } from "@base-ui/react/scroll-area";
-import { Tooltip } from "@base-ui/react/tooltip";
 
 type LiveRow = {
   position: number;
+  number: number;
   code: string;
+  name: string;
   team: string;
   teamColor: string;
+  headshot?: string;
 };
 
 export default function LiveDashboard() {
   const [rows, setRows] = useState<LiveRow[]>([]);
   const [session, setSession] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [status, setStatus] = useState<"live" | "offline" | "error">("offline");
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [progress, setProgress] = useState(0);
+  const [next, setNext] = useState<Race | null>(null);
 
   const load = useCallback(async () => {
     try {
       const s = await getLatestSession();
       if (!s) {
-        setError("No live session right now");
+        const upcoming = await getNextRaces(1);
+        setNext(upcoming[0] ?? null);
+        setStatus("offline");
+        setRows([]);
         return;
       }
 
@@ -42,9 +48,7 @@ export default function LiveDashboard() {
       ]);
 
       const lastByDriver = new Map<number, LivePosition>();
-      for (const p of livePositions) {
-        lastByDriver.set(p.driver_number, p);
-      }
+      for (const p of livePositions) lastByDriver.set(p.driver_number, p);
 
       const byNum = new Map<number, DriverInfo>();
       for (const d of drivers) byNum.set(d.driver_number, d);
@@ -54,20 +58,25 @@ export default function LiveDashboard() {
           const d = byNum.get(num);
           return {
             position: p.position,
+            number: num,
             code: d?.driver_code ?? `#${num}`,
+            name: d?.last_name ?? d?.full_name ?? `#${num}`,
             team: d?.team_name ?? "Unknown",
             teamColor: teamColor(d?.team_name ?? ""),
+            headshot: d?.headshot_url,
           };
         })
         .sort((a, b) => a.position - b.position)
-        .slice(0, 12);
+        .slice(0, 20);
 
       setRows(merged);
       setSession(sessionLabel(s));
       setProgress(sessionProgress(s));
-      setError(null);
+      setNext(null);
+      setStatus("live");
     } catch {
-      setError("Live data unavailable");
+      setStatus("error");
+      setRows([]);
     }
   }, []);
 
@@ -79,123 +88,178 @@ export default function LiveDashboard() {
   }, [autoRefresh, load]);
 
   return (
-    <Tooltip.Provider>
-      <div className="flex w-full flex-col gap-2 rounded-[2px] bg-pebble-5 p-4">
-        <div className="flex items-center justify-between gap-2">
+    <div className="flex w-full flex-col gap-3 rounded-xl bg-pebble-5 p-4">
+      {/* Header */}
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
           <h2 className="m-0 font-display text-base font-medium tracking-[0.06em] text-pebble leading-none">
             Live Timing
           </h2>
-          <div className="flex items-center gap-2">
-            <Tooltip.Root>
-              <Tooltip.Trigger
-                className="flex h-4 w-4 items-center justify-center rounded-full border border-pebble-40 text-[9px] font-semibold leading-none text-pebble-80 hover:bg-pebble-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-f1red"
-                aria-label="What is session progress"
-              >
-                ?
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Positioner sideOffset={8}>
-                  <Tooltip.Popup className="relative flex flex-col border border-pebble-40 bg-carbon-deep px-2 py-1 text-[10px] text-pebble shadow-md">
-                    <Tooltip.Arrow className="relative block w-3 h-1.5 overflow-clip [data-side=bottom]:top-[-6px] before:content-[''] before:absolute before:bottom-0 before:left-1/2 before:w-[calc(6px*sqrt(2))] before:h-[calc(6px*sqrt(2))] before:bg-carbon-deep before:border before:border-pebble-40 before:[transform:translate(-50%,50%)_rotate(45deg)]" />
-                    Session progress is derived from the scheduled start and end
-                    times.
-                  </Tooltip.Popup>
-                </Tooltip.Positioner>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-medium tracking-[0.06em] text-pebble-80">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-f1red" />
+          {status === "live" ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-f1red px-2 py-0.5 text-[9px] font-semibold tracking-[0.1em] text-white">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
               LIVE
             </span>
-          </div>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-pebble-10 px-2 py-0.5 text-[9px] font-semibold tracking-[0.1em] text-pebble-80">
+              {status === "error" ? "UNAVAILABLE" : "OFFLINE"}
+            </span>
+          )}
         </div>
 
-        <label className="flex items-center gap-2 text-[10px] font-medium tracking-[0.06em] text-pebble-80">
-          <Switch.Root
-            checked={autoRefresh}
-            onCheckedChange={setAutoRefresh}
-            className="flex h-5 w-9 shrink-0 border border-pebble-40 bg-pebble-10 p-0.5 transition-colors duration-150 ease-[ease] data-checked:bg-f1red focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-f1red"
-          >
-            <Switch.Thumb className="size-3.5 bg-pebble-80 transition-[translate,background-color] duration-150 ease-[ease] data-checked:translate-x-4 data-checked:bg-white" />
-          </Switch.Root>
-          Auto-refresh
-        </label>
+        <Tooltip title="Positions update from OpenF1 while a session is running.">
+          <span className="flex h-4 w-4 cursor-help items-center justify-center rounded-full border border-pebble-40 text-[9px] font-semibold leading-none text-pebble-80 hover:bg-pebble-10">
+            ?
+          </span>
+        </Tooltip>
+      </div>
 
-        <Progress.Root
-          value={progress}
-          className="grid w-full grid-cols-2 gap-y-1"
-        >
-          <Progress.Label className="text-[10px] font-medium tracking-[0.06em] text-pebble-80">
-            Session progress
-          </Progress.Label>
-          <Progress.Value className="text-right text-[10px] font-medium tracking-[0.06em] text-pebble-80" />
-          <Progress.Track className="col-span-2 h-1 overflow-hidden rounded-full bg-pebble-10">
-            <Progress.Indicator className="h-full bg-f1red transition-[width] duration-500" />
-          </Progress.Track>
-        </Progress.Root>
-
-        {session && (
-          <p className="m-0 text-[10px] leading-tight text-pebble-80">
+      {status === "live" && (
+        <>
+          <p className="m-0 -mt-1 text-[11px] font-medium tracking-[0.04em] text-pebble">
             {session}
           </p>
-        )}
 
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center justify-between text-[10px] font-medium tracking-[0.06em] text-pebble-80">
+              <span>Session progress</span>
+              <span>{progress}%</span>
+            </div>
+            <LinearProgress
+              variant="determinate"
+              value={progress}
+              sx={{
+                height: 4,
+                borderRadius: 999,
+                bgcolor: "rgba(20,20,28,0.1)",
+                "& .MuiLinearProgress-bar": { bgcolor: "#e10600" },
+              }}
+            />
+          </div>
+
+          <label className="flex items-center gap-2 text-[10px] font-medium tracking-[0.06em] text-pebble-80">
+            <Switch
+              checked={autoRefresh}
+              onChange={(e) => setAutoRefresh(e.target.checked)}
+              size="small"
+              sx={{
+                "& .MuiSwitch-switchBase.Mui-checked": { color: "#e10600" },
+                "& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track": {
+                  backgroundColor: "#e10600",
+                },
+              }}
+            />
+            Auto-refresh every 2 min
+          </label>
+        </>
+      )}
+
+      {/* Live board */}
+      {status === "live" && (
+        <div className="flex flex-col gap-1">
+          <div className="grid grid-cols-[28px_1fr_auto] gap-2 px-1 pb-1 text-[9px] font-semibold uppercase tracking-[0.12em] text-pebble-50">
+            <span className="text-center">Pos</span>
+            <span>Driver</span>
+            <span>Team</span>
+          </div>
+          <ol className="flex max-h-[360px] flex-col overflow-y-auto">
+            {rows.map((r) => (
+              <li
+                key={r.number}
+                className="grid grid-cols-[28px_1fr_auto] items-center gap-2 border-b border-pebble-8 py-1.5 last:border-b-0"
+              >
+                <span className="text-center font-display text-sm font-semibold text-pebble">
+                  {r.position}
+                </span>
+                <span className="flex min-w-0 items-center gap-2">
+                  <span
+                    className="h-5 w-0.5 shrink-0 rounded-full"
+                    style={{ background: r.teamColor }}
+                  />
+                  {r.headshot ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={r.headshot}
+                      alt={r.name}
+                      loading="lazy"
+                      className="h-6 w-6 shrink-0 rounded-full object-cover"
+                    />
+                  ) : (
+                    <span
+                      className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[8px] font-bold text-white"
+                      style={{ background: r.teamColor }}
+                    >
+                      {r.code.slice(0, 3)}
+                    </span>
+                  )}
+                  <span className="flex min-w-0 flex-col leading-tight">
+                    <span className="truncate font-display text-xs font-semibold text-pebble">
+                      {r.name}
+                    </span>
+                    <span className="truncate text-[9px] text-pebble-50">
+                      {r.code}
+                    </span>
+                  </span>
+                </span>
+                <span className="truncate text-right text-[10px] text-pebble-80">
+                  {r.team}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
+
+      {/* Offline / error fallback */}
+      {status !== "live" && (
+        <div className="flex flex-col gap-2 rounded-xl border border-pebble-15 bg-pebble-8 p-4">
+          <p className="m-0 text-xs font-medium text-pebble">
+            {status === "error"
+              ? "Live timing is temporarily unavailable."
+              : "No session is live right now."}
+          </p>
+          <p className="m-0 text-[11px] leading-snug text-pebble-80">
+            Live timing only runs during a Grand Prix session (practice,
+            qualifying or the race). It shows the running order of every driver,
+            updated automatically.
+          </p>
+          {next && (
+            <div className="mt-1 flex items-center gap-3 rounded-xl bg-pebble-5 p-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-f1red font-display text-sm font-bold text-white">
+                {next.round}
+              </span>
+              <div className="flex min-w-0 flex-col">
+                <span className="truncate font-display text-sm font-semibold text-pebble">
+                  {next.raceName}
+                </span>
+                <span className="truncate text-[10px] text-pebble-80">
+                  {next.circuitName} · {next.country} · in{" "}
+                  {Math.max(1, Math.ceil(
+                    (new Date(next.dateISO).getTime() - Date.now()) / 86_400_000,
+                  ))}{" "}
+                  days
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {status === "live" && (
         <div className="flex items-center justify-between">
           <span className="text-[10px] text-pebble-80">
-            {autoRefresh ? "Auto-refreshing every 2 min" : "Auto-refresh off"}
+            {autoRefresh ? "Auto-refreshing" : "Auto-refresh off"}
           </span>
           <button
             type="button"
             onClick={() => load()}
-            className="rounded-[2px] border border-pebble-40 bg-pebble-10 px-2 py-1 text-[10px] font-medium tracking-[0.06em] text-pebble transition-colors hover:bg-f1red-15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-f1red"
+            className="rounded-xl border border-pebble-40 bg-pebble-10 px-2 py-1 text-[10px] font-medium tracking-[0.06em] text-pebble transition-colors hover:bg-f1red-15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-f1red"
           >
             Refresh
           </button>
         </div>
-
-        {error ? (
-          <p className="m-0 text-xs text-pebble-80">{error}</p>
-        ) : (
-          <ScrollArea.Root className="h-[320px] w-full">
-            <ScrollArea.Viewport className="h-full w-full">
-              <ScrollArea.Content>
-                {rows.length === 0 ? (
-                  <p className="m-0 text-xs text-pebble-80">
-                    Waiting for live data…
-                  </p>
-                ) : (
-                  <ol className="flex w-full list-none flex-col">
-                    {rows.map((r) => (
-                      <li
-                        key={r.code}
-                        className="flex items-center gap-2 border-b border-pebble-8 py-1 last:border-b-0"
-                      >
-                        <span className="w-[18px] shrink-0 text-right font-display text-xs font-medium text-pebble-50">
-                          {r.position}
-                        </span>
-                        <span
-                          className="h-3.5 w-0.5 shrink-0 rounded-full"
-                          style={{ background: r.teamColor }}
-                        />
-                        <span className="min-w-0 flex-1 truncate font-display text-xs font-semibold text-pebble">
-                          {r.code}
-                        </span>
-                        <span className="truncate text-[10px] text-pebble-80">
-                          {r.team}
-                        </span>
-                      </li>
-                    ))}
-                  </ol>
-                )}
-              </ScrollArea.Content>
-            </ScrollArea.Viewport>
-            <ScrollArea.Scrollbar className="m-px flex w-2 justify-center bg-pebble-10 opacity-0 transition-opacity data-hovering:pointer-events-auto data-hovering:opacity-100 data-scrolling:pointer-events-auto data-scrolling:opacity-100">
-              <ScrollArea.Thumb className="w-full bg-pebble-40" />
-            </ScrollArea.Scrollbar>
-          </ScrollArea.Root>
-        )}
-      </div>
-    </Tooltip.Provider>
+      )}
+    </div>
   );
 }
 

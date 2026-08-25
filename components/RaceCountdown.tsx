@@ -42,24 +42,27 @@ const RaceLocationMap = memo(function RaceLocationMap({
   circuitName,
   country,
 }: {
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   circuitName: string;
   country: string;
 }) {
+  const hasCoords = lat != null && lng != null;
   return (
     <div className="border-t border-pebble-15 px-4 pb-5 pt-4 md:px-8">
-      <DottedMap
-        width={320}
-        height={160}
-        mapSamples={1800}
-        markers={[{ lat, lng, size: 1, pulse: true }]}
-        markerColor="#E10600"
-        dotRadius={0.22}
-        className="text-pebble-20"
-      />
+      {hasCoords && (
+        <DottedMap
+          width={320}
+          height={160}
+          mapSamples={1800}
+          markers={[{ lat: lat!, lng: lng!, size: 1, pulse: true }]}
+          markerColor="#E10600"
+          dotRadius={0.22}
+          className="text-pebble-20"
+        />
+      )}
       <p className="m-0 mt-2 font-display text-[10px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
-        {circuitName} · {country}
+        {country || "Location TBC"} · {circuitName || "Venue TBC"}
       </p>
     </div>
   );
@@ -86,20 +89,16 @@ export default function RaceCountdown({
   }, [target]);
 
   return (
-    <section className="overflow-hidden rounded-[2px] border border-pebble-15 bg-carbon-deep">
+    <section className="overflow-hidden rounded-xl border border-pebble-15 bg-carbon-deep">
       <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between md:p-8">
         <div className="flex flex-col gap-3">
-          <span className="inline-flex w-fit items-center gap-2 font-display text-[11px] font-semibold tracking-[0.16em] text-f1red">
-            <span className="h-3 w-[3px] bg-f1red" aria-hidden="true" />
-            NEXT RACE
-          </span>
           <h2 className="m-0 flex items-center gap-3 font-headline text-[clamp(22px,3vw,34px)] font-semibold uppercase leading-[0.98] tracking-[0.02em] text-pebble">
             {flagSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={flagSrc}
                 alt={country}
-                className="h-7 w-10 shrink-0 rounded-[2px] object-cover"
+                className="h-7 w-10 shrink-0 rounded-none object-cover"
               />
             ) : null}
             {raceName}
@@ -113,7 +112,7 @@ export default function RaceCountdown({
           {UNITS.map((u) => (
             <div
               key={u.key}
-              className="flex min-w-[64px] flex-col items-center gap-1 rounded-[2px] bg-pebble-5 px-3 py-3 md:min-w-[78px] md:px-4 md:py-4"
+              className="flex min-w-[64px] flex-col items-center gap-1 rounded-xl bg-pebble-5 px-3 py-3 md:min-w-[78px] md:px-4 md:py-4"
             >
               <span className="font-display text-[clamp(26px,4vw,40px)] font-semibold leading-none tabular-nums tracking-[-0.02em] text-pebble">
                 {remaining
@@ -128,14 +127,12 @@ export default function RaceCountdown({
         </div>
       </div>
 
-      {lat != null && lng != null && (
-        <RaceLocationMap
-          lat={lat}
-          lng={lng}
-          circuitName={circuitName}
-          country={country}
-        />
-      )}
+      <RaceLocationMap
+        lat={lat}
+        lng={lng}
+        circuitName={circuitName}
+        country={country}
+      />
 
       <div className="flex items-center justify-between border-t border-pebble-15 px-6 py-3 md:px-8">
         <span className="text-[11px] text-pebble-50">

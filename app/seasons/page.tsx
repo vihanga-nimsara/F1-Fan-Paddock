@@ -19,7 +19,7 @@ export default function SeasonsPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
         <SectionHeading kicker="Archive" title="Seasons" linkLabel="" />
-        <div className="flex w-full flex-col overflow-hidden rounded-[2px] bg-pebble-5">
+        <div className="flex w-full flex-col overflow-hidden rounded-xl bg-pebble-5">
           {SEASONS.map((s) => (
             <div
               key={s.year}

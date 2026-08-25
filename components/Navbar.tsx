@@ -10,6 +10,7 @@ import {
   CalendarDays,
   ChevronDown,
   Flag,
+  HelpCircle,
   History,
   Info,
   LayoutGrid,
@@ -25,9 +26,10 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { NavigationMenu } from "@base-ui/react/navigation-menu";
+import { Button, Menu as MuiMenu, MenuItem } from "@mui/material";
 import { F1Logo } from "@/components/f1kit";
 import F1Button from "@/components/ui/F1Button";
+import { RippleButton } from "@/components/ui/ripple-button";
 import SubscribeDialog from "@/components/SubscribeDialog";
 import ThemeToggle from "@/components/ThemeToggle";
 
@@ -56,6 +58,7 @@ const NAV: NavItem[] = [
   },
   { label: "Live Timing", href: "/dashboard", icon: <Radio size={16} /> },
   { label: "About", href: "/about", icon: <Info size={16} /> },
+  { label: "FAQ", href: "/faq", icon: <HelpCircle size={16} /> },
   {
     label: "Community",
     icon: <Users size={16} />,
@@ -76,14 +79,95 @@ const NAV: NavItem[] = [
   },
 ];
 
-const triggerClass =
-  "inline-flex items-center gap-1 px-3 py-2 font-display text-[13px] font-semibold tracking-[0.04em] text-pebble transition-colors hover:text-f1red data-[popup-open]:text-f1red";
+function DesktopNavItem({ item }: { item: NavItem }) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
-const contentTransition =
-  "transition-[opacity,transform,translate] duration-[var(--duration)] ease-[var(--easing)] data-starting-style:opacity-0 data-ending-style:opacity-0 data-starting-style:data-[activation-direction=left]:translate-x-[-50%] data-starting-style:data-[activation-direction=right]:translate-x-[50%] data-ending-style:data-[activation-direction=left]:translate-x-[50%] data-ending-style:data-[activation-direction=right]:translate-x-[-50%]";
+  const btnSx = {
+    fontFamily: "var(--font-mona)",
+    fontSize: "15px",
+    fontWeight: 600,
+    letterSpacing: "0.04em",
+    textTransform: "uppercase" as const,
+    color: "var(--color-pebble)",
+    borderRadius: "10px",
+    px: 1.5,
+    py: 1,
+    "&:hover": { bgcolor: "rgba(20,20,28,0.06)", color: "#e10600" },
+  };
 
-const linkCardClass =
-  "relative flex flex-col gap-0.5 rounded-[2px] p-3 transition-colors hover:bg-f1red-15";
+  if (item.href) {
+    return (
+      <Button component={Link} href={item.href} color="inherit" sx={btnSx}>
+        {item.label}
+      </Button>
+    );
+  }
+
+  return (
+    <>
+      <Button
+        onClick={(e) => setAnchorEl(e.currentTarget)}
+        color="inherit"
+        aria-haspopup="true"
+        aria-expanded={open}
+        endIcon={
+          <ChevronDown
+            size={14}
+            className={
+              open ? "rotate-180 transition-transform" : "transition-transform"
+            }
+          />
+        }
+        sx={btnSx}
+      >
+        {item.label}
+      </Button>
+      <MuiMenu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={() => setAnchorEl(null)}
+        slotProps={{
+          paper: {
+            sx: {
+              mt: 1,
+              p: 1,
+              borderRadius: "12px",
+              borderTop: "3px solid #e10600",
+              bgcolor: "var(--color-carbon-deep)",
+              boxShadow: "0 24px 50px rgba(0,0,0,0.5)",
+              minWidth: 420,
+            },
+          },
+        }}
+      >
+        <div className="grid grid-cols-2 gap-1">
+          {item.children?.map((c) => (
+            <MenuItem
+              key={c.label}
+              component={Link}
+              href={c.href}
+              onClick={() => setAnchorEl(null)}
+              sx={{ borderRadius: "10px", py: 1, px: 1.5, color: "var(--color-pebble)" }}
+            >
+              <div className="flex flex-col gap-0.5">
+                <span className="flex items-center gap-2 font-headline text-[15px] font-semibold tracking-[0.02em] text-pebble">
+                  {c.icon}
+                  {c.label}
+                </span>
+                {c.desc && (
+                  <span className="pl-7 text-[11px] leading-tight text-pebble-80">
+                    {c.desc}
+                  </span>
+                )}
+              </div>
+            </MenuItem>
+          ))}
+        </div>
+      </MuiMenu>
+    </>
+  );
+}
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -125,91 +209,27 @@ export default function Navbar() {
             <F1Logo className="text-[1.5rem]" />
           </Link>
 
-          <NavigationMenu.Root className="hidden text-pebble lg:block">
-            <NavigationMenu.List className="relative flex items-center gap-0.5">
-              {NAV.map((item) => (
-                <NavigationMenu.Item key={item.label} value={item.label}>
-                  {item.href ? (
-                    <NavigationMenu.Link
-                      className={triggerClass}
-                      render={<Link href={item.href} />}
-                    >
-                      {item.icon}
-                      {item.label}
-                    </NavigationMenu.Link>
-                  ) : (
-                    <>
-                      <NavigationMenu.Trigger className={triggerClass}>
-                        {item.icon}
-                        {item.label}
-                        <NavigationMenu.Icon className="transition-transform duration-200 ease-[ease] data-[popup-open]:rotate-180">
-                          <ChevronDown size={14} />
-                        </NavigationMenu.Icon>
-                      </NavigationMenu.Trigger>
-
-                      <NavigationMenu.Content
-                        className={`h-full w-max min-w-[420px] p-2 ${contentTransition}`}
-                      >
-                        <ul className="m-0 grid list-none grid-cols-2 gap-1 p-0">
-                          {item.children!.map((c) => (
-                            <li key={c.label}>
-                              <NavigationMenu.Link
-                                className={linkCardClass}
-                                render={<Link href={c.href} />}
-                              >
-                                <span className="flex items-center gap-2 font-display text-sm font-semibold tracking-[0.02em] text-pebble">
-                                  {c.icon}
-                                  {c.label}
-                                </span>
-                                {c.desc && (
-                                  <span className="pl-7 text-[11px] leading-tight text-pebble-80">
-                                    {c.desc}
-                                  </span>
-                                )}
-                              </NavigationMenu.Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </NavigationMenu.Content>
-                    </>
-                  )}
-                </NavigationMenu.Item>
-              ))}
-            </NavigationMenu.List>
-
-            <NavigationMenu.Portal>
-              <NavigationMenu.Positioner
-                sideOffset={2}
-                className="h-[var(--positioner-height)] w-[var(--positioner-width)] max-w-[var(--available-width)] transition-[top,left,right,bottom] duration-[var(--duration)] ease-[var(--easing)] before:absolute before:content-[''] data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0 data-[side=bottom]:before:h-2.5"
-                style={
-                  {
-                    "--duration": "0.25s",
-                    "--easing": "cubic-bezier(0.22,1,0.36,1)",
-                  } as React.CSSProperties
-                }
-              >
-                <NavigationMenu.Popup className="relative h-[var(--popup-height)] w-[var(--popup-width)] origin-[var(--transform-origin)] rounded-b-[2px] border-t-[3px] border-t-f1red bg-carbon-deep shadow-[0_24px_50px_rgb(0_0_0/0.5)] outline-none transition-[opacity,transform,width,height,scale] duration-[var(--duration)] ease-[var(--easing)] data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0">
-                  <NavigationMenu.Viewport className="relative h-full w-full overflow-hidden" />
-                </NavigationMenu.Popup>
-              </NavigationMenu.Positioner>
-            </NavigationMenu.Portal>
-          </NavigationMenu.Root>
+          <nav className="hidden items-center gap-0.5 lg:flex">
+            {NAV.map((item) => (
+              <DesktopNavItem key={item.label} item={item} />
+            ))}
+          </nav>
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            <F1Button
-              variant="primary"
-              className="hidden md:inline-flex"
+            <RippleButton
               onClick={() => setSubscribeOpen(true)}
+              rippleColor="#ffffff"
+              className="hidden !bg-f1red !text-white !border-f1red font-display text-[12px] font-semibold uppercase tracking-[0.06em] md:inline-flex"
             >
               Sign In
-            </F1Button>
+            </RippleButton>
             <button
               type="button"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileOpen}
               onClick={() => setMobileOpen((v) => !v)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-[2px] bg-pebble-5 text-pebble lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-pebble-5 text-pebble lg:hidden"
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -234,15 +254,17 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-2 rounded-[2px] px-3 py-2.5 font-display text-sm font-semibold tracking-[0.04em] text-pebble"
+                      style={{ fontFamily: "var(--font-mona)" }}
+                      className="flex items-center rounded-xl px-3 py-2.5 text-[15px] font-semibold uppercase tracking-[0.04em] text-pebble"
                     >
-                      {item.icon}
                       {item.label}
                     </Link>
                   ) : (
                     <>
-                      <div className="flex items-center gap-2 px-3 py-2 font-display text-[11px] font-semibold tracking-[0.12em] text-f1red">
-                        {item.icon}
+                      <div
+                        style={{ fontFamily: "var(--font-mona)" }}
+                        className="flex items-center px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-f1red"
+                      >
                         {item.label}
                       </div>
                       {item.children?.map((c) => (
@@ -250,7 +272,7 @@ export default function Navbar() {
                           key={c.label}
                           href={c.href}
                           onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-2 rounded-[2px] px-6 py-2 text-sm text-pebble-80"
+                          className="flex items-center gap-2 rounded-xl px-6 py-2 text-sm text-pebble-80"
                         >
                           {c.icon}
                           {c.label}

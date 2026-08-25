@@ -22,10 +22,13 @@ export type ConstructorStanding = {
 export type Race = {
   round: number;
   raceName: string;
+  circuitId?: string;
   circuitName: string;
   country: string;
   date: string;
   dateISO: string;
+  time?: string | null;
+  circuitImage?: string | null;
   flag: string;
   status: "upcoming" | "past";
   daysUntil?: number;
@@ -146,6 +149,46 @@ export function flagImage(country: string, size = 80): string | null {
   return `https://flagcdn.com/w${size}/${iso}.png`;
 }
 
+// Free, openly-licensed F1 circuit track-map SVGs (julesr0y/f1-circuits-svg).
+// Keyed by Jolpica/Ergast circuitId -> repo slug (repo uses "<slug>-N.svg").
+const CIRCUIT_SLUGS: Record<string, string> = {
+  monaco: "monaco",
+  bahrain: "bahrain",
+  jeddah: "jeddah",
+  miami: "miami",
+  imola: "imola",
+  catalunya: "catalunya",
+  zandvoort: "zandvoort",
+  spa: "spa-francorchamps",
+  hungaroring: "hungaroring",
+  villeneuve: "montreal",
+  marina_bay: "marina-bay",
+  albert_park: "melbourne",
+  rodriguez: "mexico-city",
+  las_vegas: "las-vegas",
+  lusail: "lusail",
+  americas: "austin",
+  interlagos: "interlagos",
+  yas_marina: "yas-marina",
+  silverstone: "silverstone",
+  suzuka: "suzuka",
+  monza: "monza",
+  red_bull_ring: "spielberg",
+  shanghai: "shanghai",
+  baku: "baku",
+  madring: "madring",
+};
+
+export function getCircuitImage(
+  _country: string,
+  circuitId?: string | null,
+): string | null {
+  if (!circuitId) return null;
+  const slug = CIRCUIT_SLUGS[circuitId];
+  if (!slug) return null;
+  return `https://raw.githubusercontent.com/julesr0y/f1-circuits-svg/main/circuits/minimal/black/${slug}-1.svg`;
+}
+
 const isServer = typeof window === "undefined";
 
 async function fetchJson(url: string, revalidate = 3600) {
@@ -212,10 +255,16 @@ export async function getSeasonRaces(
     return {
       round: Number(r.round),
       raceName: r.raceName,
+      circuitId: r.Circuit.circuitId,
       circuitName: r.Circuit.circuitName,
       country: r.Circuit.Location.country,
       date: `${r.date}`,
       dateISO,
+      time: r.time ?? null,
+      circuitImage: getCircuitImage(
+        r.Circuit.Location.country,
+        r.Circuit.circuitId,
+      ),
       flag: COUNTRY_FLAGS[r.Circuit.Location.country] ?? "🏁",
       lat:
         r.Circuit.Location.lat != null ? Number(r.Circuit.Location.lat) : undefined,

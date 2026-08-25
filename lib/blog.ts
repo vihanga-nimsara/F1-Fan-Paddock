@@ -1,4 +1,5 @@
 import Parser from "rss-parser";
+import { getFacebookPosts } from "./facebook";
 
 export type BlogPost = {
   title: string;
@@ -26,7 +27,16 @@ const SOURCES: { name: string; url: string }[] = [
 
 // Optional: drop a Facebook-page RSS feed URL (from rss.app / fetchrss / etc.)
 // into FB_RSS_URL in .env.local and FB posts flow into The Blog automatically.
-if (process.env.FB_RSS_URL) {
+// If the Graph API is configured (FB_PAGE_ID + FB_PAGE_ACCESS_TOKEN) we use that
+// instead, so we skip the RSS source to avoid duplicate posts.
+const FB_PLACEHOLDER = /^(your_|YOUR_|<|>)/;
+const fbGraphConfigured = !!(
+  process.env.FB_PAGE_ID &&
+  process.env.FB_PAGE_ACCESS_TOKEN &&
+  !FB_PLACEHOLDER.test(process.env.FB_PAGE_ID) &&
+  !FB_PLACEHOLDER.test(process.env.FB_PAGE_ACCESS_TOKEN)
+);
+if (process.env.FB_RSS_URL && !fbGraphConfigured) {
   SOURCES.push({ name: "Facebook", url: process.env.FB_RSS_URL });
 }
 
@@ -126,26 +136,27 @@ export async function getBlogPosts(
     }),
   );
 
-  if (source) {
-    return rssPosts
-      .filter((p) => p.source === source)
-      .sort(
-        (a, b) =>
-          new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
-      )
-      .slice(0, limit);
-  }
-
   const apiPosts = process.env.NEWS_API_URL ? await getApiNews() : [];
+  const fbPosts = fbGraphConfigured ? await getFacebookPosts(10) : [];
   const seen = new Set<string>();
-  const combined = [...apiPosts, ...rssPosts].filter((p) => {
+  const combined = [...apiPosts, ...fbPosts, ...rssPosts].filter((p) => {
     if (!p.title) return false;
     const key = p.link || p.title;
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
   });
-  return combined.slice(0, limit);
+
+  const filtered = source
+    ? combined.filter((p) => p.source === source)
+    : combined;
+
+  return filtered
+    .sort(
+      (a, b) =>
+        new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
+    )
+    .slice(0, limit);
 }
 
 export function timeAgo(iso: string): string {

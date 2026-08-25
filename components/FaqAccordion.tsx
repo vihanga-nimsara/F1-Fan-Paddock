@@ -1,7 +1,9 @@
 "use client";
 
-import { Accordion } from "@base-ui/react/accordion";
-import { Tooltip } from "@base-ui/react/tooltip";
+import { useState } from "react";
+import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Tooltip from "@mui/material/Tooltip";
 
 const FAQS = [
   {
@@ -23,71 +25,66 @@ const FAQS = [
 ];
 
 export default function FaqAccordion() {
-  return (
-    <Tooltip.Provider>
-      <section className="flex flex-col gap-5">
-        <div className="flex w-full items-end justify-between gap-4 border-b border-pebble-15 pb-3">
-          <div className="flex flex-col gap-1.5">
-            <span className="inline-flex items-center gap-2 font-display text-[11px] font-semibold tracking-[0.16em] text-f1red">
-              <span className="h-3 w-[3px] bg-f1red" aria-hidden="true" />
-              HELP
-            </span>
-            <h2 className="m-0 flex items-center gap-2 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold uppercase leading-[0.95] tracking-[0.02em] text-pebble">
-              Frequently Asked Questions
-              <Tooltip.Root>
-                <Tooltip.Trigger
-                  className="inline-flex h-5 w-5 items-center justify-center rounded-full border border-pebble-30 font-display text-[10px] font-semibold text-pebble-80 transition-colors hover:border-f1red hover:text-f1red"
-                  aria-label="About these FAQs"
-                >
-                  ?
-                </Tooltip.Trigger>
-                <Tooltip.Portal>
-                  <Tooltip.Positioner sideOffset={8}>
-                    <Tooltip.Popup className="max-w-[240px] rounded-[2px] border border-pebble-15 bg-carbon-deep px-3 py-2 text-[11px] leading-snug text-pebble-80 shadow-lg">
-                      <Tooltip.Arrow className="text-carbon-deep" />
-                      Quick answers for new fans. Can&apos;t find yours? Reach the
-                      paddock on socials.
-                    </Tooltip.Popup>
-                  </Tooltip.Positioner>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-            </h2>
-          </div>
-        </div>
+  const [expanded, setExpanded] = useState<number[]>([]);
 
-        <Accordion.Root className="flex flex-col gap-3">
-          {FAQS.map((f, i) => (
-            <Accordion.Item
-              key={f.q}
-              value={i}
-              className="overflow-hidden rounded-[2px] border border-pebble-15 bg-carbon-deep"
+  const toggle = (i: number) =>
+    setExpanded((prev) =>
+      prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i],
+    );
+
+  return (
+    <section className="flex flex-col gap-5">
+      <div className="flex w-full items-end justify-between gap-4 border-b border-pebble-15 pb-3">
+          <div className="flex flex-col gap-1.5">
+            <h2 className="m-0 flex items-center gap-2 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold uppercase leading-[0.95] tracking-[0.02em] text-pebble">
+            Frequently Asked Questions
+            <Tooltip title="Quick answers for new fans. Can't find yours? Reach the paddock on socials.">
+                <span className="inline-flex h-5 w-5 cursor-help items-center justify-center rounded-full border border-pebble-20 font-display text-[10px] font-semibold text-pebble-80 transition-colors hover:border-f1red hover:text-f1red">
+                ?
+              </span>
+            </Tooltip>
+          </h2>
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {FAQS.map((f, i) => (
+          <Accordion
+            key={f.q}
+            expanded={expanded.includes(i)}
+            onChange={() => toggle(i)}
+            sx={{
+              borderRadius: "12px !important",
+              border: "1px solid var(--color-pebble-15)",
+              bgcolor: "var(--color-carbon-deep)",
+              "&:before": { display: "none" },
+              boxShadow: "none",
+            }}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon sx={{ color: "#e10600" }} />}
+              sx={{
+                fontFamily: "var(--font-display)",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                color: "var(--color-pebble)",
+              }}
             >
-              <Accordion.Header>
-                <Accordion.Trigger className="group flex w-full items-center justify-between gap-4 px-5 py-4 text-left font-display text-sm font-semibold text-pebble transition-colors hover:text-f1red data-[panel-open]:text-f1red">
-                  {f.q}
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="h-4 w-4 shrink-0 text-f1red transition-transform duration-300 group-data-[panel-open]:rotate-180"
-                    aria-hidden="true"
-                  >
-                    <path d="M4 6l4 4 4-4" />
-                  </svg>
-                </Accordion.Trigger>
-              </Accordion.Header>
-              <Accordion.Panel className="px-5 pb-5 text-sm leading-relaxed text-pebble-80">
-                {f.a}
-              </Accordion.Panel>
-            </Accordion.Item>
-          ))}
-        </Accordion.Root>
-      </section>
-    </Tooltip.Provider>
+              {f.q}
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{
+                fontSize: "0.875rem",
+                lineHeight: 1.6,
+                color: "var(--color-pebble-80)",
+                fontFamily: "var(--font-body)",
+              }}
+            >
+              {f.a}
+            </AccordionDetails>
+          </Accordion>
+        ))}
+      </div>
+    </section>
   );
 }

@@ -54,9 +54,9 @@ export default async function SchedulePage() {
             {items.map((item) => (
               <article
                 key={item.type}
-                className="flex items-start gap-4 rounded-[2px] bg-pebble-5 p-4 transition-colors duration-200 hover:bg-pebble-8"
+                className="flex items-start gap-4 rounded-xl bg-pebble-5 p-4 transition-colors duration-200 hover:bg-pebble-8"
               >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-f1red-15 text-lg">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-f1red-15 text-lg">
                   {item.icon}
                 </span>
                 <div className="flex flex-1 flex-col gap-1.5">
@@ -73,8 +73,8 @@ export default async function SchedulePage() {
               </article>
             ))}
 
-            <article className="flex items-start gap-4 rounded-[2px] bg-pebble-8 p-4 ring-1 ring-f1red/30">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-[2px] bg-f1red-15 text-lg">
+            <article className="flex items-start gap-4 rounded-xl bg-pebble-8 p-4 ring-1 ring-f1red/30">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-f1red-15 text-lg">
                 🏁
               </span>
               <div className="flex flex-1 flex-col gap-1.5">

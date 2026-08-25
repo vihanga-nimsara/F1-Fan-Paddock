@@ -48,7 +48,7 @@ function DriverCard({ d }: { d: DriverStanding }) {
   return (
     <Link
       href="/drivers"
-      className="group flex flex-col overflow-hidden rounded-[2px] bg-pebble-5 transition-colors duration-150 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 transition-colors duration-150 hover:bg-pebble-8"
     >
       <div className="relative aspect-[84/120] w-full overflow-hidden bg-gradient-to-br from-pebble-10 to-carbon-deep">
         {d.headshot ? (
@@ -61,13 +61,13 @@ function DriverCard({ d }: { d: DriverStanding }) {
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-1 text-pebble">
-            <span className="h-1 w-3.5 rounded-[2px]" style={{ background: color }} />
+            <span className="h-1 w-3.5 rounded-xl" style={{ background: color }} />
             <span className="font-display text-[2.6rem] font-semibold leading-none">
               {d.number}
             </span>
           </div>
         )}
-        <span className="absolute right-2 top-2 rounded-[2px] bg-f1red px-2 py-0.5 font-display text-[10px] font-semibold text-white">
+        <span className="absolute right-2 top-2 rounded-xl bg-f1red px-2 py-0.5 font-display text-[10px] font-semibold text-white">
           P{d.position}
         </span>
       </div>
@@ -76,7 +76,7 @@ function DriverCard({ d }: { d: DriverStanding }) {
           {name}
         </span>
         <span className="inline-flex items-center gap-1.5 text-[10px] text-pebble-80">
-          <span className="h-2 w-2 rounded-[2px]" style={{ background: color }} />
+          <span className="h-2 w-2 rounded-xl" style={{ background: color }} />
           {TEAM_FLAGS[d.team] ?? ""} {d.team.replace(/_/g, " ")}
         </span>
         <span className="font-display text-lg font-semibold text-f1red">

@@ -54,9 +54,9 @@ export default function ShowcasePage() {
             {SHOWCASES.map((s) => (
               <article
                 key={s.title}
-                className="group flex flex-col gap-3 rounded-[2px] bg-pebble-5 p-5 transition-colors duration-200 hover:bg-pebble-8"
+                className="group flex flex-col gap-3 rounded-xl bg-pebble-5 p-5 transition-colors duration-200 hover:bg-pebble-8"
               >
-                <span className="flex h-14 w-14 items-center justify-center rounded-[2px] bg-gradient-to-br from-f1red-15 to-pebble-8 text-[1.6rem]">
+                <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-f1red-15 to-pebble-8 text-[1.6rem]">
                   {s.emoji}
                 </span>
                 <Pill tone="muted">{s.tag}</Pill>

@@ -21,10 +21,6 @@ export default async function StoriesPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-12 py-8">
         <div className="flex flex-col gap-3">
-          <span className="inline-flex w-fit items-center gap-2 font-display text-[11px] font-semibold tracking-[0.16em] text-f1red">
-            <span className="h-3 w-[3px] bg-f1red" aria-hidden="true" />
-            The Blog
-          </span>
           <h1 className="m-0 max-w-[20ch] font-headline text-[clamp(28px,5vw,56px)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-pebble">
             The Paddock Blog
           </h1>
@@ -37,7 +33,7 @@ export default async function StoriesPage() {
         {featured ? (
           <Link
             href={featured.link}
-            className="group grid overflow-hidden rounded-[2px] bg-pebble-5 md:grid-cols-2"
+            className="group grid overflow-hidden rounded-xl bg-pebble-5 md:grid-cols-2"
           >
             <div className="relative aspect-[16/9] w-full overflow-hidden md:aspect-auto md:min-h-[360px]">
               {featured.image ? (
@@ -55,7 +51,7 @@ export default async function StoriesPage() {
               )}
             </div>
             <div className="flex flex-col justify-center gap-3 p-6 md:p-10">
-              <span className="inline-flex w-fit items-center gap-2 rounded-[2px] bg-f1red px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.12em] text-white">
+              <span className="inline-flex w-fit items-center gap-2 rounded-xl bg-f1red px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.12em] text-white">
                 Featured · {featured.source}
               </span>
               <h2 className="m-0 font-headline text-[clamp(20px,3vw,34px)] font-semibold leading-[1] tracking-[-0.01em] text-pebble transition-colors group-hover:text-f1red">

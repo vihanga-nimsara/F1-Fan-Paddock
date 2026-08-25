@@ -40,9 +40,9 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div className="mx-auto flex w-full max-w-[820px] flex-col gap-8">
+        <div className="flex w-full max-w-[820px] flex-col gap-8 text-left">
           {SECTIONS.map((s) => (
-            <section key={s.title} className="flex flex-col gap-2">
+            <section key={s.title} className="flex flex-col gap-2 text-left">
               <h2 className="m-0 font-display text-lg font-semibold tracking-[0.04em] text-pebble">
                 {s.title}
               </h2>
@@ -52,7 +52,7 @@ export default function AboutPage() {
             </section>
           ))}
 
-          <p className="m-0 border-t border-pebble-15 pt-6 font-body text-base leading-relaxed text-pebble-80">
+          <p className="m-0 border-t border-pebble-15 pt-6 text-left font-body text-base leading-relaxed text-pebble-80">
             Curious who keeps the site running? Meet the{" "}
             <Link
               href="/team"

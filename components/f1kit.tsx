@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Avatar as BaseAvatar } from "@base-ui/react/avatar";
+import MuiAvatar from "@mui/material/Avatar";
+import { TextAnimate } from "@/components/ui/text-animate";
 
 /* ------------------------------------------------------------------ */
 /* Layout                                                              */
@@ -38,21 +39,11 @@ export function F1Logo({ className = "" }: { className?: string }) {
 /* Typography helpers                                                  */
 /* ------------------------------------------------------------------ */
 
-export function Kicker({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
+export function Kicker(_props: {
+  children?: React.ReactNode;
   className?: string;
 }) {
-  return (
-    <span
-      className={`inline-flex items-center gap-2 font-display text-[11px] font-semibold tracking-[0.16em] text-f1red ${className}`}
-    >
-      <span className="h-3 w-[3px] bg-f1red" aria-hidden="true" />
-      {children}
-    </span>
-  );
+  return null;
 }
 
 export function SectionHeading({
@@ -74,9 +65,15 @@ export function SectionHeading({
     >
       <div className="flex flex-col gap-1.5">
         {kicker && <Kicker>{kicker}</Kicker>}
-        <h2 className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold uppercase leading-[0.95] tracking-[0.02em] text-pebble">
+        <TextAnimate
+          as="h2"
+          by="word"
+          animation="blurInUp"
+          duration={0.4}
+          className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold uppercase leading-[0.95] tracking-[0.02em] text-pebble"
+        >
           {title}
-        </h2>
+        </TextAnimate>
       </div>
       {href && (
         <Link
@@ -109,7 +106,7 @@ export function Pill({
   };
   return (
     <span
-        className={`inline-flex items-center gap-1 rounded-[2px] px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.08em] leading-none ${tones[tone]} ${className}`}
+        className={`inline-flex items-center gap-1 rounded-xl px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.08em] leading-none ${tones[tone]} ${className}`}
     >
       {children}
     </span>
@@ -177,49 +174,75 @@ export function MediaFallback({
 /* Cards                                                               */
 /* ------------------------------------------------------------------ */
 
+function FacebookIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
+    </svg>
+  );
+}
+
 export function NewsCard({
   href,
   image,
   tag,
   title,
+  description,
   meta,
   color,
+  contain,
 }: {
   href: string;
   image?: string;
   tag?: string;
   title: string;
+  description?: string;
   meta?: React.ReactNode;
   color?: string;
+  contain?: boolean;
 }) {
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-[2px] bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden">
+      <div className={`relative w-full overflow-hidden ${contain ? "" : "aspect-[16/9]"}`}>
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={image}
             alt=""
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={
+              contain
+                ? "w-full h-auto max-h-[460px] object-contain"
+                : "h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            }
           />
         ) : (
           <MediaFallback label={tag?.[0]} sublabel={tag} color={color} />
         )}
         <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon-deep/80 via-transparent to-transparent" />
         {tag && (
-          <span className="absolute left-3 top-3 rounded-[2px] bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
-            {tag}
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-md bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
+            {tag === "Facebook" ? <FacebookIcon className="h-3 w-3" /> : tag}
           </span>
         )}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
-          <h3 className="m-0 line-clamp-3 font-display text-[15px] font-semibold leading-[1.15] tracking-[0.01em] text-pebble transition-colors group-hover:text-f1red">
+        <h3 className={`m-0 font-display text-[15px] font-semibold leading-[1.15] tracking-[0.01em] text-pebble transition-colors group-hover:text-f1red ${description ? "line-clamp-2" : "line-clamp-3"}`}>
           {title}
         </h3>
+        {description && (
+          <p className="m-0 line-clamp-2 text-[12px] leading-[1.3] text-pebble-70">
+            {description}
+          </p>
+        )}
         {meta && (
           <div className="mt-auto flex items-center gap-2 text-[11px] text-pebble-80">
             {meta}
@@ -246,7 +269,7 @@ export function VideoCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-[2px] bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
     >
       <div className="relative aspect-video w-full overflow-hidden">
         {image ? (
@@ -273,7 +296,7 @@ export function VideoCard({
           </span>
         )}
         {tag && (
-          <span className="absolute left-3 top-3 rounded-[2px] bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
+          <span className="absolute left-3 top-3 rounded-xl bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
             {tag}
           </span>
         )}
@@ -322,11 +345,11 @@ export function StandingsTable({
             {r.position}
           </span>
           <span
-            className="h-9 w-[3px] shrink-0 rounded-[2px]"
+            className="h-9 w-[3px] shrink-0 rounded-xl"
             style={{ background: r.color ?? "transparent" }}
             aria-hidden="true"
           />
-          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-[2px] bg-pebble-10">
+          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-pebble-10">
             {r.avatar ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -395,7 +418,7 @@ export function Hero({
   return (
     <Link
       href={href}
-      className="group relative flex min-h-[420px] w-full items-end overflow-hidden rounded-[2px] bg-carbon-deep md:min-h-[520px]"
+      className="group relative flex min-h-[420px] w-full items-end overflow-hidden rounded-xl bg-carbon-deep md:min-h-[520px]"
     >
       {image ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -415,18 +438,24 @@ export function Hero({
       )}
       <span className="absolute inset-0 bg-gradient-to-t from-carbon-deep via-carbon-deep/40 to-transparent" />
       <div className="relative z-10 flex w-full flex-col gap-3 p-6 md:p-10">
-        <span className="inline-flex w-fit items-center gap-2 rounded-[2px] bg-f1red px-2.5 py-1 font-display text-[11px] font-semibold tracking-[0.14em] text-white">
+        <span className="inline-flex w-fit items-center gap-2 rounded-xl bg-f1red px-2.5 py-1 font-display text-[11px] font-semibold tracking-[0.14em] text-white">
           {kicker}
         </span>
-        <h1 className="m-0 max-w-[18ch] font-headline text-[clamp(28px,5vw,56px)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-white">
-          {title}
-        </h1>
+         <TextAnimate
+           as="h1"
+           by="word"
+           animation="blurInUp"
+           duration={0.5}
+           className="m-0 max-w-[18ch] font-headline text-[clamp(28px,5vw,56px)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-white"
+         >
+           {title}
+         </TextAnimate>
         {excerpt && (
           <p className="m-0 max-w-[60ch] text-sm leading-[1.35] text-pebble-80">
             {excerpt}
           </p>
         )}
-          <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-[2px] bg-white px-4 py-2 font-display text-[12px] font-semibold tracking-[0.06em] text-[#15151e] transition-transform group-hover:translate-x-1">
+          <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-xl bg-white px-4 py-2 font-display text-[12px] font-semibold tracking-[0.06em] text-[#15151e] transition-transform group-hover:translate-x-1">
           {cta} →
         </span>
       </div>
@@ -447,12 +476,19 @@ export function Avatar({
 }) {
   const initial = name.trim().charAt(0).toUpperCase();
   return (
-    <BaseAvatar.Root
-      className={`inline-flex h-7 w-7 shrink-0 select-none items-center justify-center overflow-hidden rounded-full bg-f1red font-display text-sm font-semibold text-white ${className}`}
+    <MuiAvatar
+      className={className}
+      sx={{
+        width: 20,
+        height: 20,
+        bgcolor: "#e10600",
+        color: "#fff",
+        fontFamily: "var(--font-display)",
+        fontSize: 10,
+        fontWeight: 600,
+      }}
     >
-      <BaseAvatar.Fallback className="flex h-full w-full items-center justify-center">
-        {initial}
-      </BaseAvatar.Fallback>
-    </BaseAvatar.Root>
+      {initial}
+    </MuiAvatar>
   );
 }

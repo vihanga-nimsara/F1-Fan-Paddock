@@ -90,7 +90,7 @@ export default function YouTubePlayer({
           href={`https://www.youtube.com/watch?v=${videoId}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-[2px] bg-f1red px-4 py-2 font-display text-[12px] font-semibold tracking-[0.08em] text-white transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-2 rounded-xl bg-f1red px-4 py-2 font-display text-[12px] font-semibold tracking-[0.08em] text-white transition-opacity hover:opacity-90"
         >
           WATCH ON YOUTUBE
         </a>

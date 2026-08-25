@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
-import { Cookie } from "lucide-react";
+import { Dialog, DialogContent, Button } from "@mui/material";
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
@@ -34,57 +33,66 @@ export default function CookieConsent() {
   };
 
   return (
-    <AnimatePresence>
-      {visible && (
-        <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 60, scale: 0.96 }}
-          transition={{ type: "spring", stiffness: 260, damping: 24 }}
-          className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-md rounded-[2px] border border-pebble-20 bg-carbon-deep/95 p-5 shadow-[0_20px_60px_rgb(0_0_0/0.5)] backdrop-blur-md"
-          role="dialog"
-          aria-label="Cookie consent"
-        >
-          <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-f1red-15 text-f1red">
-                <Cookie size={18} />
-              </span>
-              <h2 className="m-0 font-display text-base font-semibold tracking-[0.04em] text-pebble">
-                We value your privacy
-              </h2>
-            </div>
-            <p className="m-0 text-xs leading-relaxed text-pebble-80">
-              We use cookies to improve your experience on F1 Fan Paddock and
-              analyze site traffic. You can read more in our{" "}
-              <Link
-                href="/privacy"
-                className="font-medium text-f1red underline-offset-2 hover:underline"
-                onClick={accept}
-              >
-                Privacy Policy
-              </Link>
-              .
-            </p>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={accept}
-                className="flex-1 cursor-pointer rounded-[2px] border-none bg-f1red px-4 py-2.5 font-body text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              >
-                Accept All
-              </button>
-              <button
-                type="button"
-                onClick={decline}
-                className="flex-1 cursor-pointer rounded-[2px] border border-pebble-20 bg-transparent px-4 py-2.5 font-body text-sm font-semibold text-pebble-80 transition-colors hover:bg-pebble-10 hover:text-pebble"
-              >
-                Decline
-              </button>
-            </div>
+    <Dialog
+      open={visible}
+      onClose={accept}
+      maxWidth="xs"
+      fullWidth
+      aria-label="Cookie consent"
+      slotProps={{
+        paper: {
+          sx: {
+            position: "fixed",
+            bottom: 16,
+            top: "auto",
+            left: "auto",
+            right: 16,
+            m: 0,
+            maxWidth: 420,
+            borderRadius: "12px",
+            p: 1,
+            fontFamily: "var(--font-body)",
+          },
+        },
+      }}
+    >
+      <DialogContent sx={{ fontFamily: "var(--font-body)" }}>
+        <div className="flex flex-col gap-3">
+          <h2 className="m-0 font-display text-base font-semibold tracking-[0.04em] text-pebble">
+            We value your privacy
+          </h2>
+          <p className="m-0 text-xs leading-relaxed text-pebble-80">
+            We use cookies to improve your experience on F1 Fan Paddock and
+            analyze site traffic. You can read more in our{" "}
+            <Link
+              href="/privacy"
+              className="font-medium text-f1red underline-offset-2 hover:underline"
+              onClick={accept}
+            >
+              Privacy Policy
+            </Link>
+            .
+          </p>
+          <div className="flex gap-2">
+            <Button
+              variant="contained"
+              fullWidth
+              disableElevation
+              onClick={accept}
+            >
+              Accept All
+            </Button>
+            <Button
+              variant="outlined"
+              fullWidth
+              onClick={decline}
+              sx={{ borderColor: "rgba(20,20,28,0.2)", color: "#16161d" }}
+            >
+              Decline
+            </Button>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

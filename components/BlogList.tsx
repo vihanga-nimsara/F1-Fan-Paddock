@@ -2,40 +2,68 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ToggleGroup } from "@base-ui/react/toggle-group";
-import { Toggle } from "@base-ui/react/toggle";
-import { Avatar } from "@base-ui/react/avatar";
+import {
+  ToggleButtonGroup,
+  ToggleButton,
+  Avatar,
+} from "@mui/material";
 import { NewsCard } from "@/components/f1kit";
 import { BlogPost, timeAgo } from "@/lib/blog";
 
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
 
-  const toggleClass =
-    "rounded-[2px] px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.08em] text-pebble-80 transition-colors hover:text-pebble data-[pressed]:bg-f1red data-[pressed]:text-white";
+  const groupSx = {
+    border: "1px solid rgba(20,20,28,0.2)",
+    borderRadius: "12px",
+    bgcolor: "rgba(20,20,28,0.06)",
+    p: 0.5,
+    "& .MuiToggleButtonGroup-grouped": {
+      border: 0,
+      borderRadius: "10px !important",
+      textTransform: "none",
+    },
+  };
+
+  const btnSx = {
+    fontFamily: "var(--font-display)",
+    fontSize: "11px",
+    fontWeight: 600,
+    letterSpacing: "0.08em",
+    color: "var(--color-pebble-80)",
+    px: 1.5,
+    py: 0.5,
+    "&.Mui-selected": {
+      bgcolor: "#e10600",
+      color: "#fff",
+      "&:hover": { bgcolor: "#b30500" },
+    },
+  };
 
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center justify-end">
-        <ToggleGroup
+        <ToggleButtonGroup
+          value={view}
+          exclusive
+          onChange={(_, val) => {
+            if (val) setView(val);
+          }}
+          size="small"
+          sx={groupSx}
           aria-label="View mode"
-          value={[view]}
-          onValueChange={(val) =>
-            setView(val.length ? (val.includes("list") ? "list" : "grid") : "grid")
-          }
-          className="inline-flex rounded-[2px] border border-pebble-20 bg-pebble-5 p-1"
         >
-          <Toggle value="grid" aria-label="Grid view" className={toggleClass}>
+          <ToggleButton value="grid" sx={btnSx} aria-label="Grid view">
             Grid
-          </Toggle>
-          <Toggle value="list" aria-label="List view" className={toggleClass}>
+          </ToggleButton>
+          <ToggleButton value="list" sx={btnSx} aria-label="List view">
             List
-          </Toggle>
-        </ToggleGroup>
+          </ToggleButton>
+        </ToggleButtonGroup>
       </div>
 
       {posts.length === 0 ? (
-        <div className="flex w-full flex-col items-center gap-2 rounded-[2px] bg-pebble-5 p-10 text-center">
+        <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
           <span className="text-3xl">🏁</span>
           <p className="m-0 font-body text-sm text-pebble-80">
             Stories unavailable right now. Try again shortly.
@@ -66,20 +94,23 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             <li key={p.link}>
               <Link
                 href={p.link}
-                className="group flex items-center gap-3 rounded-[2px] bg-pebble-5 p-2.5 transition-colors hover:bg-pebble-8"
+                className="group flex items-center gap-3 rounded-xl bg-pebble-5 p-2.5 transition-colors hover:bg-pebble-8"
               >
-                <Avatar.Root className="h-11 w-11 shrink-0 overflow-hidden rounded-[2px] border border-pebble-15 bg-pebble-10">
-                  {p.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <Avatar.Image
-                      src={p.image}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : null}
-                  <Avatar.Fallback className="flex h-full w-full items-center justify-center font-display text-sm font-semibold text-pebble">
-                    {(p.author?.[0] ?? p.source?.[0] ?? "·")}
-                  </Avatar.Fallback>
-                </Avatar.Root>
+                <Avatar
+                  src={p.image ?? undefined}
+                  sx={{
+                    width: 44,
+                    height: 44,
+                    borderRadius: "12px",
+                    border: "1px solid rgba(20,20,28,0.15)",
+                    bgcolor: "rgba(20,20,28,0.1)",
+                    fontSize: 14,
+                    fontWeight: 600,
+                    color: "var(--color-pebble)",
+                  }}
+                >
+                  {(p.author?.[0] ?? p.source?.[0] ?? "·")}
+                </Avatar>
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
                   <span className="line-clamp-2 font-display text-sm font-semibold leading-[1.2] text-pebble transition-colors group-hover:text-f1red">
                     {p.title}

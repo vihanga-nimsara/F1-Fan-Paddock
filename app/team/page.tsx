@@ -52,7 +52,7 @@ export default function TeamPage() {
           {TEAM.map((m) => (
             <article
               key={m.name}
-              className="flex flex-col gap-4 rounded-[2px] border border-pebble-15 bg-pebble-5 p-6"
+              className="flex flex-col gap-4 rounded-xl border border-pebble-15 bg-pebble-5 p-6"
             >
               <TeamAvatar src={m.image} name={m.name} />
               <div className="flex flex-col gap-1">

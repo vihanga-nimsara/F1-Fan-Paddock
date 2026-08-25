@@ -33,7 +33,7 @@ export default async function ListsPage() {
         <section className="flex flex-col gap-5">
           <SectionHeading kicker="Your Paddock" title="My Lists" />
 
-          <div className="flex flex-col gap-3 rounded-[2px] bg-pebble-5 p-5">
+          <div className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-5">
             <div className="flex items-center justify-between gap-2">
               <h3 className="m-0 font-display text-base font-semibold tracking-[0.02em] text-pebble">
                 Followed Drivers
@@ -58,7 +58,7 @@ export default async function ListsPage() {
         </section>
 
         <section className="flex flex-col gap-5">
-          <div className="flex flex-col gap-3 rounded-[2px] bg-pebble-5 p-5">
+          <div className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-5">
             <h3 className="m-0 font-display text-base font-semibold tracking-[0.02em] text-pebble">
               Saved Stories
             </h3>
