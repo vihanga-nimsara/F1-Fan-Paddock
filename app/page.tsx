@@ -365,11 +365,7 @@ export default async function Home() {
             </div>
           ) : (
             <p className="m-0 rounded-xl bg-pebble-5 p-6 text-sm text-pebble-80">
-              No Facebook posts yet. Set{" "}
-              <code className="font-mono text-pebble">FB_RSS_URL</code> in{" "}
-              <code className="font-mono text-pebble">.env.local</code> to a
-              Facebook-page RSS feed (from rss.app / fetchrss) and they&apos;ll
-              appear here as cards.
+              No Facebook posts to show yet — check back soon.
             </p>
           )}
         </section>
