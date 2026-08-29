@@ -1,19 +1,21 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import LoadingScreen from "@/components/LoadingScreen";
 import CookieConsent from "@/components/CookieConsent";
 import Toaster from "@/components/Toaster";
+import NewsAlert from "@/components/NewsAlert";
+import LoadingScreen from "@/components/LoadingScreen";
+import ScrollReveal from "@/components/ScrollReveal";
 import MuiProvider from "@/components/mui/MuiProvider";
 import Scanner from "@/components/Scanner";
 
-const bricolage = Bricolage_Grotesque({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-bricolage",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -44,7 +46,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${bricolage.variable} ${mona.variable} ${jetbrains.variable}`}
+      className={`${inter.variable} ${mona.variable} ${jetbrains.variable}`}
     >
       <head />
       <body>
@@ -90,12 +92,20 @@ export default function RootLayout({
           />
         </div>
         <MuiProvider>
-          <LoadingScreen />
+          <script
+            id="f1-splash"
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{if(sessionStorage.getItem('f1-splash-instant')==='1')return;sessionStorage.setItem('f1-splash-instant','1');}catch(e){}var st=document.createElement('style');st.textContent='@keyframes f1pulse{0%,100%{opacity:1}50%{opacity:.25}}';document.head.appendChild(st);var el=document.createElement('div');el.id='f1-loading-screen';el.setAttribute('style','position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;');el.innerHTML='<div style=\\'display:flex;flex-direction:column;align-items:center;gap:12px;\\'><span style=\\'font-family:var(--font-inter),sans-serif;font-size:24px;font-weight:600;color:#fff;\\'>F1 <span style=\\'color:#ff1e00;\\'>Fan Paddock</span></span><span style=\\'display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.7);\\'><span style=\\'width:6px;height:6px;border-radius:9999px;background:#ff1e00;animation:f1pulse 1s infinite;\\'></span>Loading the grid…</span></div>';document.body.appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},5000);})();`,
+            }}
+          />
           <Navbar />
           <div className="pt-[64px]">{children}</div>
           <Footer />
           <CookieConsent />
           <Toaster />
+          <NewsAlert />
+          <LoadingScreen />
+          <ScrollReveal />
         </MuiProvider>
       </body>
     </html>

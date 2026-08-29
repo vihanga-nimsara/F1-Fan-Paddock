@@ -8,7 +8,7 @@ const theme = createTheme({
     background: { default: "#f5f5f7", paper: "#ffffff" },
   },
   typography: {
-    fontFamily: 'var(--font-bricolage), "Bricolage Grotesque", sans-serif',
+    fontFamily: 'var(--font-inter), "Inter", sans-serif',
   },
   shape: { borderRadius: 12 },
 });

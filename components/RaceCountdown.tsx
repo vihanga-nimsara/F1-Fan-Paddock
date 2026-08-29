@@ -41,29 +41,62 @@ const RaceLocationMap = memo(function RaceLocationMap({
   lng,
   circuitName,
   country,
+  targetISO,
 }: {
   lat?: number;
   lng?: number;
   circuitName: string;
   country: string;
+  targetISO: string;
 }) {
   const hasCoords = lat != null && lng != null;
+  const d = new Date(targetISO);
+  const day = d.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+  const time = d.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "UTC",
+  });
+  const rows = [
+    { label: "Venue", value: `${circuitName || "TBC"}${country ? `, ${country}` : ""}` },
+    { label: "Race Day", value: day },
+    { label: "Lights Out", value: `${time} UTC` },
+  ];
   return (
     <div className="border-t border-pebble-15 px-4 pb-5 pt-4 md:px-8">
-      {hasCoords && (
-        <DottedMap
-          width={320}
-          height={160}
-          mapSamples={1800}
-          markers={[{ lat: lat!, lng: lng!, size: 1, pulse: true }]}
-          markerColor="#E10600"
-          dotRadius={0.22}
-          className="text-pebble-20"
-        />
-      )}
-      <p className="m-0 mt-2 font-display text-[10px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
-        {country || "Location TBC"} · {circuitName || "Venue TBC"}
-      </p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
+        {hasCoords && (
+          <div className="md:w-1/2">
+            <DottedMap
+              width={320}
+              height={160}
+              mapSamples={1800}
+              markers={[{ lat: lat!, lng: lng!, size: 1, pulse: true }]}
+              markerColor="#E10600"
+              dotRadius={0.22}
+              className="text-pebble-60"
+            />
+          </div>
+        )}
+        <div className="flex flex-col gap-3 md:w-1/2">
+          {rows.map((r) => (
+            <div key={r.label} className="flex flex-col gap-0.5">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
+                {r.label}
+              </span>
+              <span className="font-display text-[15px] font-semibold leading-tight text-pebble">
+                {r.value}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 });
@@ -132,6 +165,7 @@ export default function RaceCountdown({
         lng={lng}
         circuitName={circuitName}
         country={country}
+        targetISO={targetISO}
       />
 
       <div className="flex items-center justify-between border-t border-pebble-15 px-6 py-3 md:px-8">

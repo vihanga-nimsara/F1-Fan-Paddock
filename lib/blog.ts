@@ -2,6 +2,7 @@ import Parser from "rss-parser";
 import { getFacebookPosts } from "./facebook";
 
 export type BlogPost = {
+  id?: string;
   title: string;
   description: string;
   link: string;
@@ -9,6 +10,7 @@ export type BlogPost = {
   pubDate: string;
   source: string;
   image?: string;
+  images?: string[];
 };
 
 const parser = new Parser({
@@ -62,6 +64,7 @@ async function getApiNews(): Promise<BlogPost[]> {
       const title = a.title ?? "";
       const src = a.source?.name ?? a.source ?? "News";
       return {
+        id: a.url ?? a.link ?? title,
         title,
         description: stripHtml(a.description ?? a.content ?? ""),
         link: a.url ?? a.link ?? "#",
@@ -121,6 +124,7 @@ export async function getBlogPosts(
           );
           const raw = (item.content ?? item.summary ?? "") as string;
           rssPosts.push({
+            id: item.guid ?? item.link ?? title,
             title,
             description,
             link: item.link ?? "#",

@@ -133,8 +133,18 @@ export default async function Home() {
         )}
 
         {/* Blog — the main feature */}
-        <section className="flex flex-col gap-5">
-          <SectionHeading kicker="News" title="F1 News Wire" href="/stories" linkLabel="All news" />
+        <section className="relative flex flex-col gap-5 overflow-hidden rounded-xl p-4 md:p-6">
+          <div className="pointer-events-none absolute inset-0 z-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/f1-cars-track-racing-wallpaper-38e6ad48b0f0ecf8c05cc1ae6802149a.jpg"
+              alt=""
+              className="h-full w-full object-cover opacity-70"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/25 to-transparent" />
+          </div>
+          <div className="relative z-10 flex flex-col gap-5">
+          <SectionHeading kicker="News" title="F1 News Wire" href="/news" linkLabel="All news" />
             <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
               <Link
                 href={blogFeatured.link}
@@ -194,7 +204,7 @@ export default async function Home() {
             {blogRest.slice(2).map((s) => (
               <NewsCard
                 key={s.title}
-                href="/stories"
+                href="/news"
                 tag={s.tag}
                 title={s.title}
                 meta={
@@ -207,6 +217,7 @@ export default async function Home() {
                 }
               />
             ))}
+          </div>
           </div>
         </section>
 

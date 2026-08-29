@@ -12,6 +12,7 @@ import {
   Flag,
   HelpCircle,
   History,
+  Home,
   Info,
   LayoutGrid,
   List,
@@ -42,7 +43,9 @@ type NavItem = {
 };
 
 const NAV: NavItem[] = [
-  { label: "Blog", href: "/stories", icon: <Newspaper size={16} /> },
+  { label: "Home", href: "/", icon: <Home size={16} /> },
+  { label: "Blog", href: "/stories", icon: <BookOpen size={16} /> },
+  { label: "News", href: "/news", icon: <Newspaper size={16} /> },
   { label: "Video", href: "/video", icon: <PlayCircle size={16} /> },
   {
     label: "Racing",

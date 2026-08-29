@@ -48,7 +48,7 @@ export default function TeamPage() {
           </p>
         </div>
 
-        <div className="mx-auto grid w-full max-w-[820px] gap-5 sm:grid-cols-2">
+        <div className="grid w-full max-w-[820px] gap-5 sm:grid-cols-2">
           {TEAM.map((m) => (
             <article
               key={m.name}
@@ -81,7 +81,7 @@ export default function TeamPage() {
           ))}
         </div>
 
-        <p className="mx-auto w-fit border-t border-pebble-15 pt-6 font-body text-base leading-relaxed text-pebble-80">
+        <p className="max-w-[820px] border-t border-pebble-15 pt-6 font-body text-base leading-relaxed text-pebble-80">
           Want to get involved? Reach out on{" "}
           <Link
             href="https://web.facebook.com/profile.php?id=61574396222083"

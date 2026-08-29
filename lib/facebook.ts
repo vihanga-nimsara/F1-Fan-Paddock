@@ -31,6 +31,7 @@ export type FacebookPost = {
 const API_VERSION = process.env.FB_API_VERSION ?? "v22.0";
 
 export type FetchedPost = {
+  id?: string;
   title: string;
   description: string;
   link: string;
@@ -38,6 +39,7 @@ export type FetchedPost = {
   pubDate: string;
   source: string;
   image?: string;
+  images?: string[];
 };
 
 function extractImage(post: FacebookPost): string | undefined {
@@ -84,14 +86,23 @@ function toBlogPost(post: FacebookPost, pageName: string): FetchedPost {
     attachment?.title ||
     "";
 
+  const images = [
+    proxiedImage(extractImage(post)),
+    ...(post.child_attachments?.data ?? [])
+      .map((c) => proxiedImage(c.picture ?? c.media?.image?.src))
+      .filter(Boolean),
+  ].filter(Boolean) as string[];
+
   return {
+    id: post.id,
     title,
     description: body,
     link,
     author: pageName,
     pubDate: post.created_time,
     source: "Facebook",
-    image: proxiedImage(extractImage(post)),
+    image: images[0],
+    images,
   };
 }
 

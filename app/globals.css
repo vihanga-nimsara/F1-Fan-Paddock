@@ -34,11 +34,20 @@
   --color-pebble-80: rgb(20 20 28 / 0.72);
   --color-pebble-90: rgb(20 20 28 / 0.9);
 
-  /* Fonts — Bricolage Grotesque for UI/body, Mona Sans for big headlines */
-  --font-display: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
-  --font-heading: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
-  --font-body: var(--font-bricolage), "Bricolage Grotesque", sans-serif;
+  /* Fonts — Inter for UI/body, Mona Sans for big headlines */
+  --font-display: var(--font-inter), "Inter", sans-serif;
+  --font-heading: var(--font-inter), "Inter", sans-serif;
+  --font-body: var(--font-inter), "Inter", sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+
+  /* Global corner radius — smooth, rounded look */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-3xl: 28px;
 }
 
 /* Dark theme — enabled by the `.dark` class on <html> (toggled in ThemeToggle) */
@@ -54,18 +63,18 @@
   --color-carbon-90: rgb(21 21 30 / 0.9);
 
   --color-pebble: hsl(0 0% 93%);
-  --color-pebble-5: hsl(0 0% 93% / 0.05);
-  --color-pebble-8: hsl(0 0% 93% / 0.08);
-  --color-pebble-10: hsl(0 0% 93% / 0.1);
-  --color-pebble-15: hsl(0 0% 93% / 0.15);
-  --color-pebble-20: hsl(0 0% 93% / 0.2);
+  --color-pebble-5: hsl(0 0% 93% / 0.04);
+  --color-pebble-8: hsl(0 0% 93% / 0.06);
+  --color-pebble-10: hsl(0 0% 93% / 0.08);
+  --color-pebble-15: hsl(0 0% 93% / 0.1);
+  --color-pebble-20: hsl(0 0% 93% / 0.14);
   --color-pebble-40: hsl(0 0% 93% / 0.4);
   --color-pebble-50: hsl(0 0% 93% / 0.5);
   --color-pebble-80: hsl(0 0% 93% / 0.78);
   --color-pebble-90: hsl(0 0% 93% / 0.9);
 }
 
-/* Big display headings use Mona Sans; everything else stays Bricolage */
+/* Big display headings use Mona Sans; everything else stays Inter */
 .font-headline {
   font-family: var(--font-mona), "Mona Sans", ui-sans-serif, system-ui, sans-serif;
 }
@@ -151,6 +160,35 @@
   * {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* Scroll reveal — only active once JS adds `.js-reveal` (content stays visible without JS) */
+.js-reveal [data-reveal] {
+  opacity: 0;
+}
+
+.js-reveal [data-reveal].is-visible {
+  animation: revealUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-reveal [data-reveal] {
+    opacity: 1;
+  }
+  .js-reveal [data-reveal].is-visible {
+    animation: none;
   }
 }
 

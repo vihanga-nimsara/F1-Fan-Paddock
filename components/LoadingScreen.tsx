@@ -41,7 +41,8 @@ const F1_HYPERSPEED_OPTIONS = {
 };
 
 export default function LoadingScreen() {
-  const [visible, setVisible] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [fading, setFading] = useState(false);
 
   useEffect(() => {
     let shown = false;
@@ -54,19 +55,29 @@ export default function LoadingScreen() {
       sessionStorage.setItem("f1-welcome-shown", "1");
     } catch {}
 
-    setVisible(true);
-    const timer = setTimeout(() => setVisible(false), 3000);
-    return () => clearTimeout(timer);
+    setMounted(true);
+    const t1 = setTimeout(() => setFading(true), 3000);
+    const t2 = setTimeout(() => {
+      setMounted(false);
+      try {
+        const el = document.getElementById("f1-loading-screen");
+        if (el && el.parentNode) el.parentNode.removeChild(el);
+      } catch {}
+    }, 3750);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
 
-  if (!visible) return null;
+  if (!mounted) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black transition-opacity duration-700 ${
-        visible ? "opacity-100" : "pointer-events-none opacity-0"
+      className={`fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-black transition-opacity duration-700 ${
+        fading ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
-      aria-hidden={!visible}
+      aria-hidden
     >
       <div className="absolute inset-0">
         <ErrorBoundary fallback={null}>
