@@ -76,7 +76,7 @@ export async function getCachedBlogPosts(limit = 20): Promise<BlogPost[]> {
         const key = dedupeKey(p);
         if (key && !map.has(key)) map.set(key, p);
       }
-      const merged = [...map.values()].sort(
+      const merged = Array.from(map.values()).sort(
         (a, b) =>
           new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime(),
       );
