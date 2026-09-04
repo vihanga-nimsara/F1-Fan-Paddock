@@ -40,7 +40,7 @@ export default function SubscribeDialog({
       slotProps={{
         paper: {
           sx: {
-            borderRadius: "12px",
+            borderRadius: "4px",
             borderTop: "3px solid #e10600",
             fontFamily: "var(--font-body)",
           },

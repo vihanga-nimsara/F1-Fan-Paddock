@@ -7,7 +7,7 @@ export const metadata = {
   title: "F1 News — F1 Fan Paddock",
 };
 
-export const revalidate = 1800;
+export const dynamic = "force-dynamic";
 
 export default async function NewsPage() {
   const posts = await getBlogPosts(13);

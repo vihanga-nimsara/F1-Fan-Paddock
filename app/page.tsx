@@ -40,8 +40,10 @@ const STORIES = [
   { tag: "Track guide", ts: "17d", title: "Monza: why overtaking is so hard — and what changed", author: "paddock" },
 ];
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
-  const [drivers, constructors, nextRaces, recentRaces, blogPosts, fbPosts, headshots, videos] =
+  const [drivers, constructors, nextRaces, recentRaces, blogPosts, fbPosts, videos] =
     await Promise.all([
       getDriverStandings(),
       getConstructorStandings(),
@@ -49,9 +51,12 @@ export default async function Home() {
       getRecentRaces(4),
       getBlogPosts(10),
       getBlogPosts(10, "Facebook"),
-      getDriverHeadshots().catch(() => ({}) as Record<string, string>),
       getPlaylistVideos(YT_PLAYLIST, 6),
     ]);
+
+  const headshots = await getDriverHeadshots(undefined, drivers).catch(
+    () => ({}) as Record<string, string>,
+  );
 
   const driverRows: StandingRow[] = drivers.slice(0, 10).map((d: DriverStanding) => ({
     position: d.position,
@@ -74,14 +79,6 @@ export default async function Home() {
     logo: getTeamLogo(c.constructorId, 80),
     href: "/constructors",
   }));
-
-  const featured = recentRaces[0];
-  const heroTitle = featured
-    ? `Race Report: ${featured.raceName}`
-    : "The 2026 Season Is Live";
-  const heroExcerpt = featured
-    ? `Full breakdown, timing deltas and the key moments from ${featured.circuitName}.`
-    : "Follow every session, every lap and every overtake with live timing and fan verdicts.";
 
   const homeBlogs = blogPosts.filter((p) => p.source !== "Facebook");
   const [blogFeatured, ...blogRest] = (
@@ -108,17 +105,21 @@ export default async function Home() {
 
   return (
     <main className="relative w-full">
-      <Container className="flex flex-col gap-14 py-8">
-        {/* Hero */}
+      {/* Hero — full-bleed background, fades into page */}
+      <section className="relative w-full">
         <Hero
-          href={featured ? "/calendar" : "/standings"}
           image="/images/ChatGPT_Image_Aug_16_2026_08_13_40_PM.png"
-          kicker="Latest"
-          title={heroTitle}
-          excerpt={heroExcerpt}
-          cta="Read the report"
+          kicker="Welcome to"
+          title="The F1 Fan Paddock"
+          excerpt="Follow every session, every lap and every overtake with live timing, verdicts from verified fans and the full 2026 story — all in one paddock."
+          primaryCta="Explore the Grid"
+          primaryHref="/standings"
+          secondaryCta="Live Timing"
+          secondaryHref="/dashboard"
         />
+      </section>
 
+      <Container className="flex flex-col gap-14 py-8">
         {/* Next race countdown */}
         {nextRaces[0] && (
           <RaceCountdown
@@ -133,22 +134,12 @@ export default async function Home() {
         )}
 
         {/* Blog — the main feature */}
-        <section className="relative flex flex-col gap-5 overflow-hidden rounded-xl p-4 md:p-6">
-          <div className="pointer-events-none absolute inset-0 z-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/f1-cars-track-racing-wallpaper-38e6ad48b0f0ecf8c05cc1ae6802149a.jpg"
-              alt=""
-              className="h-full w-full object-cover opacity-70"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-carbon via-carbon/25 to-transparent" />
-          </div>
-          <div className="relative z-10 flex flex-col gap-5">
+        <section className="flex flex-col gap-5">
           <SectionHeading kicker="News" title="F1 News Wire" href="/news" linkLabel="All news" />
-            <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+          <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
               <Link
                 href={blogFeatured.link}
-                className="group relative flex min-h-[200px] flex-col justify-end overflow-hidden rounded-xl bg-carbon-deep"
+                className="group relative flex min-h-[220px] flex-col justify-end overflow-hidden rounded-sm bg-carbon-deep"
               >
               {blogFeatured.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -164,7 +155,7 @@ export default async function Home() {
               )}
               <span className="absolute inset-0 bg-gradient-to-t from-carbon-deep via-carbon-deep/40 to-transparent" />
               <div className="relative z-10 flex flex-col gap-2 p-6">
-                <span className="inline-flex w-fit items-center gap-2 rounded-xl bg-f1red px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.12em] text-white">
+                <span className="inline-flex w-fit items-center gap-2 rounded-sm bg-f1red px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.12em] text-white uppercase">
                   {blogFeatured.tag}
                 </span>
                 <h3 className="m-0 max-w-[24ch] font-headline text-[clamp(18px,2.4vw,28px)] font-semibold leading-[1.02] tracking-[-0.01em] text-pebble transition-colors group-hover:text-f1red">
@@ -218,7 +209,6 @@ export default async function Home() {
               />
             ))}
           </div>
-          </div>
         </section>
 
         {/* Must watch */}
@@ -267,7 +257,7 @@ export default async function Home() {
               return (
                 <div
                   key={r.round}
-                  className="flex flex-col gap-3 rounded-xl border border-pebble-15 bg-carbon-deep p-4"
+                  className="flex flex-col gap-3 rounded-sm border border-pebble-15 bg-carbon-deep p-4"
                 >
                   <div className="flex items-center justify-between">
                     <span className="font-headline text-[11px] font-semibold tracking-[0.12em] text-pebble-80 uppercase">
@@ -300,7 +290,7 @@ export default async function Home() {
                 <Link
                   key={r.round}
                   href="/calendar"
-                  className="group flex flex-col overflow-hidden rounded-xl border border-pebble-15 bg-carbon-deep transition-colors hover:bg-pebble-5"
+                  className="group flex flex-col overflow-hidden rounded-sm border border-pebble-15 bg-carbon-deep transition-colors hover:bg-pebble-5"
                 >
                   <div className="relative h-40 w-full overflow-hidden bg-pebble-10">
                     {img ? (
@@ -364,14 +354,14 @@ export default async function Home() {
               ))}
             </div>
           ) : (
-            <p className="m-0 rounded-xl bg-pebble-5 p-6 text-sm text-pebble-80">
+            <p className="m-0 rounded-sm bg-pebble-5 p-6 text-sm text-pebble-80">
               No Facebook posts to show yet — check back soon.
             </p>
           )}
         </section>
 
         {/* CTA band */}
-        <section className="flex flex-col items-start gap-4 rounded-xl bg-f1red px-6 py-10 md:px-12 md:py-14">
+        <section className="flex flex-col items-start gap-4 rounded-sm bg-f1red px-6 py-10 md:px-12 md:py-14">
             <TextAnimate
             as="h2"
             by="word"

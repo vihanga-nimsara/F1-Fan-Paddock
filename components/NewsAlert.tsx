@@ -47,62 +47,61 @@ export default function NewsAlert() {
   const item = posts[index];
 
   return (
-    <div className="fixed bottom-4 right-4 z-[60] w-[min(92vw,340px)] overflow-hidden rounded-xl border border-pebble-15 bg-carbon-deep shadow-2xl">
-      <div className="relative w-full aspect-[2/1] overflow-hidden bg-pebble-10">
-        {item.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
+    <div className="fixed bottom-4 right-4 z-[60] flex w-[min(94vw,380px)] overflow-hidden rounded-sm border border-pebble-15 bg-carbon-deep shadow-2xl">
+      {item.image ? (
+        <div className="relative h-auto w-24 shrink-0 overflow-hidden bg-pebble-10 sm:w-28">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={item.image}
             alt=""
             className="h-full w-full object-cover"
           />
-        ) : (
+        </div>
+      ) : (
+        <div className="relative h-auto w-24 shrink-0 overflow-hidden bg-pebble-10 sm:w-28">
           <MediaFallback label={item.source?.[0]} sublabel={item.source} />
-        )}
-        <button
-          type="button"
-          aria-label="Dismiss news"
-          onClick={() => setOpen(false)}
-          className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-md bg-carbon-deep/80 text-pebble-80 backdrop-blur transition-colors hover:bg-f1red hover:text-white"
-        >
-          ✕
-        </button>
-      </div>
+        </div>
+      )}
 
-      <div className="flex flex-col gap-2 p-3">
-        <span className="text-[11px] text-pebble-80">
-          {item.source} · {item.ago}
-        </span>
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5 p-3">
+        <div className="flex items-start justify-between gap-2">
+          <span className="text-[10px] font-medium text-pebble-80">
+            {item.source} · {item.ago}
+          </span>
+          <button
+            type="button"
+            aria-label="Dismiss news"
+            onClick={() => setOpen(false)}
+            className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm text-pebble-50 transition-colors hover:bg-f1red hover:text-white"
+          >
+            ✕
+          </button>
+        </div>
         <a
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-display text-[15px] font-semibold leading-[1.2] text-pebble transition-colors hover:text-f1red"
+          className="line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble transition-colors hover:text-f1red"
         >
           {item.title}
         </a>
-        {item.description ? (
-          <p className="m-0 line-clamp-2 text-[12px] leading-[1.4] text-pebble-80">
-            {item.description}
-          </p>
-        ) : null}
 
-        <div className="mt-1 flex items-center justify-between">
+        <div className="mt-auto flex items-center justify-between pt-0.5">
           <a
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-display text-[11px] font-semibold tracking-[0.08em] text-f1red hover:underline"
+            className="font-display text-[10px] font-semibold tracking-[0.08em] text-f1red hover:underline"
           >
-            Read at source ↗
+            Read more ↗
           </a>
           {posts.length > 1 ? (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               <button
                 type="button"
                 aria-label="Previous news"
                 onClick={() => setIndex((i) => (i - 1 + posts.length) % posts.length)}
-                className="flex h-7 w-7 items-center justify-center rounded-md border border-pebble-15 text-pebble-80 transition-colors hover:bg-pebble-10 hover:text-pebble"
+                className="flex h-5 w-5 items-center justify-center rounded-sm border border-pebble-15 text-pebble-80 transition-colors hover:bg-pebble-10 hover:text-pebble"
               >
                 ‹
               </button>
@@ -110,7 +109,7 @@ export default function NewsAlert() {
                 type="button"
                 aria-label="Next news"
                 onClick={() => setIndex((i) => (i + 1) % posts.length)}
-                className="flex h-7 w-7 items-center justify-center rounded-md border border-pebble-15 text-pebble-80 transition-colors hover:bg-pebble-10 hover:text-pebble"
+                className="flex h-5 w-5 items-center justify-center rounded-sm border border-pebble-15 text-pebble-80 transition-colors hover:bg-pebble-10 hover:text-pebble"
               >
                 ›
               </button>

@@ -38,7 +38,11 @@ const fbGraphConfigured = !!(
   !FB_PLACEHOLDER.test(process.env.FB_PAGE_ID) &&
   !FB_PLACEHOLDER.test(process.env.FB_PAGE_ACCESS_TOKEN)
 );
-if (process.env.FB_RSS_URL && !fbGraphConfigured) {
+// The RSS feed is ALWAYS registered when available. When the Graph API is
+// configured we still prefer it (see getBlogPosts), but the RSS feed provides
+// an automatic, token-free fallback so Facebook posts keep flowing even if the
+// page access token expires or the Graph API is unavailable.
+if (process.env.FB_RSS_URL) {
   SOURCES.push({ name: "Facebook", url: process.env.FB_RSS_URL });
 }
 
@@ -104,7 +108,17 @@ function stripHtml(input: string): string {
 
 function extractImage(input: string): string | undefined {
   const m = input.match(/<img[^>]+src=["']([^"']+)["']/);
-  return m ? m[1] : undefined;
+  let url = m ? m[1] : undefined;
+  // Also try media:content (used by Facebook RSS feeds)
+  if (!url) {
+    const mc = input.match(/<media:content[^>]+url=["']([^"']+)["']/);
+    url = mc ? mc[1] : undefined;
+  }
+  // Proxy Facebook CDN images through our server so they aren't hotlink-blocked
+  if (url && /fbcdn\.net|facebook\.com/.test(url)) {
+    return `/api/fbimg?u=${encodeURIComponent(url)}`;
+  }
+  return url;
 }
 
 export async function getBlogPosts(

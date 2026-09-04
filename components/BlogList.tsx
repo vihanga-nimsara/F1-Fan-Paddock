@@ -15,12 +15,12 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
   const groupSx = {
     border: "1px solid rgba(20,20,28,0.2)",
-    borderRadius: "12px",
+    borderRadius: "4px",
     bgcolor: "rgba(20,20,28,0.06)",
     p: 0.5,
     "& .MuiToggleButtonGroup-grouped": {
       border: 0,
-      borderRadius: "10px !important",
+      borderRadius: "4px !important",
       textTransform: "none",
     },
   };
@@ -101,7 +101,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                   sx={{
                     width: 44,
                     height: 44,
-                    borderRadius: "12px",
+                    borderRadius: "4px",
                     border: "1px solid rgba(20,20,28,0.15)",
                     bgcolor: "rgba(20,20,28,0.1)",
                     fontSize: 14,

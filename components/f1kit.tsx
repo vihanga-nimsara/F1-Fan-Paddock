@@ -106,7 +106,7 @@ export function Pill({
   };
   return (
     <span
-        className={`inline-flex items-center gap-1 rounded-xl px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.08em] leading-none ${tones[tone]} ${className}`}
+        className={`inline-flex items-center gap-1 rounded-sm px-2.5 py-1 font-display text-[10px] font-semibold tracking-[0.08em] leading-none ${tones[tone]} ${className}`}
     >
       {children}
     </span>
@@ -209,7 +209,7 @@ export function NewsCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-sm bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
     >
       <div className={`relative w-full overflow-hidden ${contain ? "" : "aspect-[16/9]"}`}>
         {image ? (
@@ -229,7 +229,7 @@ export function NewsCard({
         )}
         <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon-deep/80 via-transparent to-transparent" />
         {tag && (
-          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-md bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
+          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-sm bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
             {tag === "Facebook" ? <FacebookIcon className="h-3 w-3" /> : tag}
           </span>
         )}
@@ -269,7 +269,7 @@ export function VideoCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-sm bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
     >
       <div className="relative aspect-video w-full overflow-hidden">
         {image ? (
@@ -296,7 +296,7 @@ export function VideoCard({
           </span>
         )}
         {tag && (
-          <span className="absolute left-3 top-3 rounded-xl bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
+          <span className="absolute left-3 top-3 rounded-sm bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
             {tag}
           </span>
         )}
@@ -399,67 +399,87 @@ export function StandingsTable({
 /* ------------------------------------------------------------------ */
 
 export function Hero({
-  href,
   image,
-  kicker,
+  kicker = "Welcome to",
   title,
   excerpt,
-  cta = "Read more",
+  primaryCta,
+  primaryHref,
+  secondaryCta,
+  secondaryHref,
   color = "#e10600",
 }: {
-  href: string;
   image?: string;
-  kicker: string;
+  kicker?: string;
   title: string;
   excerpt?: string;
-  cta?: string;
+  primaryCta?: string;
+  primaryHref?: string;
+  secondaryCta?: string;
+  secondaryHref?: string;
   color?: string;
 }) {
   return (
-    <Link
-      href={href}
-      className="group relative flex min-h-[420px] w-full items-end overflow-hidden rounded-xl bg-carbon-deep md:min-h-[520px]"
-    >
+    <div className="group relative flex min-h-[420px] w-full flex-col justify-end md:min-h-[540px]">
       {image ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={image}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover object-top"
         />
       ) : (
         <div
           className="absolute inset-0"
           style={{
-            background: `radial-gradient(120% 100% at 85% 0%, ${color}cc 0%, #15151e 60%)`,
+            background: `radial-gradient(130% 110% at 80% 10%, ${color}cc 0%, #15151e 55%)`,
           }}
           aria-hidden="true"
         />
       )}
-      <span className="absolute inset-0 bg-gradient-to-t from-carbon-deep via-carbon-deep/40 to-transparent" />
-      <div className="relative z-10 flex w-full flex-col gap-3 p-6 md:p-10">
-        <span className="inline-flex w-fit items-center gap-2 rounded-xl bg-f1red px-2.5 py-1 font-display text-[11px] font-semibold tracking-[0.14em] text-white">
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon via-carbon/40 to-transparent" />
+      <span className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-f1red" />
+      <div className="relative z-10 mx-auto w-full max-w-[1640px] flex flex-col gap-4 px-4 pb-10 pt-16 md:px-6 md:pb-14">
+        <span className="inline-flex w-fit items-center gap-3 rounded-sm bg-f1red px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.16em] text-white uppercase">
+          <span aria-hidden="true">🏁</span>
           {kicker}
         </span>
-         <TextAnimate
-           as="h1"
-           by="word"
-           animation="blurInUp"
-           duration={0.5}
-           className="m-0 max-w-[18ch] font-headline text-[clamp(28px,5vw,56px)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-white"
-         >
-           {title}
-         </TextAnimate>
+        <TextAnimate
+          as="h1"
+          by="word"
+          animation="blurInUp"
+          duration={0.5}
+          className="m-0 max-w-[22ch] font-headline text-[clamp(34px,6vw,64px)] font-semibold uppercase leading-[0.88] tracking-[0.01em] text-white"
+        >
+          {title}
+        </TextAnimate>
         {excerpt && (
-          <p className="m-0 max-w-[60ch] text-sm leading-[1.35] text-pebble-80">
+          <p className="m-0 max-w-[55ch] text-[16px] leading-[1.4] text-white/75">
             {excerpt}
           </p>
         )}
-          <span className="mt-1 inline-flex w-fit items-center gap-2 rounded-xl bg-white px-4 py-2 font-display text-[12px] font-semibold tracking-[0.06em] text-[#15151e] transition-transform group-hover:translate-x-1">
-          {cta} →
-        </span>
+        {(primaryCta || secondaryCta) && (
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            {primaryCta && (
+              <Link
+                href={primaryHref ?? "#"}
+                className="inline-flex items-center gap-2 rounded-sm bg-white px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-all hover:bg-f1red hover:text-white"
+              >
+                {primaryCta} →
+              </Link>
+            )}
+            {secondaryCta && (
+              <Link
+                href={secondaryHref ?? "#"}
+                className="inline-flex items-center gap-2 rounded-sm border border-white/40 bg-white/10 px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-white backdrop-blur transition-colors hover:border-white hover:bg-white/20"
+              >
+                {secondaryCta}
+              </Link>
+            )}
+          </div>
+        )}
       </div>
-    </Link>
+    </div>
   );
 }
 

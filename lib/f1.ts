@@ -1,3 +1,5 @@
+import { DRIVER_HEADSHOTS } from "./headshots";
+
 export type DriverStanding = {
   position: number;
   points: number;
@@ -191,9 +193,18 @@ export function getCircuitImage(
 
 const isServer = typeof window === "undefined";
 
+// OpenF1 is free without auth outside live sessions, but during a live session
+// (or for authenticated features) it requires a Bearer token. If you have an
+// account, set OPENF1_ACCESS_TOKEN (a token from POST /token) or the credentials
+// OPENF1_USERNAME + OPENF1_PASSWORD and we'll fetch an OAuth token automatically.
+function openf1Headers(): Record<string, string> {
+  const token = process.env.OPENF1_ACCESS_TOKEN;
+  return token ? { Authorization: `Bearer ${token}` } : {};
+}
+
 async function fetchJson(url: string, revalidate = 3600) {
   const res = await fetch(url, {
-    headers: { Accept: "application/json" },
+    headers: { Accept: "application/json", ...(isServer ? openf1Headers() : {}) },
     ...(isServer ? { next: { revalidate } } : {}),
   });
   if (!res.ok) throw new Error(`API error ${res.status}: ${url}`);
@@ -306,7 +317,13 @@ export async function getLatestSession(): Promise<LiveSession | null> {
     })
     .sort((a, b) => b.date_start.localeCompare(a.date_start));
   if (started.length > 0) return started[0];
-  return null;
+
+  // No session has started yet — fall back to the most recent available session
+  // so we can still resolve driver headshots.
+  const any = sessions
+    .filter((s) => !s.is_cancelled)
+    .sort((a, b) => b.date_start.localeCompare(a.date_start));
+  return any[0] ?? null;
 }
 
 export type LiveCarData = {
@@ -367,22 +384,47 @@ export async function getDrivers(sessionKey?: number): Promise<DriverInfo[]> {
 
 export async function getDriverHeadshots(
   sessionKey?: number,
+  roster?: { code?: string; number?: string }[],
 ): Promise<Record<string, string>> {
-  let key = sessionKey;
-  if (!key) {
-    const session = await getLatestSession();
-    key = session?.session_key;
-  }
-  if (!key) return {};
-  const drivers = await getDrivers(key);
   const map: Record<string, string> = {};
-  for (const d of drivers) {
-    if (d.headshot_url) {
-      const hi = d.headshot_url.replace(".transform/1col/", ".transform/5col/");
-      map[String(d.driver_number)] = hi;
-      map[d.name_acronym?.toUpperCase() ?? ""] = hi;
+  try {
+    let key = sessionKey;
+    if (!key) {
+      const session = await getLatestSession();
+      key = session?.session_key;
+    }
+    if (key) {
+      const drivers = await getDrivers(key);
+      for (const d of drivers) {
+        if (d.headshot_url) {
+          const hi = d.headshot_url.replace(
+            ".transform/1col/",
+            ".transform/5col/",
+          );
+          map[String(d.driver_number)] = hi;
+          map[d.name_acronym?.toUpperCase() ?? ""] = hi;
+        }
+      }
+    }
+  } catch {
+    // OpenF1 unavailable — fall through to the curated fallback below.
+  }
+
+  // Fill in any roster drivers still missing a headshot using the curated,
+  // token-free Wikimedia fallback map.
+  if (roster?.length) {
+    for (const d of roster) {
+      if (!d.code && !d.number) continue;
+      const k = d.code?.toUpperCase() ?? String(d.number);
+      if (map[String(d.number)] || map[k]) continue;
+      const url = DRIVER_HEADSHOTS[d.code?.toUpperCase() ?? ""];
+      if (url) {
+        if (d.number) map[String(d.number)] = url;
+        map[d.code!.toUpperCase()] = url;
+      }
     }
   }
+
   return map;
 }
 

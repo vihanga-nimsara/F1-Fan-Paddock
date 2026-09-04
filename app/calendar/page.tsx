@@ -6,6 +6,8 @@ export const metadata = {
   title: "Calendar — F1 Fan Paddock",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function CalendarPage() {
   const races = await getSeasonRaces("current");
 

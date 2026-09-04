@@ -54,7 +54,7 @@ export default function FaqAccordion() {
             expanded={expanded.includes(i)}
             onChange={() => toggle(i)}
             sx={{
-              borderRadius: "12px !important",
+              borderRadius: "4px !important",
               border: "1px solid var(--color-pebble-15)",
               bgcolor: "var(--color-carbon-deep)",
               "&:before": { display: "none" },

@@ -40,21 +40,21 @@
   --font-body: var(--font-inter), "Inter", sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
 
-  /* Global corner radius — smooth, rounded look */
-  --radius-xs: 6px;
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
-  --radius-2xl: 22px;
-  --radius-3xl: 28px;
+  /* Global corner radius — sharp, minimal look */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 3px;
+  --radius-xl: 3px;
+  --radius-2xl: 4px;
+  --radius-3xl: 4px;
 }
 
 /* Dark theme — enabled by the `.dark` class on <html> (toggled in ThemeToggle) */
 .dark {
   color-scheme: dark;
-  --color-carbon: #15151e;
-  --color-carbon-deep: #0d0d12;
+  --color-carbon: #000000;
+  --color-carbon-deep: #0a0a0a;
   --color-carbon-10: rgb(21 21 30 / 0.1);
   --color-carbon-15: rgb(21 21 30 / 0.15);
   --color-carbon-20: rgb(21 21 30 / 0.2);

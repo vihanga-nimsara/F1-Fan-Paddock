@@ -9,8 +9,12 @@ export async function GET(
   const { path } = await ctx.params;
   const url = `${OPENF1_BASE}/${path.join("/")}${req.nextUrl.search}`;
   try {
+    const token = process.env.OPENF1_ACCESS_TOKEN;
     const res = await fetch(url, {
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
       next: { revalidate: 15 },
     });
     if (!res.ok) {

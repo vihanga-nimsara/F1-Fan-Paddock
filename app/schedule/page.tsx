@@ -5,7 +5,7 @@ export const metadata = {
   title: "Release Schedule — F1 Fan Paddock",
 };
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function SchedulePage() {
   const races = await getSeasonRaces("2026");

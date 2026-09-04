@@ -6,7 +6,7 @@ export const metadata = {
   title: "The Paddock Blog — F1 Fan Paddock",
 };
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export default async function StoriesPage() {
   const posts = await getCachedBlogPosts(24);

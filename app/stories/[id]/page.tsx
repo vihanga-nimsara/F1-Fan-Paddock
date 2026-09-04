@@ -5,7 +5,7 @@ import { MediaFallback } from "@/components/f1kit";
 import { getCachedPostById } from "@/lib/blog-cache";
 import { timeAgo } from "@/lib/blog";
 
-export const revalidate = 300;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

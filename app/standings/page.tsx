@@ -19,11 +19,15 @@ export const metadata = {
   title: "Standings — F1 Fan Paddock",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function StandingsPage() {
-  const [drivers, constructors, headshots] = await Promise.all([
-    getDriverStandings(),
+  const drivers = await getDriverStandings();
+  const [constructors, headshots] = await Promise.all([
     getConstructorStandings(),
-    getDriverHeadshots().catch(() => ({}) as Record<string, string>),
+    getDriverHeadshots(undefined, drivers).catch(
+      () => ({}) as Record<string, string>,
+    ),
   ]);
 
   const driverRows: StandingRow[] = drivers.map((d: DriverStanding) => ({

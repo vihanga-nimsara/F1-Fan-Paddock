@@ -36,7 +36,7 @@ export default function F1Button({
     textTransform: "none",
     fontWeight: 600,
     letterSpacing: "0.06em",
-    borderRadius: "12px",
+    borderRadius: "4px",
     fontSize: "12px",
     ...(variant === "primary" && {
       bgcolor: "#e10600",

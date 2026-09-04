@@ -87,16 +87,20 @@ function DesktopNavItem({ item }: { item: NavItem }) {
   const open = Boolean(anchorEl);
 
   const btnSx = {
-    fontFamily: "var(--font-mona)",
-    fontSize: "15px",
+    fontFamily: "var(--font-inter)",
+    fontSize: "14px",
     fontWeight: 600,
-    letterSpacing: "0.04em",
+    letterSpacing: "0.03em",
     textTransform: "uppercase" as const,
     color: "var(--color-pebble)",
-    borderRadius: "10px",
+    borderRadius: "4px",
     px: 1.5,
     py: 1,
-    "&:hover": { bgcolor: "rgba(20,20,28,0.06)", color: "#e10600" },
+    transition: "all 150ms ease",
+    "&:hover": {
+      bgcolor: "rgba(20,20,28,0.06)",
+      color: "#e10600",
+    },
   };
 
   if (item.href) {
@@ -130,16 +134,18 @@ function DesktopNavItem({ item }: { item: NavItem }) {
         anchorEl={anchorEl}
         open={open}
         onClose={() => setAnchorEl(null)}
+        transitionDuration={120}
         slotProps={{
           paper: {
             sx: {
               mt: 1,
               p: 1,
-              borderRadius: "12px",
+              borderRadius: "4px",
               borderTop: "3px solid #e10600",
               bgcolor: "var(--color-carbon-deep)",
               boxShadow: "0 24px 50px rgba(0,0,0,0.5)",
               minWidth: 420,
+              transition: "all 120ms ease",
             },
           },
         }}
@@ -151,10 +157,17 @@ function DesktopNavItem({ item }: { item: NavItem }) {
               component={Link}
               href={c.href}
               onClick={() => setAnchorEl(null)}
-              sx={{ borderRadius: "10px", py: 1, px: 1.5, color: "var(--color-pebble)" }}
+              sx={{
+                borderRadius: "4px",
+                py: 1,
+                px: 1.5,
+                color: "var(--color-pebble)",
+                transition: "all 120ms ease",
+                "&:hover": { bgcolor: "rgba(20,20,28,0.06)" },
+              }}
             >
               <div className="flex flex-col gap-0.5">
-                <span className="flex items-center gap-2 font-headline text-[15px] font-semibold tracking-[0.02em] text-pebble">
+                <span className="flex items-center gap-2 font-display text-[14px] font-semibold tracking-[0.02em] text-pebble">
                   {c.icon}
                   {c.label}
                 </span>
@@ -199,7 +212,7 @@ export default function Navbar() {
     <header ref={ref} className="fixed inset-x-0 top-0 z-50 w-full">
       {/* Main nav */}
       <div
-        className="bg-carbon-deep/95 backdrop-blur-md transition-[border-color,box-shadow] duration-200"
+        className="bg-carbon-deep/95 backdrop-blur-md transition-[border-color,box-shadow] duration-150"
         style={{
           borderBottom: scrolled
             ? "2px solid var(--color-f1red)"
@@ -247,7 +260,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.15 }}
             className="overflow-y-auto border-b border-pebble-20 border-t-[3px] border-t-f1red bg-carbon-deep lg:hidden"
           >
             <div className="mx-auto flex max-w-[1640px] flex-col gap-1 px-4 py-4">
@@ -257,15 +270,15 @@ export default function Navbar() {
                     <Link
                       href={item.href}
                       onClick={() => setMobileOpen(false)}
-                      style={{ fontFamily: "var(--font-mona)" }}
-                      className="flex items-center rounded-xl px-3 py-2.5 text-[15px] font-semibold uppercase tracking-[0.04em] text-pebble"
+                      style={{ fontFamily: "var(--font-inter)" }}
+                      className="flex items-center rounded-sm px-3 py-2.5 text-[15px] font-semibold uppercase tracking-[0.04em] text-pebble"
                     >
                       {item.label}
                     </Link>
                   ) : (
                     <>
                       <div
-                        style={{ fontFamily: "var(--font-mona)" }}
+                        style={{ fontFamily: "var(--font-inter)" }}
                         className="flex items-center px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-f1red"
                       >
                         {item.label}

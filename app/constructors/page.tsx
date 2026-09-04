@@ -12,6 +12,8 @@ export const metadata = {
   title: "Constructors — F1 Fan Paddock",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function ConstructorsPage() {
   const constructors = await getConstructorStandings();
   const leader = constructors[0]?.points ?? 1;

@@ -12,7 +12,7 @@ export const metadata = {
   title: "My Lists — F1 Fan Paddock",
 };
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function ListsPage() {
   const drivers = await getDriverStandings();

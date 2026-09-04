@@ -5,7 +5,7 @@ export const metadata = {
   title: "Race Spotlight — F1 Fan Paddock",
 };
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function ReviewsPage() {
   const [races, standings] = await Promise.all([

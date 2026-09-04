@@ -10,7 +10,7 @@ const theme = createTheme({
   typography: {
     fontFamily: 'var(--font-inter), "Inter", sans-serif',
   },
-  shape: { borderRadius: 12 },
+  shape: { borderRadius: 4 },
 });
 
 export default theme;
