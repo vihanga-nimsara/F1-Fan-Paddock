@@ -1,26 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@mui/material";
-
-type Variant = "primary" | "secondary" | "ghost";
-
-const MUI_VARIANT: Record<Variant, "contained" | "outlined" | "text"> = {
-  primary: "contained",
-  secondary: "outlined",
-  ghost: "text",
-};
+import { Button, type ButtonProps } from "@mui/material";
 
 type F1ButtonProps = {
-  variant?: Variant;
+  variant?: "primary" | "secondary" | "ghost";
   className?: string;
   children: React.ReactNode;
   href?: string;
   external?: boolean;
-} & Omit<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  "color" | "size" | "translate" | "slot"
->;
+  size?: ButtonProps["size"];
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color" | "size" | "translate" | "slot">;
+
+const YOUTUBE_STYLES: Record<string, Record<string, any>> = {
+  primary: {
+    bgcolor: "#cc0000",
+    color: "#fff",
+    ":hover": { bgcolor: "#b30000" },
+  },
+  secondary: {
+    bgcolor: "#272727",
+    color: "#f1f1f1",
+    ":hover": { bgcolor: "#3d3d3d" },
+  },
+  ghost: {
+    bgcolor: "transparent",
+    color: "#f1f1f1",
+    ":hover": { bgcolor: "#272727" },
+  },
+};
 
 export default function F1Button({
   variant = "primary",
@@ -28,50 +36,28 @@ export default function F1Button({
   children,
   href,
   external,
+  size = "medium",
   type,
   ...rest
 }: F1ButtonProps) {
-  const sx = {
-    fontFamily: "var(--font-display)",
-    textTransform: "none",
-    fontWeight: 600,
-    letterSpacing: "0.06em",
-    borderRadius: "4px",
-    fontSize: "12px",
-    ...(variant === "primary" && {
-      bgcolor: "#e10600",
-      color: "#ffffff",
-      "&:hover": { bgcolor: "#b30500", opacity: 0.9 },
-    }),
-    ...(variant === "secondary" && {
-      borderColor: "rgba(20,20,28,0.4)",
-      color: "var(--color-pebble)",
-      "&:hover": { borderColor: "var(--color-pebble)" },
-    }),
-    ...(variant === "ghost" && {
-      color: "var(--color-pebble)",
-      "&:hover": { color: "#e10600" },
-    }),
-  };
-
   const commonProps = {
-    variant: MUI_VARIANT[variant],
     disableElevation: true,
+    size,
     className,
-    sx,
+    sx: {
+      textTransform: "none",
+      fontWeight: 600,
+      borderRadius: "18px",
+      px: 2.5,
+      ...YOUTUBE_STYLES[variant],
+    },
     ...rest,
   } as any;
 
   if (href) {
     if (external || href.startsWith("http")) {
       return (
-        <Button
-          component="a"
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          {...commonProps}
-        >
+        <Button component="a" href={href} target="_blank" rel="noopener noreferrer" {...commonProps}>
           {children}
         </Button>
       );

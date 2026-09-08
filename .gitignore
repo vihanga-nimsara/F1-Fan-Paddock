@@ -11,3 +11,5 @@ out
 # persisted blog cache (runtime data)
 data/
 
+
+dev.log

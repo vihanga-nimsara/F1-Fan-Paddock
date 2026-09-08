@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
+import { Chakra_Petch, Geist, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import AppShell from "@/components/AppShell";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
 import Toaster from "@/components/Toaster";
@@ -13,15 +12,16 @@ import ScrollReveal from "@/components/ScrollReveal";
 import MuiProvider from "@/components/mui/MuiProvider";
 import Scanner from "@/components/Scanner";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
-const mona = localFont({
-  src: "./fonts/mona-sans.woff2",
-  variable: "--font-mona",
+const chakra = Chakra_Petch({
+  subsets: ["latin"],
+  weight: ["600", "700"],
+  variable: "--font-chakra",
   display: "swap",
 });
 
@@ -46,7 +46,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${mona.variable} ${jetbrains.variable}`}
+      className={`${geist.variable} ${chakra.variable} ${jetbrains.variable}`}
     >
       <head />
       <body>
@@ -55,7 +55,7 @@ export default function RootLayout({
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html:
-              "(function(){try{var t=localStorage.getItem('theme')||'light';var e=document.documentElement;e.classList.remove('light','dark');e.classList.add(t);e.style.colorScheme=t;}catch(e){e.classList.add('light');e.style.colorScheme='light';}})();",
+              "window.__THEME__='dark';try{document.documentElement.classList.remove('light','dark');document.documentElement.classList.add('dark');}catch(e){}document.documentElement.style.colorScheme='dark';",
           }}
         />
         <div
@@ -95,12 +95,13 @@ export default function RootLayout({
           <script
             id="f1-splash"
             dangerouslySetInnerHTML={{
-              __html: `(function(){try{if(sessionStorage.getItem('f1-splash-instant')==='1')return;sessionStorage.setItem('f1-splash-instant','1');}catch(e){}var st=document.createElement('style');st.textContent='@keyframes f1pulse{0%,100%{opacity:1}50%{opacity:.25}}';document.head.appendChild(st);var el=document.createElement('div');el.id='f1-loading-screen';el.setAttribute('style','position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;');el.innerHTML='<div style=\\'display:flex;flex-direction:column;align-items:center;gap:12px;\\'><span style=\\'font-family:var(--font-inter),sans-serif;font-size:24px;font-weight:600;color:#fff;\\'>F1 <span style=\\'color:#ff1e00;\\'>Fan Paddock</span></span><span style=\\'display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.7);\\'><span style=\\'width:6px;height:6px;border-radius:9999px;background:#ff1e00;animation:f1pulse 1s infinite;\\'></span>Loading the grid…</span></div>';document.body.appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},5000);})();`,
+              __html: `(function(){try{if(sessionStorage.getItem('f1-splash-instant')==='1')return;sessionStorage.setItem('f1-splash-instant','1');}catch(e){}var st=document.createElement('style');st.textContent='@keyframes f1pulse{0%,100%{opacity:1}50%{opacity:.25}}';document.head.appendChild(st);var el=document.createElement('div');el.id='f1-loading-screen';el.setAttribute('style','position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#0f0f0f;');el.innerHTML='<div style=\\'display:flex;flex-direction:column;align-items:center;gap:12px;\\'><span style=\\'font-family:var(--font-inter),sans-serif;font-size:24px;font-weight:600;color:#fff;\\'>F1 <span style=\\'color:#ff1e00;\\'>Fan Paddock</span></span><span style=\\'display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.7);\\'><span style=\\'width:6px;height:6px;border-radius:9999px;background:#ff1e00;animation:f1pulse 1s infinite;\\'></span>Loading the grid…</span></div>';document.body.appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},5000);})();`,
             }}
           />
-          <Navbar />
-          <div className="pt-[64px]">{children}</div>
-          <Footer />
+          <AppShell>
+            {children}
+            <Footer />
+          </AppShell>
           <CookieConsent />
           <Toaster />
           <NewsAlert />

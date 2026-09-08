@@ -114,8 +114,14 @@ function extractImage(input: string): string | undefined {
     const mc = input.match(/<media:content[^>]+url=["']([^"']+)["']/);
     url = mc ? mc[1] : undefined;
   }
+  if (!url) return undefined;
+  // fetchrss encodes & as &amp; in image URLs — decode before proxying
+  url = url
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
   // Proxy Facebook CDN images through our server so they aren't hotlink-blocked
-  if (url && /fbcdn\.net|facebook\.com/.test(url)) {
+  if (/fbcdn\.net|facebook\.com/.test(url)) {
     return `/api/fbimg?u=${encodeURIComponent(url)}`;
   }
   return url;

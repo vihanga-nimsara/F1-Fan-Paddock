@@ -40,14 +40,13 @@ export default function SubscribeDialog({
       slotProps={{
         paper: {
           sx: {
-            borderRadius: "4px",
-            borderTop: "3px solid #e10600",
+            borderRadius: "12px",
             fontFamily: "var(--font-body)",
           },
         },
       }}
     >
-      <DialogTitle sx={{ fontFamily: "var(--font-display)", fontWeight: 600 }}>
+      <DialogTitle sx={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
         Join the Paddock
       </DialogTitle>
       <Box component="form" onSubmit={handleSubmit}>
@@ -72,6 +71,11 @@ export default function SubscribeDialog({
             variant="contained"
             fullWidth
             disableElevation
+            sx={{
+              bgcolor: "#ff0000",
+              color: "#fff",
+              "&:hover": { bgcolor: "#cc0000" },
+            }}
           >
             Subscribe
           </Button>

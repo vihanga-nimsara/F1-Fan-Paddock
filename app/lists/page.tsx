@@ -38,14 +38,15 @@ export default async function ListsPage() {
               <h3 className="m-0 font-display text-base font-semibold tracking-[0.02em] text-pebble">
                 Followed Drivers
               </h3>
-              <Pill tone="muted">Sample list</Pill>
+              <Pill tone="muted">Top 4</Pill>
             </div>
             <p className="m-0 text-xs text-pebble-80">
-              A sample list from the current standings. Sign in to customize.
+              The current championship leaders you can track here. Bookmarking
+              and custom lists are on the way.
             </p>
             <StandingsTable rows={rows} />
             <p className="mt-1 text-xs text-pebble-80">
-              Want to build your own lists?{" "}
+              Want to follow other drivers?{" "}
               <Link
                 href="/drivers"
                 className="font-medium text-f1red underline-offset-2 hover:underline"
@@ -70,7 +71,7 @@ export default async function ListsPage() {
               >
                 Paddock Stories
               </Link>{" "}
-              to bookmark it here.
+              once bookmarking ships.
             </p>
           </div>
         </section>

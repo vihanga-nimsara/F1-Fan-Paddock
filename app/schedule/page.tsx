@@ -34,7 +34,7 @@ export default async function SchedulePage() {
       type: "Paddock Stories",
       cadence: "Daily",
       icon: "📰",
-      desc: "Fresh F1 news from ESPN, BBC Sport, and Sky Sports.",
+      desc: "Fresh F1 news from Formula1.com, ESPN F1, and BBC Sport.",
     },
     {
       type: "Race Video",

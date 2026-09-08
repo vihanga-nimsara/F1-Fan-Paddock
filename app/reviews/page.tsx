@@ -1,5 +1,5 @@
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
-import { getSeasonRaces, getDriverStandings } from "@/lib/f1";
+import { getSeasonRaceReviews, TEAM_COLORS, type RaceReview } from "@/lib/f1";
 
 export const metadata = {
   title: "Race Spotlight — F1 Fan Paddock",
@@ -7,22 +7,32 @@ export const metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function ReviewsPage() {
-  const [races, standings] = await Promise.all([
-    getSeasonRaces("2026"),
-    getDriverStandings(),
-  ]);
-  const finished = races.filter((r) => r.status !== "upcoming").reverse();
+function verdictLine(r: RaceReview): string {
+  if (!r.winner || !r.winner.code) return "No result yet.";
+  const w = r.winner;
+  const team = w.constructorId.replace(/_/g, " ");
+  const car = `${w.givenName} ${w.familyName} (${team})`;
 
-  const highlight = (raceName: string) => {
-    const winner = standings[0];
-    return {
-      verdict: winner
-        ? `${winner.code} took the flag, extending the title fight. Strategy and pit stops decided it.`
-        : "A dramatic race weekend with strategy calls changing the order.",
-      score: (raceName.length + standings.length * 7) % 11,
-    };
-  };
+  if (r.pole && r.pole.driverId === w.driverId) {
+    return `${w.code} converted pole into the win — a lights-to-flag victory for ${car}.`;
+  }
+
+  const grid = w.grid;
+  if (grid > 1) {
+    return `${w.code} climbed from P${grid} to take the win for ${car}.`;
+  }
+
+  return `${w.code} took the flag for ${car}.`;
+}
+
+function marginText(r: RaceReview): string {
+  if (!r.margin) return "—";
+  const clean = r.margin.replace(/^\+/, "");
+  return `${clean}s`;
+}
+
+export default async function ReviewsPage() {
+  const reviews = await getSeasonRaceReviews("2026");
 
   return (
     <main className="relative w-full">
@@ -32,10 +42,10 @@ export default async function ReviewsPage() {
             kicker="Verdicts"
             title="Race Spotlight"
             href="/reviews"
-            linkLabel="All reviews"
+            linkLabel=""
           />
 
-          {finished.length === 0 ? (
+          {reviews.length === 0 ? (
             <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
               <span className="text-3xl">🏁</span>
               <p className="m-0 font-body text-sm text-pebble-80">
@@ -44,8 +54,9 @@ export default async function ReviewsPage() {
             </div>
           ) : (
             <div className="grid gap-4 sm:grid-cols-2">
-              {finished.map((race) => {
-                const h = highlight(race.raceName);
+              {reviews.map((race) => {
+                const w = race.winner!;
+                const teamColor = TEAM_COLORS[w.constructorId] ?? "#e10600";
                 return (
                   <article
                     key={race.round}
@@ -53,7 +64,10 @@ export default async function ReviewsPage() {
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-f1red font-display text-sm font-semibold text-white">
+                        <span
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl font-display text-sm font-semibold text-white"
+                          style={{ backgroundColor: teamColor }}
+                        >
                           R{race.round}
                         </span>
                         <div className="flex flex-col gap-1">
@@ -68,11 +82,65 @@ export default async function ReviewsPage() {
                           </span>
                         </div>
                       </div>
-                      <Pill tone="accent">Verdict {h.score}/10</Pill>
                     </div>
+
                     <p className="m-0 text-sm leading-[1.4] text-pebble-80">
-                      {h.verdict}
+                      {verdictLine(race)}
                     </p>
+
+                    <div className="grid grid-cols-2 gap-2 border-t border-pebble-10 pt-3 text-xs sm:grid-cols-4">
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-display text-[10px] font-semibold tracking-[0.12em] text-pebble-80">
+                          WINNER
+                        </span>
+                        <span className="font-display font-semibold text-pebble">
+                          {w.code}
+                        </span>
+                        <span className="text-pebble-80">
+                          {w.givenName} {w.familyName}
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-display text-[10px] font-semibold tracking-[0.12em] text-pebble-80">
+                          MARGIN
+                        </span>
+                        <span className="font-display font-semibold text-pebble">
+                          {marginText(race)}
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-display text-[10px] font-semibold tracking-[0.12em] text-pebble-80">
+                          POLE
+                        </span>
+                        <span className="font-display font-semibold text-pebble">
+                          {race.pole?.code ?? "—"}
+                        </span>
+                        <span className="text-pebble-80">
+                          {race.pole?.time ?? ""}
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-display text-[10px] font-semibold tracking-[0.12em] text-pebble-80">
+                          FASTEST LAP
+                        </span>
+                        <span className="font-display font-semibold text-pebble">
+                          {race.fastestLap?.code ?? "—"}
+                        </span>
+                        <span className="text-pebble-80">
+                          {race.fastestLap?.fastestLapTime ?? ""}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Pill tone="muted">
+                        {race.finishers}/{race.starters} finishers
+                      </Pill>
+                      <Pill tone="accent">
+                        P{w.grid - w.position >= 0 ? `+${w.grid - w.position}` : w.grid - w.position}{" "}
+                        positions gained
+                      </Pill>
+                    </div>
                   </article>
                 );
               })}

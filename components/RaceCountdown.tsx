@@ -125,7 +125,7 @@ export default function RaceCountdown({
     <section className="overflow-hidden rounded-xl border border-pebble-15 bg-carbon-deep">
       <div className="flex flex-col gap-6 p-6 md:flex-row md:items-center md:justify-between md:p-8">
         <div className="flex flex-col gap-3">
-          <h2 className="m-0 flex items-center gap-3 font-headline text-[clamp(22px,3vw,34px)] font-semibold uppercase leading-[0.98] tracking-[0.02em] text-pebble">
+          <h2 className="m-0 flex items-center gap-3 font-headline text-[clamp(22px,3vw,34px)] font-semibold leading-[0.98] tracking-[0.02em] text-pebble">
             {flagSrc ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img

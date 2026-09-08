@@ -12,32 +12,32 @@
   --color-f1red-30: #e10600 / 0.3;
   --color-f1red-50: #e10600 / 0.5;
 
-  /* Surfaces — LIGHT is the default theme */
-  --color-carbon: #f5f5f7;
-  --color-carbon-deep: #ffffff;
-  --color-carbon-10: rgb(20 20 28 / 0.06);
-  --color-carbon-15: rgb(20 20 28 / 0.1);
-  --color-carbon-20: rgb(20 20 28 / 0.14);
-  --color-carbon-50: rgb(20 20 28 / 0.5);
-  --color-carbon-70: rgb(20 20 28 / 0.7);
-  --color-carbon-90: rgb(20 20 28 / 0.9);
+  /* Surfaces — DARK is the default theme (YouTube-inspired) */
+  --color-carbon: #0f0f0f;
+  --color-carbon-deep: #1f1f1f;
+  --color-carbon-10: rgb(255 255 255 / 0.08);
+  --color-carbon-15: rgb(255 255 255 / 0.12);
+  --color-carbon-20: rgb(255 255 255 / 0.16);
+  --color-carbon-50: rgb(255 255 255 / 0.5);
+  --color-carbon-70: rgb(255 255 255 / 0.7);
+  --color-carbon-90: rgb(255 255 255 / 0.9);
 
-  /* Pebble (text/surface) — LIGHT theme defaults */
-  --color-pebble: #16161d;
-  --color-pebble-5: rgb(20 20 28 / 0.05);
-  --color-pebble-8: rgb(20 20 28 / 0.08);
-  --color-pebble-10: rgb(20 20 28 / 0.1);
-  --color-pebble-15: rgb(20 20 28 / 0.14);
-  --color-pebble-20: rgb(20 20 28 / 0.2);
-  --color-pebble-40: rgb(20 20 28 / 0.4);
-  --color-pebble-50: rgb(20 20 28 / 0.5);
-  --color-pebble-80: rgb(20 20 28 / 0.72);
-  --color-pebble-90: rgb(20 20 28 / 0.9);
+  /* Pebble (text/surface) — DARK theme defaults */
+  --color-pebble: #f1f1f1;
+  --color-pebble-5: rgb(241 241 241 / 0.05);
+  --color-pebble-8: rgb(241 241 241 / 0.07);
+  --color-pebble-10: rgb(241 241 241 / 0.1);
+  --color-pebble-15: rgb(241 241 241 / 0.14);
+  --color-pebble-20: rgb(241 241 241 / 0.2);
+  --color-pebble-40: rgb(241 241 241 / 0.4);
+  --color-pebble-50: rgb(241 241 241 / 0.5);
+  --color-pebble-80: rgb(241 241 241 / 0.78);
+  --color-pebble-90: rgb(241 241 241 / 0.9);
 
-  /* Fonts — Inter for UI/body, Mona Sans for big headlines */
-  --font-display: var(--font-inter), "Inter", sans-serif;
-  --font-heading: var(--font-inter), "Inter", sans-serif;
-  --font-body: var(--font-inter), "Inter", sans-serif;
+  /* Fonts — Geist for UI/body, Chakra Petch for big titles */
+  --font-display: var(--font-inter), "Geist", sans-serif;
+  --font-heading: var(--font-chakra), "Chakra Petch", sans-serif;
+  --font-body: var(--font-inter), "Geist", sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
 
   /* Global corner radius — sharp, minimal look */
@@ -74,9 +74,9 @@
   --color-pebble-90: hsl(0 0% 93% / 0.9);
 }
 
-/* Big display headings use Mona Sans; everything else stays Inter */
+/* Big display headings use Chakra Petch; everything else stays Geist */
 .font-headline {
-  font-family: var(--font-mona), "Mona Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-heading), "Chakra Petch", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -189,18 +189,5 @@
   }
   .js-reveal [data-reveal].is-visible {
     animation: none;
-  }
-}
-
-@theme inline {
-  --animate-rippling: rippling var(--duration) ease-out;
-  @keyframes rippling {
-  0% {
-    opacity: 1;
-    }
-  100% {
-    transform: scale(2);
-    opacity: 0;
-    }
   }
 }

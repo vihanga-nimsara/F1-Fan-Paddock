@@ -462,3 +462,163 @@ export async function getRecentRaces(limit = 4): Promise<Race[]> {
     .slice(-limit)
     .reverse();
 }
+
+export type RaceResult = {
+  position: number;
+  driverId: string;
+  code: string;
+  givenName: string;
+  familyName: string;
+  constructorId: string;
+  grid: number;
+  points: number;
+  status: string;
+  time: string | null;
+  fastestLapRank: number | null;
+  fastestLapTime: string | null;
+};
+
+export type PoleWinner = {
+  position: number;
+  driverId: string;
+  code: string;
+  givenName: string;
+  familyName: string;
+  constructorId: string;
+  time: string | null;
+};
+
+export type RaceReview = {
+  round: number;
+  raceName: string;
+  circuitName: string;
+  country: string;
+  flag: string;
+  date: string;
+  winner: RaceResult | null;
+  margin: string | null;
+  pole: PoleWinner | null;
+  fastestLap: RaceResult | null;
+  finishers: number;
+  starters: number;
+  laps: string | null;
+  lastLapStatuses: Record<string, string>;
+};
+
+export async function getRaceResults(
+  season: string,
+  round: number,
+): Promise<RaceResult[]> {
+  const data = await fetchJson(`${JOLPICA_BASE}/${season}/${round}/results`);
+  const race = data.MRData?.RaceTable?.Races?.[0];
+  if (!race) return [];
+  return (race.Results ?? []).map((x: any) => ({
+    position: Number(x.position),
+    driverId: x.Driver.driverId,
+    code: x.Driver.code,
+    givenName: x.Driver.givenName,
+    familyName: x.Driver.familyName,
+    constructorId: x.Constructor.constructorId,
+    grid: Number(x.grid),
+    points: Number(x.points),
+    status: x.status,
+    time: x.Time?.time ?? null,
+    fastestLapRank: x.FastestLap?.rank != null ? Number(x.FastestLap.rank) : null,
+    fastestLapTime: x.FastestLap?.Time?.time ?? null,
+  }));
+}
+
+export async function getQualifying(
+  season: string,
+  round: number,
+): Promise<PoleWinner[]> {
+  try {
+    const data = await fetchJson(`${JOLPICA_BASE}/${season}/${round}/qualifying`);
+    const race = data.MRData?.RaceTable?.Races?.[0];
+    if (!race) return [];
+    return (race.QualifyingResults ?? []).map((x: any) => ({
+      position: Number(x.position),
+      driverId: x.Driver.driverId,
+      code: x.Driver.code,
+      givenName: x.Driver.givenName,
+      familyName: x.Driver.familyName,
+      constructorId: x.Constructor.constructorId,
+      time: x.Q3 ?? x.Q2 ?? x.Q1 ?? null,
+    }));
+  } catch {
+    return [];
+  }
+}
+
+// Real race verdicts for a season's completed rounds: winner, margin to P2,
+// pole sitter, fastest lap and finishing stats — all pulled from race results.
+// Results/qualifying calls are run with limited concurrency so we don't trip
+// the public API's rate limit on the first (uncached) request.
+async function mapLimit<T, R>(
+  items: T[],
+  limit: number,
+  fn: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const out: R[] = new Array(items.length);
+  let i = 0;
+  async function worker() {
+    while (i < items.length) {
+      const idx = i++;
+      try {
+        out[idx] = await fn(items[idx]);
+      } catch {
+        out[idx] = undefined as unknown as R;
+      }
+    }
+  }
+  await Promise.all(Array.from({ length: limit }, worker));
+  return out;
+}
+
+export async function getSeasonRaceReviews(
+  season = "current",
+): Promise<RaceReview[]> {
+  const races = await getSeasonRaces(season);
+  const finished = races
+    .filter((r) => r.status === "past")
+    .sort((a, b) => a.round - b.round)
+    .slice(-10);
+
+  const reviews = await mapLimit(finished, 3, async (race) => {
+    const [results, poleList] = await Promise.all([
+      getRaceResults(season, race.round).catch(() => []),
+      getQualifying(season, race.round).catch(() => []),
+    ]);
+
+    const fastestLap =
+      results.find((r) => r.fastestLapRank === 1) ?? null;
+
+    const winner = [...results]
+      .sort((a, b) => a.position - b.position)[0];
+    const runnerUp = results.find((x) => x.position === 2);
+    const pole = poleList[0] ?? null;
+
+    return {
+      round: race.round,
+      raceName: race.raceName,
+      circuitName: race.circuitName,
+      country: race.country,
+      flag: race.flag,
+      date: race.date,
+      winner: winner ?? null,
+      margin: runnerUp?.time ?? null,
+      pole,
+      fastestLap,
+      finishers: results.filter((r) =>
+        ["Finished", "+1 Lap", "+2 Laps"].includes(r.status),
+      ).length,
+      starters: results.length,
+      laps: null,
+      lastLapStatuses: {},
+    } satisfies RaceReview;
+  });
+
+  return reviews
+    .filter((r) => r && r.winner)
+    .sort((a, b) => b.round - a.round);
+}

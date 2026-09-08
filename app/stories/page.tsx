@@ -15,7 +15,7 @@ export default async function StoriesPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
         <div className="flex flex-col gap-3">
-          <h1 className="m-0 max-w-[20ch] font-headline text-[clamp(28px,5vw,56px)] font-semibold uppercase leading-[0.92] tracking-[0.01em] text-pebble">
+          <h1 className="m-0 max-w-[20ch] font-headline text-[clamp(28px,5vw,56px)] font-semibold leading-[0.92] tracking-[0.01em] text-pebble">
             The Paddock Blog
           </h1>
           <p className="m-0 max-w-[60ch] text-sm leading-[1.4] text-pebble-80">

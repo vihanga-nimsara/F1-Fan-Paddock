@@ -70,7 +70,7 @@ export function SectionHeading({
           by="word"
           animation="blurInUp"
           duration={0.4}
-          className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold uppercase leading-[0.95] tracking-[0.02em] text-pebble"
+          className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold leading-[0.95] tracking-[0.02em] text-pebble"
         >
           {title}
         </TextAnimate>
@@ -449,7 +449,7 @@ export function Hero({
           by="word"
           animation="blurInUp"
           duration={0.5}
-          className="m-0 max-w-[22ch] font-headline text-[clamp(34px,6vw,64px)] font-semibold uppercase leading-[0.88] tracking-[0.01em] text-white"
+          className="m-0 max-w-[22ch] font-headline text-[clamp(34px,6vw,64px)] font-semibold leading-[0.88] tracking-[0.01em] text-white"
         >
           {title}
         </TextAnimate>
