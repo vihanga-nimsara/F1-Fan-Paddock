@@ -39,7 +39,7 @@ export default async function StandingsPage() {
     color: TEAM_COLORS[d.team],
     logo: getTeamLogo(d.team, 80),
     avatar: headshots[d.code] ?? headshots[String(d.number)] ?? undefined,
-    href: "/drivers",
+    href: `/drivers/${d.driverId}`,
   }));
 
   const conRows: StandingRow[] = constructors.map((c: ConstructorStanding) => ({

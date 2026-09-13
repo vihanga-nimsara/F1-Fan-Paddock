@@ -10,6 +10,9 @@ export interface Marker {
   lng: number
   size?: number
   pulse?: boolean
+  color?: string
+  title?: string
+  details?: string
 }
 
 /** addMarkers returns markers with lat/lng removed; only x, y and other props (e.g. size) remain */
@@ -117,6 +120,7 @@ export function DottedMap<M extends Marker = Marker>({
         const x = marker.x + offsetX
         const y = marker.y
         const r = marker.size ?? dotRadius
+        const fillColor = marker.color ?? markerColor
         const shouldPulse = pulse
           ? marker.pulse !== false
           : marker.pulse === true
@@ -124,7 +128,17 @@ export function DottedMap<M extends Marker = Marker>({
 
         return (
           <g key={`${marker.x}-${marker.y}-${index}`}>
-            <circle cx={x} cy={y} r={r} fill={markerColor} />
+            <circle cx={x} cy={y} r={r} fill={fillColor} />
+
+            {/* Larger invisible hover target so the tooltip is easy to trigger */}
+            <circle cx={x} cy={y} r={Math.max(r * 3, 5)} fill="transparent" />
+
+            {/* Native SVG hover tooltip with more info */}
+            {marker.title || marker.details ? (
+              <title>
+                {[marker.title, marker.details].filter(Boolean).join("\n")}
+              </title>
+            ) : null}
 
             {shouldPulse ? (
               <g pointerEvents="none">
@@ -133,7 +147,7 @@ export function DottedMap<M extends Marker = Marker>({
                   cy={y}
                   r={r}
                   fill="none"
-                  stroke={markerColor}
+                  stroke={fillColor}
                   strokeOpacity={1}
                   strokeWidth={0.35}
                 >
@@ -155,7 +169,7 @@ export function DottedMap<M extends Marker = Marker>({
                   cy={y}
                   r={r}
                   fill="none"
-                  stroke={markerColor}
+                  stroke={fillColor}
                   strokeOpacity={0.9}
                   strokeWidth={0.3}
                 >

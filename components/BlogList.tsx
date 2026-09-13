@@ -2,75 +2,55 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import {
-  ToggleButtonGroup,
-  ToggleButton,
-  Avatar,
-} from "@mui/material";
+import { LayoutGrid, List } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { NewsCard } from "@/components/f1kit";
 import { BlogPost, timeAgo } from "@/lib/blog";
+import { cn } from "@/lib/utils";
 
 export default function BlogList({ posts }: { posts: BlogPost[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
 
-  const groupSx = {
-    border: "1px solid rgba(20,20,28,0.2)",
-    borderRadius: "4px",
-    bgcolor: "rgba(20,20,28,0.06)",
-    p: 0.5,
-    "& .MuiToggleButtonGroup-grouped": {
-      border: 0,
-      borderRadius: "4px !important",
-      textTransform: "none",
-    },
-  };
-
-  const btnSx = {
-    fontFamily: "var(--font-display)",
-    fontSize: "11px",
-    fontWeight: 600,
-    letterSpacing: "0.08em",
-    color: "var(--color-pebble-80)",
-    px: 1.5,
-    py: 0.5,
-    "&.Mui-selected": {
-      bgcolor: "#e10600",
-      color: "#fff",
-      "&:hover": { bgcolor: "#b30500" },
-    },
-  };
-
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center justify-end">
-        <ToggleButtonGroup
-          value={view}
-          exclusive
-          onChange={(_, val) => {
-            if (val) setView(val);
-          }}
-          size="small"
-          sx={groupSx}
-          aria-label="View mode"
+      <div className="flex items-center justify-end gap-1 rounded-full border border-border bg-muted/50 p-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setView("grid")}
+          aria-pressed={view === "grid"}
+          className={cn(
+            "gap-1.5",
+            view === "grid" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground",
+          )}
         >
-          <ToggleButton value="grid" sx={btnSx} aria-label="Grid view">
-            Grid
-          </ToggleButton>
-          <ToggleButton value="list" sx={btnSx} aria-label="List view">
-            List
-          </ToggleButton>
-        </ToggleButtonGroup>
+          <LayoutGrid className="size-3.5" />
+          Grid
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setView("list")}
+          aria-pressed={view === "list"}
+          className={cn(
+            "gap-1.5",
+            view === "list" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground",
+          )}
+        >
+          <List className="size-3.5" />
+          List
+        </Button>
       </div>
 
       {posts.length === 0 ? (
-        <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
+        <div className="flex w-full flex-col items-center gap-2 rounded-2xl border border-dashed p-10 text-center">
           <span className="text-3xl">🏁</span>
-          <p className="m-0 font-body text-sm text-pebble-80">
+          <p className="m-0 text-sm text-muted-foreground">
             Stories unavailable right now. Try again shortly.
           </p>
         </div>
       ) : view === "grid" ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((p) => (
             <NewsCard
               key={p.link}
@@ -78,6 +58,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
               image={p.image}
               tag={p.source}
               title={p.title}
+              description={p.description}
               meta={
                 <>
                   <span>{p.author}</span>
@@ -89,33 +70,37 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
           ))}
         </div>
       ) : (
-        <ul className="flex flex-col gap-2">
+        <ul className="flex flex-col gap-3">
           {posts.map((p) => (
             <li key={p.link}>
               <Link
                 href={p.link}
-                className="group flex items-center gap-3 rounded-xl bg-pebble-5 p-2.5 transition-colors hover:bg-pebble-8"
+                target={p.link.startsWith("http") ? "_blank" : undefined}
+                rel={p.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
               >
-                <Avatar
-                  src={p.image ?? undefined}
-                  sx={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: "4px",
-                    border: "1px solid rgba(20,20,28,0.15)",
-                    bgcolor: "rgba(20,20,28,0.1)",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: "var(--color-pebble)",
-                  }}
-                >
-                  {(p.author?.[0] ?? p.source?.[0] ?? "·")}
-                </Avatar>
+                <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
+                  {p.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={p.image}
+                      alt=""
+                      loading="lazy"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center font-heading text-lg font-bold text-muted-foreground">
+                      {p.source?.[0] ?? "·"}
+                    </div>
+                  )}
+                </div>
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <span className="line-clamp-2 font-display text-sm font-semibold leading-[1.2] text-pebble transition-colors group-hover:text-f1red">
+                  <span className="line-clamp-2 font-heading text-[15px] font-bold leading-snug tracking-tight group-hover:text-f1red">
                     {p.title}
                   </span>
-                  <span className="flex items-center gap-2 text-[11px] text-pebble-80">
+                  <span className="flex items-center gap-2 text-[12px] text-muted-foreground">
+                    <span className="font-medium text-foreground/80">{p.author}</span>
+                    <span aria-hidden="true">·</span>
                     <span>{p.source}</span>
                     <span aria-hidden="true">·</span>
                     <span>{timeAgo(p.pubDate)}</span>

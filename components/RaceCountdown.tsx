@@ -1,9 +1,19 @@
 "use client";
 
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { flagImage } from "@/lib/f1";
 import { DottedMap } from "@/components/ui/dotted-map";
+
+type UpcomingRace = {
+  round?: number;
+  lat?: number;
+  lng?: number;
+  circuitName?: string;
+  country?: string;
+  raceName?: string;
+  dateISO?: string;
+};
 
 type Props = {
   targetISO: string;
@@ -13,6 +23,7 @@ type Props = {
   round: number;
   lat?: number;
   lng?: number;
+  upcomingRaces?: UpcomingRace[];
 };
 
 type Remaining = { d: number; h: number; m: number; s: number; done: boolean };
@@ -39,15 +50,19 @@ const UNITS: { key: keyof Remaining; label: string }[] = [
 const RaceLocationMap = memo(function RaceLocationMap({
   lat,
   lng,
+  raceName,
   circuitName,
   country,
   targetISO,
+  upcomingRaces,
 }: {
   lat?: number;
   lng?: number;
+  raceName?: string;
   circuitName: string;
   country: string;
   targetISO: string;
+  upcomingRaces?: UpcomingRace[];
 }) {
   const hasCoords = lat != null && lng != null;
   const d = new Date(targetISO);
@@ -68,6 +83,38 @@ const RaceLocationMap = memo(function RaceLocationMap({
     { label: "Race Day", value: day },
     { label: "Lights Out", value: `${time} UTC` },
   ];
+
+  const mainTitle = [raceName, circuitName && country ? `${circuitName}, ${country}` : circuitName]
+    .filter(Boolean)
+    .join("\n");
+
+  const markers = [
+    ...(hasCoords
+      ? [{ lat: lat!, lng: lng!, size: 1, pulse: true, title: mainTitle }]
+      : []),
+    ...(upcomingRaces ?? [])
+      .filter((r) => r.lat != null && r.lng != null)
+      .map((r) => {
+        const d = r.dateISO ? new Date(r.dateISO) : null;
+        const dateLabel = d
+          ? d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })
+          : "";
+        const lines = [
+          r.raceName || r.circuitName || "Upcoming race",
+          [r.circuitName, r.country].filter(Boolean).join(", "),
+          dateLabel,
+        ].filter(Boolean);
+        return {
+          lat: r.lat!,
+          lng: r.lng!,
+          size: 0.6,
+          pulse: false,
+          color: "#22c55e",
+          title: lines.join("\n"),
+        };
+      }),
+  ];
+
   return (
     <div className="border-t border-pebble-15 px-4 pb-5 pt-4 md:px-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:gap-6">
@@ -77,20 +124,21 @@ const RaceLocationMap = memo(function RaceLocationMap({
               width={320}
               height={160}
               mapSamples={1800}
-              markers={[{ lat: lat!, lng: lng!, size: 1, pulse: true }]}
+              markers={markers}
               markerColor="#E10600"
-              dotRadius={0.22}
-              className="text-pebble-60"
+              dotRadius={0.32}
+              dotColor="#9aa0ad"
+              className="text-pebble-80"
             />
           </div>
         )}
-        <div className="flex flex-col gap-3 md:w-1/2">
+        <div className="flex flex-col gap-4 md:w-1/2">
           {rows.map((r) => (
-            <div key={r.label} className="flex flex-col gap-0.5">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
+            <div key={r.label} className="flex flex-col gap-1">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
                 {r.label}
               </span>
-              <span className="font-display text-[15px] font-semibold leading-tight text-pebble">
+              <span className="font-display text-[18px] font-semibold leading-tight text-pebble">
                 {r.value}
               </span>
             </div>
@@ -109,17 +157,42 @@ export default function RaceCountdown({
   round,
   lat,
   lng,
+  upcomingRaces,
 }: Props) {
-  const target = new Date(targetISO).getTime();
-  const flagSrc = flagImage(country);
+  const items = useMemo(
+    () => [
+      { round, lat, lng, circuitName, country, raceName, dateISO: targetISO },
+      ...(upcomingRaces ?? []).map((r, i) => ({
+        round: r.round ?? round + i + 1,
+        lat: r.lat,
+        lng: r.lng,
+        circuitName: r.circuitName ?? "TBC",
+        country: r.country ?? "",
+        raceName: r.raceName ?? "Upcoming race",
+        dateISO: r.dateISO ?? targetISO,
+      })),
+    ],
+    [targetISO, raceName, circuitName, country, round, lat, lng, upcomingRaces],
+  );
+
+  const [activeIdx, setActiveIdx] = useState(0);
   const [remaining, setRemaining] = useState<Remaining | null>(null);
 
+  // If the set of races changes upstream, keep selection within bounds.
   useEffect(() => {
-    const tick = () => setRemaining(getRemaining(target));
+    setActiveIdx((idx) => Math.min(idx, items.length - 1));
+  }, [items.length]);
+
+  const active = items[Math.min(activeIdx, items.length - 1)] ?? items[0];
+  const activeTarget = new Date(active.dateISO).getTime();
+  const flagSrc = flagImage(active.country);
+
+  useEffect(() => {
+    const tick = () => setRemaining(getRemaining(activeTarget));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [target]);
+  }, [activeTarget]);
 
   return (
     <section className="overflow-hidden rounded-xl border border-pebble-15 bg-carbon-deep">
@@ -130,24 +203,42 @@ export default function RaceCountdown({
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={flagSrc}
-                alt={country}
+                alt={active.country}
                 className="h-7 w-10 shrink-0 rounded-none object-cover"
               />
             ) : null}
-            {raceName}
+            {active.raceName}
           </h2>
           <p className="m-0 text-sm text-pebble-80">
-            Round {round} · {circuitName}
+            Round {active.round} · {active.circuitName}
           </p>
+          {items.length > 1 && (
+            <label className="mt-1 flex items-center gap-2">
+              <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
+                Countdown to
+              </span>
+              <select
+                value={activeIdx}
+                onChange={(e) => setActiveIdx(Number(e.target.value))}
+                className="cursor-pointer rounded-lg border border-pebble-15 bg-pebble-5 px-2.5 py-1.5 text-[13px] font-medium text-pebble outline-none transition-colors focus:border-f1red/60"
+              >
+                {items.map((it, i) => (
+                  <option key={i} value={i}>
+                    Rd {it.round} · {it.raceName}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
         </div>
 
-        <div className="grid grid-cols-4 gap-2 md:gap-3">
+        <div className="grid grid-cols-4 gap-2 md:gap-3" role="timer" aria-label="Race countdown">
           {UNITS.map((u) => (
             <div
               key={u.key}
               className="flex min-w-[64px] flex-col items-center gap-1 rounded-xl bg-pebble-5 px-3 py-3 md:min-w-[78px] md:px-4 md:py-4"
             >
-              <span className="font-display text-[clamp(26px,4vw,40px)] font-semibold leading-none tabular-nums tracking-[-0.02em] text-pebble">
+              <span className="font-timer text-[clamp(26px,4vw,42px)] leading-none tabular-nums tracking-[-0.02em] text-pebble">
                 {remaining
                   ? String(remaining[u.key]).padStart(2, "0")
                   : "--"}
@@ -161,11 +252,13 @@ export default function RaceCountdown({
       </div>
 
       <RaceLocationMap
-        lat={lat}
-        lng={lng}
-        circuitName={circuitName}
-        country={country}
-        targetISO={targetISO}
+        lat={active.lat}
+        lng={active.lng}
+        raceName={active.raceName}
+        circuitName={active.circuitName}
+        country={active.country}
+        targetISO={active.dateISO}
+        upcomingRaces={upcomingRaces}
       />
 
       <div className="flex items-center justify-between border-t border-pebble-15 px-6 py-3 md:px-8">

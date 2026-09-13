@@ -9,6 +9,7 @@ export type DriverStanding = {
   givenName: string;
   familyName: string;
   number: string;
+  nationality: string;
   team: string;
   headshot?: string;
 };
@@ -230,6 +231,7 @@ export async function getDriverStandings(
     givenName: s.Driver.givenName,
     familyName: s.Driver.familyName,
     number: s.Driver.permanentNumber,
+    nationality: s.Driver.nationality ?? "",
     team: s.Constructors[0]?.constructorId ?? "unknown",
   }));
 }
@@ -554,7 +556,7 @@ export async function getQualifying(
 // pole sitter, fastest lap and finishing stats — all pulled from race results.
 // Results/qualifying calls are run with limited concurrency so we don't trip
 // the public API's rate limit on the first (uncached) request.
-async function mapLimit<T, R>(
+export async function mapLimit<T, R>(
   items: T[],
   limit: number,
   fn: (item: T) => Promise<R>,

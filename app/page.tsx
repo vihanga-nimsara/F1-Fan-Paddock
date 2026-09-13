@@ -14,36 +14,68 @@ import {
 } from "@/lib/f1";
 import {
   Container,
-  Hero,
   SectionHeading,
-  NewsCard,
   StandingsTable,
   MediaFallback,
   Avatar,
   type StandingRow,
 } from "@/components/f1kit";
-import F1Button from "@/components/ui/F1Button";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import PostCard from "@/components/PostCard";
+import NewsletterForm from "@/components/NewsletterForm";
+import StandingsTicker from "@/components/StandingsTicker";
 import RaceCountdown from "@/components/RaceCountdown";
 import MustWatchVideos from "@/components/MustWatchVideos";
-import F1Card from "@/components/youtube/F1Card";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
-import { getCachedBlogPosts } from "@/lib/blog-cache";
+import { getOwnPosts } from "@/lib/own-posts";
 import { getPlaylistVideos } from "@/lib/youtube";
-import { TextAnimate } from "@/components/ui/text-animate";
-import { Box, Typography, Divider, Paper } from "@mui/material";
 
 const YT_PLAYLIST = "PLo5BbNWSTIgjjZUH3GlSU5Qo029JfgUTh";
 
 export const dynamic = "force-dynamic";
 
+function SectionHeader({
+  kicker,
+  title,
+  href,
+  linkLabel = "View all",
+}: {
+  kicker: string;
+  title: string;
+  href?: string;
+  linkLabel?: string;
+}) {
+  return (
+    <div className="mb-5 flex items-end justify-between gap-4 border-b border-border pb-3">
+      <div>
+        <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
+          {kicker}
+        </span>
+        <h2 className="m-0 font-heading text-2xl font-bold tracking-tight md:text-3xl">
+          {title}
+        </h2>
+      </div>
+      {href && (
+        <Link
+          href={href}
+          className="group flex shrink-0 items-center gap-1 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
+        >
+          {linkLabel}
+          <span className="transition-transform group-hover:translate-x-0.5">→</span>
+        </Link>
+      )}
+    </div>
+  );
+}
+
 export default async function Home() {
-  const [drivers, constructors, nextRaces, recentRaces, blogPosts, fbPosts, videos] =
+  const [drivers, constructors, nextRaces, recentRaces, fbPosts, videos] =
     await Promise.all([
       getDriverStandings(),
       getConstructorStandings(),
       getNextRaces(7),
       getRecentRaces(4),
-      getBlogPosts(10),
       getBlogPosts(10, "Facebook"),
       getPlaylistVideos(YT_PLAYLIST, 6),
     ]);
@@ -51,6 +83,32 @@ export default async function Home() {
   const headshots = await getDriverHeadshots(undefined, drivers).catch(
     () => ({}) as Record<string, string>,
   );
+
+  const ownPosts = getOwnPosts();
+  const [featured, ...moreOwn] = ownPosts;
+
+  const latestPosts = [
+    ...moreOwn.map((p) => ({
+      id: p.id,
+      href: `/stories/${p.id}`,
+      image: p.image,
+      tag: "Paddock",
+      title: p.title,
+      excerpt: p.excerpt,
+      author: p.author.name,
+      pubDate: p.pubDate,
+    })),
+    ...fbPosts.slice(0, 3).map((p) => ({
+      id: null as string | null,
+      href: p.link,
+      image: p.image,
+      tag: p.source,
+      title: p.title,
+      excerpt: p.description,
+      author: p.author,
+      pubDate: p.pubDate,
+    })),
+  ].slice(0, 6);
 
   const driverRows: StandingRow[] = drivers.slice(0, 10).map((d: DriverStanding) => ({
     position: d.position,
@@ -61,7 +119,7 @@ export default async function Home() {
     color: TEAM_COLORS[d.team],
     logo: getTeamLogo(d.team, 80),
     avatar: headshots[d.code] ?? headshots[String(d.number)] ?? undefined,
-    href: "/drivers",
+    href: `/drivers/${d.driverId}`,
   }));
 
   const conRows: StandingRow[] = constructors.map((c: ConstructorStanding) => ({
@@ -74,476 +132,375 @@ export default async function Home() {
     href: "/constructors",
   }));
 
-  const homeBlogs = blogPosts.filter((p) => p.source !== "Facebook");
-  const cached = homeBlogs.length ? [] : await getCachedBlogPosts(20);
-  const fallback = cached.length
-    ? cached.map((p) => ({
-        tag: p.source,
-        ts: timeAgo(p.pubDate),
-        title: p.title,
-        author: p.author,
-        description: p.description,
-        image: p.image,
-        link: p.link,
-      }))
-    : [];
-  const [blogFeatured, ...blogRest] = (
-    homeBlogs.length
-      ? homeBlogs.map((p) => ({
-          tag: p.source,
-          ts: timeAgo(p.pubDate),
-          title: p.title,
-          author: p.author,
-          description: p.description,
-          image: p.image,
-          link: p.link,
-        }))
-      : fallback
-  ) as {
-    tag: string;
-    ts: string;
-    title: string;
-    author: string;
-    description?: string;
-    image?: string;
-    link: string;
-  }[];
+  const tickerItems = drivers.slice(0, 10).map((d: DriverStanding) => ({
+    position: d.position,
+    code: d.code ?? d.familyName.slice(0, 3).toUpperCase(),
+    points: d.points,
+    color: TEAM_COLORS[d.team],
+  }));
 
-  const feed = [
-    blogFeatured,
-    ...blogRest.slice(0, 2),
-    ...blogRest.slice(2, 8),
-  ];
+  const next = nextRaces[0];
+  const nextDay = next
+    ? new Date(next.dateISO).toLocaleDateString("en-GB", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        timeZone: "UTC",
+      })
+    : null;
+  const nextTime = next?.time ? `${next.time.slice(0, 5)} UTC` : null;
 
   return (
-    <main className="relative w-full">
-      {/* Featured "video" hero — YouTube watch-page style */}
-      <Box component="section" sx={{ width: "100%" }}>
-        <Box
-          sx={{
-            position: "relative",
-            minHeight: { xs: 260, md: 360 },
-            display: "flex",
-            alignItems: "flex-end",
-          }}
-        >
-          <Box
-            component="img"
-            src="/images/ChatGPT_Image_Aug_16_2026_08_13_40_PM.png"
-            alt=""
-            sx={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "top",
-            }}
-          />
-          <Box
-            sx={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(to top, rgba(15,15,15,0.95), rgba(15,15,15,0.4) 60%, transparent)",
-            }}
-          />
-          <Box
-            sx={{
-              position: "relative",
-              zIndex: 1,
-              width: "100%",
-              maxWidth: "1640px",
-              mx: "auto",
-              px: { xs: 2, md: 3 },
-              pb: 4,
-            }}
-          >
-            <Box
-              sx={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 0.75,
-                bgcolor: "#e10600",
-                color: "#fff",
-                px: 1.5,
-                py: 0.5,
-                borderRadius: "4px",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                mb: 1.5,
-              }}
-            >
-              Welcome to
-            </Box>
-            <Typography
-              variant="h1"
-              sx={{
-                color: "#fff",
-                fontFamily: "var(--font-heading), sans-serif",
-                fontSize: { xs: 30, md: 52 },
-                fontWeight: 700,
-                lineHeight: 0.95,
-                letterSpacing: "-0.01em",
-                maxWidth: "24ch",
-              }}
-            >
-              The F1 Fan Paddock
-            </Typography>
-            <Typography
-              sx={{
-                color: "rgba(255,255,255,0.78)",
-                fontSize: { xs: 14, md: 16 },
-                maxWidth: "56ch",
-                mt: 1.5,
-                mb: 2,
-              }}
-            >
-              Follow every session, every lap and every overtake with live timing,
-              verdicts from verified fans and the full 2026 story — all in one paddock.
-            </Typography>
-            <Box sx={{ display: "flex", gap: 1.5, flexWrap: "wrap" }}>
-              <F1Button href="/standings" variant="primary" className="!bg-white !text-[#15151e]">
-                Explore the Grid →
-              </F1Button>
-              <F1Button href="/dashboard" variant="secondary" className="!bg-white/10 !text-white">
-                Live Timing
-              </F1Button>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
+    <main className="w-full">
+      {/* ------------------------------ Featured story ------------------------------ */}
+      {featured && (
+        <section className="border-b border-border">
+          <Container className="py-8 md:py-14">
+            <Link href={`/stories/${featured.id}`} className="group grid items-center gap-8 md:grid-cols-2 md:gap-12">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
+                {featured.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={featured.image}
+                    alt={featured.title}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                ) : (
+                  <MediaFallback label="The Paddock" />
+                )}
+                <Badge className="absolute left-4 top-4 gap-1 bg-f1red py-1 text-white hover:bg-f1red-dark">
+                  Featured story
+                </Badge>
+              </div>
 
-      <Box
-        component="section"
-        sx={{
-          width: "100%",
-          maxWidth: "1640px",
-          mx: "auto",
-          px: { xs: 1.5, md: 3 },
-          py: 2,
-          display: "flex",
-          flexDirection: "column",
-          gap: 4,
-        }}
-      >
-        {/* Next race countdown */}
-        {nextRaces[0] && (
-          <RaceCountdown
-            targetISO={nextRaces[0].dateISO}
-            raceName={nextRaces[0].raceName}
-            circuitName={nextRaces[0].circuitName}
-            country={nextRaces[0].country}
-            round={nextRaces[0].round}
-            lat={nextRaces[0].lat}
-            lng={nextRaces[0].lng}
-          />
-        )}
-
-        {/* Latest stories — YouTube feed */}
-        <section>
-          <SectionHeading kicker="News" title="Latest from the Paddock" href="/news" linkLabel="All news" />
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, minmax(0,1fr))",
-                lg: "repeat(4, minmax(0,1fr))",
-              },
-              gap: { xs: 3, md: 4 },
-              pt: 2,
-            }}
-          >
-            {feed.map((s) => (
-              <F1Card
-                key={s.title}
-                href={s.link}
-                image={s.image}
-                title={s.title}
-                channel={s.author}
-                tag={s.tag}
-                meta={[s.tag, `${s.ts} ago`]}
-              />
-            ))}
-          </Box>
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3 text-[12px] font-medium text-muted-foreground">
+                  <span className="font-semibold uppercase tracking-[0.16em] text-f1red">
+                    The Paddock
+                  </span>
+                  <span aria-hidden="true">·</span>
+                  <span>{timeAgo(featured.pubDate)}</span>
+                </div>
+                <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight group-hover:text-f1red">
+                  {featured.title}
+                </h1>
+                <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
+                  {featured.excerpt}
+                </p>
+                <div className="flex items-center gap-3">
+                  <Avatar name={featured.author.name} className="h-9 w-9 text-sm" />
+                  <div className="flex flex-col leading-tight">
+                    <span className="text-sm font-semibold">{featured.author.name}</span>
+                    <span className="text-[12px] text-muted-foreground">
+                      {featured.readTime} · {featured.content.length} sections
+                    </span>
+                  </div>
+                </div>
+                <span className="mt-1 inline-flex w-fit items-center">
+                  <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-f1red px-4 py-2.5 text-sm font-medium text-white transition-colors group-hover:bg-f1red-dark">
+                    Read the story <span aria-hidden="true">→</span>
+                  </span>
+                </span>
+              </div>
+            </Link>
+          </Container>
         </section>
+      )}
 
-        {/* Must watch */}
-        <section>
-          <SectionHeading
-            kicker="Watch"
-            title="Must Watch"
-            href={`https://www.youtube.com/playlist?list=${YT_PLAYLIST}`}
-            linkLabel="All videos"
-          />
-          <Box sx={{ pt: 2 }}>
+      {/* ------------------------------ Championship ticker ------------------------------ */}
+      <StandingsTicker items={tickerItems} href="/standings" />
+
+      {/* ------------------------------ Main grid ------------------------------ */}
+      <Container className="grid gap-10 py-8 md:py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
+        {/* Main column */}
+        <div className="flex min-w-0 flex-col gap-14">
+          {/* Latest posts */}
+          <section>
+            <SectionHeader kicker="Blog" title="Latest from the Paddock" href="/stories" linkLabel="All posts" />
+            <div className="grid gap-5 sm:grid-cols-2">
+              {latestPosts.map((p) => (
+                  <PostCard
+                    key={p.id ?? p.href}
+                    href={p.href}
+                    image={p.image}
+                    tag={p.tag}
+                    title={p.title}
+                    excerpt={p.excerpt}
+                    meta={
+                      <>
+                        <span className="font-medium text-foreground/80">
+                          {p.author}
+                        </span>
+                        <span aria-hidden="true">·</span>
+                        <span>{timeAgo(p.pubDate)}</span>
+                      </>
+                    }
+                  />
+                ))}
+            </div>
+          </section>
+
+          {/* Must watch */}
+          <section>
+            <SectionHeader
+              kicker="Watch"
+              title="Must Watch"
+              href={`https://www.youtube.com/playlist?list=${YT_PLAYLIST}`}
+              linkLabel="All videos"
+            />
             <MustWatchVideos videos={videos.map((v) => ({ id: v.id, title: v.title }))} />
-          </Box>
-        </section>
+          </section>
 
-        {/* 2026 Season standings */}
-        <section>
-          <SectionHeading kicker="2026" title="Season Standings" href="/standings" linkLabel="Full standings" />
-          <Box
-            sx={{
-              display: "grid",
-              gap: { xs: 3, md: 4 },
-              gridTemplateColumns: { xs: "1fr", lg: "1fr 1fr" },
-              pt: 2,
-            }}
-          >
-            <Box>
-              <Typography
-                sx={{
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  color: "text.secondary",
-                  textTransform: "uppercase",
-                  mb: 1,
-                }}
-              >
-                Drivers
-              </Typography>
-              <StandingsTable rows={driverRows} />
-            </Box>
-            <Box>
-              <Typography
-                sx={{
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: "0.08em",
-                  color: "text.secondary",
-                  textTransform: "uppercase",
-                  mb: 1,
-                }}
-              >
-                Constructors
-              </Typography>
-              <StandingsTable rows={conRows} />
-            </Box>
-          </Box>
-        </section>
+          {/* From Facebook */}
+          <section>
+            <SectionHeader kicker="Community" title="From Our Facebook" />
+            {fbPosts.length > 0 ? (
+              <div className="grid gap-5 sm:grid-cols-3">
+                {fbPosts.slice(0, 3).map((p) => (
+                  <PostCard
+                    key={p.link}
+                    href={p.link}
+                    image={p.image}
+                    tag="Facebook"
+                    title={p.title}
+                    excerpt={p.description}
+                    meta={
+                      <>
+                        <span>{p.author}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{timeAgo(p.pubDate)}</span>
+                      </>
+                    }
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="rounded-xl border border-dashed text-sm text-muted-foreground">
+                No Facebook posts to show yet — check back soon.
+              </p>
+            )}
+          </section>
+        </div>
 
-        {/* Upcoming races */}
-        <section>
-          <SectionHeading kicker="Calendar" title="Upcoming Races" href="/calendar" linkLabel="Full schedule" />
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, minmax(0,1fr))",
-                lg: "repeat(4, minmax(0,1fr))",
-              },
-              gap: { xs: 3, md: 4 },
-              pt: 2,
-            }}
-          >
-            {nextRaces.map((r: Race) => {
-              const date = new Date(r.dateISO).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              });
-              const time = r.time ? r.time.slice(0, 5) : "—";
-              return (
-                <Paper
-                  key={r.round}
-                  elevation={0}
-                  sx={{
-                    p: 2,
-                    borderRadius: "12px",
-                    bgcolor: "background.paper",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 1,
-                  }}
-                >
-                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <Typography sx={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "text.secondary", textTransform: "uppercase" }}>
-                      Round {r.round}
-                    </Typography>
-                    <Typography sx={{ fontSize: "1.25rem", lineHeight: 1 }}>{r.flag}</Typography>
-                  </Box>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontSize: 16, fontWeight: 700, lineHeight: 1.2, color: "text.primary" }}
-                  >
-                    {r.raceName}
-                  </Typography>
-                  <Typography sx={{ fontSize: 13, color: "text.secondary" }}>{r.circuitName}</Typography>
-                  <Typography sx={{ fontSize: 13, color: "text.secondary" }}>{r.country}</Typography>
-                  <Typography sx={{ fontSize: 13, fontWeight: 600, color: "text.primary" }}>{date}</Typography>
-                  <Typography sx={{ fontSize: 13, fontWeight: 600, color: "text.primary" }}>{time} UTC</Typography>
-                </Paper>
-              );
-            })}
-          </Box>
-        </section>
-
-        {/* Recent results */}
-        <section>
-          <SectionHeading kicker="Results" title="Race Weekend" href="/calendar" linkLabel="All results" />
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "repeat(2, minmax(0,1fr))",
-                lg: "repeat(4, minmax(0,1fr))",
-              },
-              gap: { xs: 3, md: 4 },
-              pt: 2,
-            }}
-          >
-            {recentRaces.map((r: Race) => {
-              const img = r.circuitImage ?? flagImage(r.country, 320);
-              return (
-                <Link
-                  key={r.round}
-                  href="/calendar"
-                  style={{ textDecoration: "none" }}
-                >
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      overflow: "hidden",
-                      borderRadius: "12px",
-                      bgcolor: "background.paper",
-                      transition: "background-color 0.2s",
-                      "&:hover": { bgcolor: "rgba(255,255,255,0.06)" },
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        position: "relative",
-                        height: 160,
-                        bgcolor: "rgba(255,255,255,0.06)",
-                      }}
-                    >
-                      {img ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={img}
-                          alt={`${r.circuitName} circuit`}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                            padding: 12,
-                          }}
-                        />
-                      ) : (
-                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", fontSize: 40 }}>
-                          {r.flag}
-                        </Box>
-                      )}
-                    </Box>
-                    <Box sx={{ p: 1.5, display: "flex", flexDirection: "column", gap: 0.25 }}>
-                      <Typography sx={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "text.secondary", textTransform: "uppercase" }}>
-                        Round {r.round}
-                      </Typography>
-                      <Typography variant="h6" sx={{ fontSize: 15, fontWeight: 700, lineHeight: 1.2 }}>
-                        {r.raceName}
-                      </Typography>
-                      <Typography sx={{ fontSize: 13, color: "text.secondary" }}>
-                        {r.circuitName.replace("Grand Prix Circuit", "").trim()}
-                      </Typography>
-                    </Box>
-                  </Paper>
-                </Link>
-              );
-            })}
-          </Box>
-        </section>
-
-        {/* Facebook posts */}
-        <section>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5, mb: 1 }}>
-            <Typography
-              variant="h2"
-              sx={{
-                fontFamily: "var(--font-heading), sans-serif",
-                fontSize: { xs: 20, md: 28 },
-                fontWeight: 700,
-                letterSpacing: "0.02em",
-                color: "text.primary",
-              }}
-            >
-              From Our Facebook
-            </Typography>
-            <Typography sx={{ color: "text.secondary", fontSize: 14, maxWidth: "60ch" }}>
-              Latest posts, race-week reactions and paddock banter from the F1 Fan Paddock page.
-            </Typography>
-          </Box>
-          {fbPosts.length > 0 ? (
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  sm: "repeat(2, minmax(0,1fr))",
-                  lg: "repeat(3, minmax(0,1fr))",
-                },
-                gap: { xs: 3, md: 4 },
-                pt: 2,
-              }}
-            >
-              {fbPosts.map((p) => (
-                <F1Card
-                  key={p.link}
-                  href={p.link}
-                  image={p.image}
-                  title={p.title}
-                  channel={p.author}
-                  tag={p.source}
-                  meta={[p.author, timeAgo(p.pubDate)]}
-                />
-              ))}
-            </Box>
-          ) : (
-            <Typography sx={{ p: 2.5, bgcolor: "rgba(255,255,255,0.05)", borderRadius: "12px", color: "text.secondary", fontSize: 14 }}>
-              No Facebook posts to show yet — check back soon.
-            </Typography>
+        {/* Sidebar */}
+        <aside className="flex min-w-0 flex-col gap-6 lg:sticky lg:top-20 lg:self-start">
+          {next && (
+            <section className="overflow-hidden rounded-2xl border border-border bg-card">
+              <div className="flex h-24 items-center justify-center bg-carbon-deep">
+                {(() => {
+                  const flag = flagImage(next.country);
+                  return flag ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={flag} alt={next.country} className="h-10 w-16 rounded object-cover shadow" />
+                  ) : (
+                    <span className="text-3xl">{next.flag}</span>
+                  );
+                })()}
+              </div>
+              <div className="flex flex-col gap-2 p-5">
+                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-f1red">
+                  Next race · Round {next.round}
+                </span>
+                <h3 className="m-0 font-heading text-lg font-bold tracking-tight">{next.raceName}</h3>
+                <p className="m-0 text-[13px] text-muted-foreground">
+                  {next.circuitName} · {next.country}
+                </p>
+                {nextDay && (
+                  <p className="m-0 text-[13px] font-semibold">
+                    {nextDay}
+                    {nextTime ? ` · ${nextTime}` : ""}
+                  </p>
+                )}
+                <Button asChild variant="outline" size="sm" className="mt-1 w-full">
+                  <Link href="/calendar">Full schedule</Link>
+                </Button>
+              </div>
+            </section>
           )}
-        </section>
 
-        {/* CTA band */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "flex-start",
-            gap: 2,
-            bgcolor: "#e10600",
-            color: "#fff",
-            borderRadius: "16px",
-            px: { xs: 3, md: 5 },
-            py: { xs: 4, md: 5 },
-          }}
-        >
-          <TextAnimate
-            as="h2"
-            by="word"
-            animation="blurInUp"
-            duration={0.5}
-            className="m-0 font-headline font-semibold leading-[0.95] tracking-[0.01em] text-white"
-            style={{ fontSize: "clamp(24px,4vw,44px)" }}
-          >
-            Find Your People. Find Your Next Race.
-          </TextAnimate>
-          <Typography sx={{ color: "rgba(255,255,255,0.85)", fontSize: 14, maxWidth: "60ch" }}>
-            Lap-by-lap verdicts from verified fans, live timing and the full 2026 story — all in one paddock.
-          </Typography>
-          <F1Button href="/standings" variant="primary" className="!bg-white !text-[#15151e]">
-            Explore Standings →
-          </F1Button>
-        </Box>
-      </Box>
+          <section className="rounded-2xl border border-f1red/25 bg-f1red/5 p-5">
+            <h3 className="m-0 font-heading text-lg font-bold tracking-tight">
+              The Paddock newsletter
+            </h3>
+            <p className="mb-3 mt-1 text-[13px] leading-relaxed text-muted-foreground">
+              Race-weekend verdicts, fresh stories and the fastest F1 data — in
+              your inbox.
+            </p>
+            <NewsletterForm compact />
+          </section>
+
+          <section className="rounded-2xl border border-border bg-card p-5">
+            <h3 className="mb-3 font-heading text-base font-bold tracking-tight">
+              Championship <span className="text-muted-foreground">· Top 5</span>
+            </h3>
+            <StandingsTable rows={driverRows.slice(0, 5)} />
+            <Button asChild variant="ghost" size="sm" className="mt-2 w-full">
+              <Link href="/standings">Full standings →</Link>
+            </Button>
+          </section>
+
+          <section className="rounded-2xl border border-border bg-muted/40 p-5">
+            <h3 className="mb-3 font-heading text-base font-bold tracking-tight">
+              Browse the paddock
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: "Stories", href: "/stories" },
+                { label: "News", href: "/news" },
+                { label: "Videos", href: "/video" },
+                { label: "Standings", href: "/standings" },
+                { label: "Drivers", href: "/drivers" },
+                { label: "Race reviews", href: "/reviews" },
+                { label: "Live timing", href: "/dashboard" },
+              ].map((t) => (
+                <Link
+                  key={t.href}
+                  href={t.href}
+                  className="rounded-full border border-border bg-card px-3 py-1.5 text-[12px] font-medium text-foreground/80 transition-colors hover:border-f1red/50 hover:text-f1red"
+                >
+                  {t.label}
+                </Link>
+              ))}
+            </div>
+          </section>
+        </aside>
+      </Container>
+
+      {/* ------------------------------ Next race countdown ------------------------------ */}
+      {next && (
+        <Container className="pb-8">
+          <RaceCountdown
+            targetISO={next.dateISO}
+            raceName={next.raceName}
+            circuitName={next.circuitName}
+            country={next.country}
+            round={next.round}
+            lat={next.lat}
+            lng={next.lng}
+            upcomingRaces={nextRaces.slice(1).map((r) => ({
+              round: r.round,
+              lat: r.lat,
+              lng: r.lng,
+              circuitName: r.circuitName,
+              country: r.country,
+              raceName: r.raceName,
+              dateISO: r.dateISO,
+            }))}
+          />
+        </Container>
+      )}
+
+      {/* ------------------------------ Championship tables ------------------------------ */}
+      <Container className="grid gap-8 pb-8 md:grid-cols-2">
+        <section>
+          <SectionHeading kicker="2026" title="Drivers' Championship" href="/standings" linkLabel="Full standings" />
+          <div className="pt-3">
+            <StandingsTable rows={driverRows} />
+          </div>
+        </section>
+        <section>
+          <SectionHeading kicker="2026" title="Constructors' Championship" href="/standings" linkLabel="Full standings" />
+          <div className="pt-3">
+            <StandingsTable rows={conRows} />
+          </div>
+        </section>
+      </Container>
+
+      {/* ------------------------------ Upcoming races ------------------------------ */}
+      <Container className="flex flex-col gap-5 pb-8">
+        <SectionHeader kicker="Calendar" title="Upcoming Races" href="/calendar" linkLabel="Full schedule" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {nextRaces.map((r: Race) => {
+            const date = new Date(r.dateISO).toLocaleDateString("en-GB", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            });
+            return (
+              <Link
+                key={r.round}
+                href="/calendar"
+                className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    Round {r.round}
+                  </span>
+                  <span className="text-xl leading-none">{r.flag}</span>
+                </div>
+                <h3 className="m-0 font-heading text-[15px] font-bold leading-snug tracking-tight group-hover:text-f1red">
+                  {r.raceName}
+                </h3>
+                <p className="m-0 text-[12px] text-muted-foreground">{r.circuitName}</p>
+                <p className="mt-auto text-[12px] font-semibold">{date}</p>
+              </Link>
+            );
+          })}
+        </div>
+      </Container>
+
+      {/* ------------------------------ Recent results ------------------------------ */}
+      <Container className="flex flex-col gap-5 pb-8">
+        <SectionHeader kicker="Results" title="Race Weekend" />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {recentRaces.map((r: Race) => {
+            const img = r.circuitImage ?? flagImage(r.country, 320);
+            return (
+              <Link
+                key={r.round}
+                href="/reviews"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+              >
+                <div className="flex h-28 items-center justify-center bg-muted p-3">
+                  {img ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={img}
+                      alt={`${r.circuitName} circuit`}
+                      className="h-full w-full object-contain"
+                    />
+                  ) : (
+                    <span className="text-4xl">{r.flag}</span>
+                  )}
+                </div>
+                <div className="flex flex-col gap-1 p-4">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    Round {r.round}
+                  </span>
+                  <h3 className="m-0 font-heading text-[15px] font-bold leading-snug tracking-tight group-hover:text-f1red">
+                    {r.raceName}
+                  </h3>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </Container>
+
+      {/* ------------------------------ CTA ------------------------------ */}
+      <Container className="pb-8">
+        <div className="flex flex-col items-start gap-4 rounded-2xl bg-carbon-deep px-6 py-8 md:px-10 md:py-10">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
+            The Paddock
+          </span>
+          <h2 className="m-0 max-w-[24ch] font-heading text-[clamp(24px,3.5vw,40px)] font-bold leading-[1.05] tracking-tight text-foreground">
+            Find your people. Find your next race.
+          </h2>
+          <p className="m-0 max-w-[60ch] text-[14px] leading-relaxed text-muted-foreground">
+            Lap-by-lap verdicts, paddock stories and live 2026 data — all in one
+            fan-built paddock.
+          </p>
+          <div className="mt-1 flex flex-wrap gap-3">
+            <Button asChild className="bg-f1red text-white hover:bg-f1red-dark">
+              <Link href="/standings">Explore standings</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/stories">Read the blog</Link>
+            </Button>
+          </div>
+        </div>
+      </Container>
     </main>
   );
 }

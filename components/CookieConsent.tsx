@@ -49,7 +49,7 @@ export default function CookieConsent() {
             right: 16,
             m: 0,
             maxWidth: 420,
-            borderRadius: "4px",
+            borderRadius: "3px",
             p: 1,
             fontFamily: "var(--font-body)",
           },

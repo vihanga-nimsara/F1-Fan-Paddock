@@ -57,7 +57,7 @@ export default function Toaster() {
             onClose={() => remove(toast.id)}
             sx={{
               width: "100%",
-              borderRadius: "4px",
+              borderRadius: "3px",
               borderTop: "3px solid #e10600",
               borderColor: "rgba(20,20,28,0.12)",
               bgcolor: "#ffffff",

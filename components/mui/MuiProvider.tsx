@@ -2,16 +2,19 @@
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "@/lib/mui/theme";
+import { useThemeMode } from "@/components/theme-provider";
+import { createAppTheme } from "@/lib/mui/theme";
 
 export default function MuiProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { resolved } = useThemeMode();
+
   return (
-    <AppRouterCacheProvider>
-      <ThemeProvider theme={theme}>{children}</ThemeProvider>
+    <AppRouterCacheProvider options={{ key: "paddock" }}>
+      <ThemeProvider theme={createAppTheme(resolved)}>{children}</ThemeProvider>
     </AppRouterCacheProvider>
   );
 }

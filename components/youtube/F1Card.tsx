@@ -37,7 +37,7 @@ export default function F1Card({
         alignItems: "flex-start",
         p: 0,
         overflow: "hidden",
-        borderRadius: "12px",
+        borderRadius: "3px",
         td: { color: "text.primary" },
       }}
     >
@@ -48,7 +48,7 @@ export default function F1Card({
           aspectRatio: "16/9",
           overflow: "hidden",
           bgcolor: "rgba(255,255,255,0.06)",
-          borderRadius: "12px",
+          borderRadius: "3px",
         }}
       >
         {image ? (
@@ -90,7 +90,7 @@ export default function F1Card({
               fontWeight: 600,
               px: 0.75,
               py: 0.25,
-              borderRadius: "4px",
+              borderRadius: "3px",
             }}
           >
             {duration}
@@ -110,7 +110,7 @@ export default function F1Card({
               textTransform: "uppercase",
               px: 1,
               py: 0.5,
-              borderRadius: "4px",
+              borderRadius: "3px",
             }}
           >
             {tag}

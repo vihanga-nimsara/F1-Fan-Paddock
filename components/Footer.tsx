@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
-import { Box, Typography } from "@mui/material";
 
 const LINKS = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/team" },
+  { label: "Team", href: "/team" },
+  { label: "Blog", href: "/stories" },
 ];
 
 const SOCIAL = [
@@ -44,84 +42,51 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <Box
-      component="footer"
-      sx={{
-        borderTop: "1px solid #303030",
-        bgcolor: "background.default",
-        mt: 2,
-      }}
-    >
-      <Box
-        sx={{
-          maxWidth: "1640px",
-          mx: "auto",
-          px: { xs: 1.5, md: 3 },
-          py: 3,
-          display: "flex",
-          flexDirection: { xs: "column", sm: "row" },
-          alignItems: { xs: "flex-start", sm: "center" },
-          justifyContent: "space-between",
-          gap: 2,
-        }}
-      >
-        <Typography sx={{ fontSize: 12, color: "text.secondary" }}>
-          © {year} F1 Fan Paddock. An independent fan project.
-        </Typography>
-
-        <Box
-          sx={{
-            display: "flex",
-            flexWrap: "wrap",
-            alignItems: "center",
-            gap: { xs: 1.5, sm: 2 },
-          }}
-        >
-          {LINKS.map((l) => (
-            <Link key={l.label} href={l.href} style={{ textDecoration: "none" }}>
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: 12,
-                  fontWeight: 500,
-                  color: "text.secondary",
-                  transition: "color 0.15s ease",
-                  ":hover": { color: "text.primary" },
-                }}
+    <footer className="mt-10 border-t border-border bg-background">
+      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-4 py-8 md:px-6">
+        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-1">
+            <span className="font-heading text-base font-bold tracking-tight">
+              The Paddock
+            </span>
+            <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
+              An independent F1 fan blog — race analysis, paddock stories and
+              live data for every session, every lap, every overtake.
+            </p>
+          </div>
+          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2" aria-label="Footer">
+            {LINKS.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
                 {l.label}
-              </Typography>
-            </Link>
-          ))}
-          {SOCIAL.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={s.label}
-              style={{ color: "inherit", display: "inline-flex" }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  display: "inline-flex",
-                  width: 32,
-                  height: 32,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "50%",
-                  color: "text.secondary",
-                  transition: "background-color 0.15s ease, color 0.15s ease",
-                  ":hover": { bgcolor: "#272727", color: "text.primary" },
-                }}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-border pt-4 sm:flex-row sm:items-center">
+          <p className="text-xs text-muted-foreground">
+            © {year} The Paddock · F1 Fan Paddock. An independent fan project.
+          </p>
+          <div className="flex items-center gap-2">
+            {SOCIAL.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={s.label}
+                className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
               >
                 {s.icon}
-              </Box>
-            </a>
-          ))}
-        </Box>
-      </Box>
-    </Box>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 }

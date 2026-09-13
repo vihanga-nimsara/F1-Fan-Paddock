@@ -47,7 +47,7 @@ export default function F1Button({
     sx: {
       textTransform: "none",
       fontWeight: 600,
-      borderRadius: "18px",
+      borderRadius: "3px",
       px: 2.5,
       ...YOUTUBE_STYLES[variant],
     },

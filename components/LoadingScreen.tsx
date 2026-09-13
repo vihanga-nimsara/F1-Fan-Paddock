@@ -85,8 +85,11 @@ export default function LoadingScreen() {
         </ErrorBoundary>
       </div>
       <div className="relative z-10 flex flex-col items-center gap-3">
-        <span className="font-display text-2xl font-semibold tracking-[0.02em] text-white">
-          F1 <span className="text-[#ff1e00]">Fan Paddock</span>
+        <span
+          className="font-display text-5xl font-semibold tracking-[0.02em] text-white"
+          style={{ fontFamily: "Formula1 Display Bold Bold, var(--font-inter), sans-serif" }}
+        >
+          F1 <span className="text-[#ff1e00]">paddock SL</span>
         </span>
         <span className="flex items-center gap-1.5 font-body text-xs font-medium tracking-[0.2em] text-white/70">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ff1e00]" />
