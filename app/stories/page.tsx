@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PostCard from "@/components/PostCard";
 import { getOwnPosts } from "@/lib/own-posts";
+import { getAuthoredBlogs } from "@/lib/authored-blogs";
 import { timeAgo } from "@/lib/blog";
 
 export const metadata = {
@@ -11,8 +12,14 @@ export const metadata = {
 };
 
 export default async function StoriesPage() {
-  const ownPosts = getOwnPosts();
-  const [featured, ...rest] = ownPosts;
+  const [ownPosts, authoredBlogs] = await Promise.all([
+    Promise.resolve(getOwnPosts()),
+    getAuthoredBlogs(),
+  ]);
+  const posts = [...authoredBlogs, ...ownPosts].sort(
+    (a, b) => +new Date(b.pubDate) - +new Date(a.pubDate)
+  );
+  const [featured, ...rest] = posts;
 
   return (
     <main className="w-full">
@@ -80,7 +87,7 @@ export default async function StoriesPage() {
                 More stories
               </h2>
               <span className="text-[12px] font-medium text-muted-foreground">
-                {ownPosts.length} posts
+                {posts.length} posts
               </span>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

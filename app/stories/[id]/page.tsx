@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { MediaFallback } from "@/components/f1kit";
 import { getCachedPostById } from "@/lib/blog-cache";
 import { getOwnPostById } from "@/lib/own-posts";
+import { getAuthoredBlogBySlug } from "@/lib/authored-blogs";
 import { getComments } from "@/lib/comments";
 import CommentSection from "@/components/CommentSection";
 import { timeAgo } from "@/lib/blog";
@@ -17,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const own = getOwnPostById(id);
+  const own = getOwnPostById(id) ?? (await getAuthoredBlogBySlug(id));
   const post = own ?? (await getCachedPostById(id));
   return {
     title: post ? `${post.title} — F1 Fan Paddock` : "Blog Post — F1 Fan Paddock",
@@ -29,7 +30,7 @@ export default async function BlogPostPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const own = getOwnPostById(id);
+  const own = getOwnPostById(id) ?? (await getAuthoredBlogBySlug(id));
   const post = await getCachedPostById(id);
   const userComments = getComments(id);
 
