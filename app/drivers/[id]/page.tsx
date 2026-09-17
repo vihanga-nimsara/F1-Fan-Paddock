@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ArrowLeft, ExternalLink, Flag } from "lucide-react";
+import { ArrowLeft, ExternalLink, Flag, ArrowRight } from "lucide-react";
 import {
   getDriverStandings,
   getConstructorStandings,
@@ -261,9 +261,10 @@ export default async function DriverPage({
             </div>
             <Link
               href="/reviews"
-              className="text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
+              className="group flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
             >
-              Race reviews →
+              Race reviews
+              <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
             </Link>
           </div>
 

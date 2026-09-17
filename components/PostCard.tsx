@@ -26,7 +26,7 @@ export default function PostCard({
     <Link
       href={href}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground ring-1 ring-foreground/10 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5 hover:ring-foreground/20",
+        "group flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground ring-1 ring-foreground/10 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5 hover:ring-foreground/20",
         className,
       )}
     >
@@ -37,7 +37,7 @@ export default function PostCard({
             src={image}
             alt=""
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
           />
         ) : (
           <MediaFallback label={tag?.[0]} sublabel={tag} />

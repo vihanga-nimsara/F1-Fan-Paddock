@@ -2,8 +2,15 @@
 
 import { memo, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { ChevronDown, ArrowRight } from "lucide-react";
 import { flagImage } from "@/lib/f1";
 import { DottedMap } from "@/components/ui/dotted-map";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 
 type UpcomingRace = {
   round?: number;
@@ -213,28 +220,37 @@ export default function RaceCountdown({
             Round {active.round} · {active.circuitName}
           </p>
           {items.length > 1 && (
-            <label className="mt-1 flex items-center gap-2">
+            <div className="mt-1 flex items-center gap-2">
               <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-pebble-50">
                 Countdown to
               </span>
-              <select
-                value={activeIdx}
-                onChange={(e) => setActiveIdx(Number(e.target.value))}
-                className="cursor-pointer appearance-none rounded-lg border border-pebble-40 bg-card py-1.5 pl-2.5 pr-8 text-[13px] font-medium text-pebble shadow-sm outline-none transition-colors focus:border-f1red/60 [&>option]:bg-card [&>option]:text-pebble"
-                style={{
-                  backgroundImage:
-                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a3a3a3' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "right 0.65rem center",
-                }}
-              >
-                {items.map((it, i) => (
-                  <option key={i} value={i}>
-                    Rd {it.round} · {it.raceName}
-                  </option>
-                ))}
-              </select>
-            </label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    type="button"
+                    className="flex cursor-pointer items-center gap-2 rounded-lg border border-pebble-40 bg-card py-1.5 pl-2.5 pr-2.5 text-[13px] font-medium text-pebble shadow-sm outline-none transition-colors hover:border-f1red/60 focus-visible:border-f1red/60"
+                  >
+                    <span>
+                      Rd {active.round} · {active.raceName}
+                    </span>
+                    <ChevronDown className="size-3.5 text-pebble-50" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="min-w-[180px]">
+                  {items.map((it, i) => (
+                    <DropdownMenuItem
+                      key={i}
+                      onClick={() => setActiveIdx(i)}
+                      className={
+                        i === activeIdx ? "font-semibold text-f1red" : undefined
+                      }
+                    >
+                      Rd {it.round} · {it.raceName}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           )}
         </div>
 
@@ -273,9 +289,10 @@ export default function RaceCountdown({
         </span>
         <Link
           href="/calendar"
-          className="font-display text-[11px] font-semibold tracking-[0.12em] text-f1red transition-opacity hover:opacity-80"
+          className="group inline-flex items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-f1red transition-all hover:gap-2.5"
         >
-          VIEW SCHEDULE →
+          VIEW SCHEDULE
+          <ArrowRight className="size-3.5" aria-hidden="true" />
         </Link>
       </div>
     </section>

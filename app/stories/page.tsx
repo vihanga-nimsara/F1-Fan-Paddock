@@ -6,6 +6,7 @@ import PostCard from "@/components/PostCard";
 import { getOwnPosts } from "@/lib/own-posts";
 import { getAuthoredBlogs } from "@/lib/authored-blogs";
 import { timeAgo } from "@/lib/blog";
+import { ArrowRight } from "lucide-react";
 
 export const metadata = {
   title: "The Paddock Blog — F1 Paddock SL",
@@ -72,8 +73,9 @@ export default async function StoriesPage() {
                 {featured.excerpt}
               </p>
               <Button asChild className="mt-1 w-fit gap-2 bg-f1red text-white hover:bg-f1red-dark">
-                <Link href={`/stories/${featured.id}`}>
-                  Read the story <span aria-hidden="true">→</span>
+                <Link href={`/stories/${featured.id}`} className="gap-1.5">
+                  Read the story
+                  <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
               </Button>
             </div>

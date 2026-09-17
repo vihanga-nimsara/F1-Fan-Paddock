@@ -42,6 +42,40 @@ export type FetchedPost = {
   images?: string[];
 };
 
+export type FacebookPageStats = {
+  id?: string;
+  name?: string;
+  fan_count?: number;
+  followers_count?: number;
+};
+
+// Reads the live follower/like count of the managed Facebook Page using the
+// same Graph API credentials as the posts feed (FB_PAGE_ID + token in .env.local).
+export async function getFacebookPageStats(): Promise<FacebookPageStats | null> {
+  const pageId = process.env.FB_PAGE_ID;
+  const token = process.env.FB_PAGE_ACCESS_TOKEN;
+  if (!pageId || !token) return null;
+
+  const fields = ["id", "name", "fan_count", "followers_count"].join(",");
+  const url =
+    `https://graph.facebook.com/${API_VERSION}/${encodeURIComponent(pageId)}` +
+    `?fields=${encodeURIComponent(fields)}` +
+    `&access_token=${encodeURIComponent(token)}`;
+
+  try {
+    const res = await fetch(url, {
+      headers: { "User-Agent": "paddock-bulletin/1.0" },
+      next: { revalidate: 1800 },
+    });
+    if (!res.ok) return null;
+    const json = (await res.json()) as FacebookPageStats & { error?: any };
+    if (json.error) return null;
+    return json;
+  } catch {
+    return null;
+  }
+}
+
 function extractImage(post: FacebookPost): string | undefined {
   if (post.full_picture) return post.full_picture;
   if (post.picture) return post.picture;

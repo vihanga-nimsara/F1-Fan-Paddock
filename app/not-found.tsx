@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Container, Kicker } from "@/components/f1kit";
 import F1Button from "@/components/ui/F1Button";
+import { ArrowLeft } from "lucide-react";
 
 export const metadata = {
   title: "Page Not Found — F1 Paddock SL",
@@ -21,7 +22,10 @@ export default function NotFound() {
           The page you were looking for didn't make it out of the pit lane.
           Check the URL or head back to the start.
         </p>
-        <F1Button href="/">Back to the grid →</F1Button>
+        <F1Button href="/" className="gap-2">
+          <ArrowLeft className="size-4" aria-hidden="true" />
+          Back to the grid
+        </F1Button>
       </Container>
     </main>
   );

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MuiAvatar from "@mui/material/Avatar";
-import { TextAnimate } from "@/components/ui/text-animate";
+import { ArrowRight } from "lucide-react";
+import { LineShadowText } from "@/components/ui/line-shadow-text";
 
 /* ------------------------------------------------------------------ */
 /* Layout                                                              */
@@ -65,25 +66,17 @@ export function SectionHeading({
     >
       <div className="flex flex-col gap-1.5">
         {kicker && <Kicker>{kicker}</Kicker>}
-        <TextAnimate
-          as="h2"
-          by="word"
-          animation="blurInUp"
-          duration={0.4}
-          className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold leading-[0.95] tracking-[0.02em] text-pebble"
-        >
+        <h2 className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold leading-[0.95] tracking-[0.02em] text-pebble">
           {title}
-        </TextAnimate>
+        </h2>
       </div>
       {href && (
         <Link
           href={href}
-          className="group flex shrink-0 items-center gap-1 font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80 transition-colors hover:text-f1red"
+          className="group flex shrink-0 items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80 transition-colors hover:text-f1red"
         >
           {linkLabel}
-          <span className="transition-transform group-hover:translate-x-0.5">
-            →
-          </span>
+          <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
         </Link>
       )}
     </div>
@@ -400,7 +393,6 @@ export function StandingsTable({
 
 export function Hero({
   image,
-  kicker = "Welcome to",
   title,
   excerpt,
   primaryCta,
@@ -410,7 +402,6 @@ export function Hero({
   color = "#e10600",
 }: {
   image?: string;
-  kicker?: string;
   title: string;
   excerpt?: string;
   primaryCta?: string;
@@ -438,34 +429,28 @@ export function Hero({
         />
       )}
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon/70 via-carbon/20 to-transparent" />
-      <span className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-f1red" />
-      <div className="relative z-10 mx-auto w-full max-w-[1640px] flex flex-col gap-4 px-4 pb-10 pt-16 md:px-6 md:pb-14">
-        <span className="inline-flex w-fit items-center gap-3 rounded-sm bg-f1red px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.16em] text-white uppercase">
-          <span aria-hidden="true">🏁</span>
-          {kicker}
-        </span>
-        <TextAnimate
+      <div className="relative z-10 mx-auto w-full max-w-[1640px] flex flex-col items-center gap-4 px-4 pb-10 pt-16 text-center md:px-6 md:pb-14">
+        <LineShadowText
           as="h1"
-          by="word"
-          animation="blurInUp"
-          duration={0.5}
-          className="m-0 max-w-[22ch] font-headline text-[clamp(34px,6vw,64px)] font-semibold leading-[0.88] tracking-[0.01em] text-white"
+          shadowColor="rgba(255,255,255,0.45)"
+          className="m-0 font-f1-display text-[clamp(56px,11vw,126px)] font-bold uppercase leading-[0.9] tracking-tight text-white"
         >
           {title}
-        </TextAnimate>
+        </LineShadowText>
         {excerpt && (
-          <p className="m-0 max-w-[55ch] text-[16px] leading-[1.4] text-white/75">
+          <p className="m-0 max-w-[55ch] text-[17px] leading-[1.4] text-white/85">
             {excerpt}
           </p>
         )}
         {(primaryCta || secondaryCta) && (
-          <div className="mt-2 flex flex-wrap items-center gap-3">
+          <div className="mt-2 flex flex-wrap items-center justify-center gap-3">
             {primaryCta && (
               <Link
                 href={primaryHref ?? "#"}
-                className="inline-flex items-center gap-2 rounded-sm bg-white px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-all hover:bg-f1red hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-sm bg-white px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-all hover:bg-f1red hover:text-white"
               >
-                {primaryCta} →
+                {primaryCta}
+                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             )}
             {secondaryCta && (

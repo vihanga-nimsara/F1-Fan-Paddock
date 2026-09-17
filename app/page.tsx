@@ -17,8 +17,6 @@ import {
   Container,
   SectionHeading,
   StandingsTable,
-  MediaFallback,
-  Avatar,
   Hero,
   type StandingRow,
 } from "@/components/f1kit";
@@ -28,12 +26,22 @@ import PostCard from "@/components/PostCard";
 import NewsletterForm from "@/components/NewsletterForm";
 import StandingsTicker from "@/components/StandingsTicker";
 import RaceCountdown from "@/components/RaceCountdown";
+import {
+  Marquee,
+  MarqueeContent,
+  MarqueeItem,
+} from "@/components/kibo-ui/marquee";
 import MustWatchVideos from "@/components/MustWatchVideos";
+import FeaturedStorySlider from "@/components/FeaturedStorySlider";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
 import { getOwnPosts } from "@/lib/own-posts";
-import { getPlaylistVideos } from "@/lib/youtube";
+import { getPlaylistVideos, getChannelVideos } from "@/lib/youtube";
+import { getFacebookPageStats } from "@/lib/facebook";
+import { ArrowRight } from "lucide-react";
 
 const YT_PLAYLIST = "PLo5BbNWSTIgjjZUH3GlSU5Qo029JfgUTh";
+const YT_CHANNEL = "UCtbLA0YM6EpwUQhFUyPQU9Q";
+const YT_CHANNEL_NAME = "Driver61";
 
 export const dynamic = "force-dynamic";
 
@@ -43,7 +51,7 @@ function SectionHeader({
   href,
   linkLabel = "View all",
 }: {
-  kicker: string;
+  kicker?: string;
   title: string;
   href?: string;
   linkLabel?: string;
@@ -51,9 +59,11 @@ function SectionHeader({
   return (
     <div className="mb-5 flex items-end justify-between gap-4 border-b border-border pb-3">
       <div>
-        <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-          {kicker}
-        </span>
+        {kicker && (
+          <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
+            {kicker}
+          </span>
+        )}
         <h2 className="m-0 font-heading text-2xl font-bold tracking-tight md:text-3xl">
           {title}
         </h2>
@@ -61,10 +71,10 @@ function SectionHeader({
       {href && (
         <Link
           href={href}
-          className="group flex shrink-0 items-center gap-1 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
+          className="group flex shrink-0 items-center gap-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
         >
           {linkLabel}
-          <span className="transition-transform group-hover:translate-x-0.5">→</span>
+          <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
         </Link>
       )}
     </div>
@@ -72,7 +82,7 @@ function SectionHeader({
 }
 
 export default async function Home() {
-  const [drivers, constructors, nextRaces, recentRaces, fbPosts, videos] =
+  const [drivers, constructors, nextRaces, recentRaces, fbPosts, videos, channelVideos, fbStats] =
     await Promise.all([
       getDriverStandings(),
       getConstructorStandings(),
@@ -80,6 +90,8 @@ export default async function Home() {
       getRecentRaces(4),
       getBlogPosts(10, "Facebook"),
       getPlaylistVideos(YT_PLAYLIST, 6),
+      getChannelVideos(YT_CHANNEL, 3),
+      getFacebookPageStats().catch(() => null),
     ]);
 
   const headshots = await getDriverHeadshots(undefined, drivers).catch(
@@ -87,7 +99,7 @@ export default async function Home() {
   );
 
   const ownPosts = getOwnPosts();
-  const [featured, ...moreOwn] = ownPosts;
+  const moreOwn = ownPosts.slice(1);
 
   const latestPosts = [
     ...moreOwn.map((p) => ({
@@ -159,8 +171,7 @@ export default async function Home() {
       {/* ------------------------------ Hero banner ------------------------------ */}
       <Hero
         image="/images/ChatGPT_Image_Aug_16_2026_08_13_40_PM.png"
-        kicker="F1 Paddock SL"
-        title="The Paddock Bulletin"
+        title="F1 Paddock SL"
         excerpt="Race analysis, paddock stories and live Formula 1 stats — in Sinhala and English."
         primaryCta="Explore stories"
         primaryHref="/stories"
@@ -168,60 +179,8 @@ export default async function Home() {
         secondaryHref="/standings"
       />
 
-      {/* ------------------------------ Featured story ------------------------------ */}
-      {featured && (
-        <section className="border-b border-border">
-          <Container className="py-8 md:py-14">
-            <Link href={`/stories/${featured.id}`} className="group grid items-center gap-8 md:grid-cols-2 md:gap-12">
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
-                {featured.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={featured.image}
-                    alt={featured.title}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <MediaFallback label="The Paddock" />
-                )}
-                <Badge className="absolute left-4 top-4 gap-1 bg-f1red py-1 text-white hover:bg-f1red-dark">
-                  Featured story
-                </Badge>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3 text-[12px] font-medium text-muted-foreground">
-                  <span className="font-semibold uppercase tracking-[0.16em] text-f1red">
-                    The Paddock
-                  </span>
-                  <span aria-hidden="true">·</span>
-                  <span>{timeAgo(featured.pubDate)}</span>
-                </div>
-                <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight group-hover:text-f1red">
-                  {featured.title}
-                </h1>
-                <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
-                  {featured.excerpt}
-                </p>
-                <div className="flex items-center gap-3">
-                  <Avatar name={featured.author.name} className="h-9 w-9 text-sm" />
-                  <div className="flex flex-col leading-tight">
-                    <span className="text-sm font-semibold">{featured.author.name}</span>
-                    <span className="text-[12px] text-muted-foreground">
-                      {featured.readTime} · {featured.content.length} sections
-                    </span>
-                  </div>
-                </div>
-                <span className="mt-1 inline-flex w-fit items-center">
-                  <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-f1red px-4 py-2.5 text-sm font-medium text-white transition-colors group-hover:bg-f1red-dark">
-                    Read the story <span aria-hidden="true">→</span>
-                  </span>
-                </span>
-              </div>
-            </Link>
-          </Container>
-        </section>
-      )}
+      {/* ------------------------------ Featured stories ------------------------------ */}
+      <FeaturedStorySlider posts={ownPosts} />
 
       {/* ------------------------------ Championship ticker ------------------------------ */}
       <StandingsTicker items={tickerItems} href="/standings" />
@@ -232,77 +191,60 @@ export default async function Home() {
         <div className="flex min-w-0 flex-col gap-14">
           {/* Latest posts */}
           <section>
-            <SectionHeader kicker="Blog" title="Latest from the Paddock" href="/stories" linkLabel="All posts" />
-            <div className="grid gap-5 sm:grid-cols-2">
-              {latestPosts.map((p) => (
-                  <PostCard
+            <SectionHeader title="Latest from the Paddock" href="/stories" linkLabel="All posts" />
+            <Marquee className="py-4">
+              <MarqueeContent speed={35} autoFill pauseOnHover>
+                {latestPosts.map((p) => (
+                  <MarqueeItem
                     key={p.id ?? p.href}
-                    href={p.href}
-                    image={p.image}
-                    tag={p.tag}
-                    title={p.title}
-                    excerpt={p.excerpt}
-                    meta={
-                      <>
-                        <span className="font-medium text-foreground/80">
-                          {p.author}
-                        </span>
-                        <span aria-hidden="true">·</span>
-                        <span>{timeAgo(p.pubDate)}</span>
-                      </>
-                    }
-                  />
+                    className="mx-2 w-[300px] sm:w-[340px]"
+                  >
+                    <PostCard
+                      href={p.href}
+                      image={p.image}
+                      tag={p.tag}
+                      title={p.title}
+                      excerpt={p.excerpt}
+                      meta={
+                        <>
+                          <span className="font-medium text-foreground/80">
+                            {p.author}
+                          </span>
+                          <span aria-hidden="true">·</span>
+                          <span>{timeAgo(p.pubDate)}</span>
+                        </>
+                      }
+                    />
+                  </MarqueeItem>
                 ))}
-            </div>
+              </MarqueeContent>
+            </Marquee>
           </section>
 
           {/* Must watch */}
           <section>
             <SectionHeader
-              kicker="Watch"
               title="Must Watch"
               href={`https://www.youtube.com/playlist?list=${YT_PLAYLIST}`}
               linkLabel="All videos"
             />
-            <MustWatchVideos videos={videos.map((v) => ({ id: v.id, title: v.title }))} />
-          </section>
-
-          {/* From Facebook */}
-          <section className="flex flex-col gap-5">
-            <SectionHeader kicker="Community" title="From Our Facebook" />
-            <div
-              className="sk-ww-facebook-page-posts"
-              data-embed-id="25713675"
+            <MustWatchVideos
+              groups={[
+                {
+                  label: "Formula 1",
+                  href: `https://www.youtube.com/playlist?list=${YT_PLAYLIST}`,
+                  videos: videos.map((v) => ({ id: v.id, title: v.title })),
+                },
+                {
+                  label: YT_CHANNEL_NAME,
+                  href: `https://www.youtube.com/channel/${YT_CHANNEL}`,
+                  videos: channelVideos.map((v) => ({
+                    id: v.id,
+                    title: v.title,
+                  })),
+                },
+              ]}
             />
-            <Script
-              src="https://widgets.sociablekit.com/facebook-page-posts/widget.js"
-              defer
-            />
-            {fbPosts.length > 0 ? (
-              <div className="grid gap-5 sm:grid-cols-3">
-                {fbPosts.slice(0, 3).map((p) => (
-                  <PostCard
-                    key={p.link}
-                    href={p.link}
-                    image={p.image}
-                    tag="Facebook"
-                    title={p.title}
-                    excerpt={p.description}
-                    meta={
-                      <>
-                        <span>{p.author}</span>
-                        <span aria-hidden="true">·</span>
-                        <span>{timeAgo(p.pubDate)}</span>
-                      </>
-                    }
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="rounded-xl border border-dashed text-sm text-muted-foreground">
-                No Facebook posts to show yet — check back soon.
-              </p>
-            )}
           </section>
         </div>
 
@@ -365,13 +307,52 @@ export default async function Home() {
             <NewsletterForm compact />
           </section>
 
+          {fbStats &&
+            (fbStats.followers_count != null || fbStats.fan_count != null) && (
+              <section className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-card p-5">
+                <div className="flex min-w-0 flex-col gap-1">
+                  <span className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                    <span className="relative flex h-2 w-2">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
+                      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+                    </span>
+                    Facebook followers
+                  </span>
+                  <span className="font-heading text-3xl font-bold tracking-tight text-foreground">
+                    {new Intl.NumberFormat("en-US").format(
+                      fbStats.followers_count ?? fbStats.fan_count ?? 0,
+                    )}
+                  </span>
+                  <span className="text-[12px] text-muted-foreground">
+                    Live from the paddock page
+                  </span>
+                </div>
+                <Button
+                  asChild
+                  size="sm"
+                  className="shrink-0 bg-[#1877F2] text-white hover:bg-[#1877F2]/90"
+                >
+                  <Link
+                    href="https://web.facebook.com/profile.php?id=61574396222083"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Follow
+                  </Link>
+                </Button>
+              </section>
+            )}
+
           <section className="rounded-2xl border border-border bg-card p-5">
             <h3 className="mb-3 font-heading text-base font-bold tracking-tight">
               Championship <span className="text-muted-foreground">· Top 5</span>
             </h3>
             <StandingsTable rows={driverRows.slice(0, 5)} />
             <Button asChild variant="ghost" size="sm" className="mt-2 w-full">
-              <Link href="/standings">Full standings →</Link>
+              <Link href="/standings" className="gap-1.5">
+                Full standings
+                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+              </Link>
             </Button>
           </section>
 
@@ -400,6 +381,44 @@ export default async function Home() {
             </div>
           </section>
         </aside>
+
+        {/* Facebook — full width */}
+        <section className="flex flex-col gap-5 lg:col-span-2">
+          <SectionHeader title="From Our Facebook" />
+          <div
+            className="sk-ww-facebook-page-posts"
+            data-embed-id="25713675"
+          />
+          <Script
+            src="https://widgets.sociablekit.com/facebook-page-posts/widget.js"
+            defer
+          />
+          {fbPosts.length > 0 ? (
+            <div className="grid gap-5 sm:grid-cols-3">
+              {fbPosts.slice(0, 3).map((p) => (
+                <PostCard
+                  key={p.link}
+                  href={p.link}
+                  image={p.image}
+                  tag="Facebook"
+                  title={p.title}
+                  excerpt={p.description}
+                  meta={
+                    <>
+                      <span>{p.author}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{timeAgo(p.pubDate)}</span>
+                    </>
+                  }
+                />
+              ))}
+            </div>
+          ) : (
+            <p className="rounded-xl border border-dashed text-sm text-muted-foreground">
+              No Facebook posts to show yet — check back soon.
+            </p>
+          )}
+        </section>
       </Container>
 
       {/* ------------------------------ Next race countdown ------------------------------ */}
@@ -427,24 +446,26 @@ export default async function Home() {
       )}
 
       {/* ------------------------------ Championship tables ------------------------------ */}
-      <Container className="grid gap-8 pb-8 md:grid-cols-2">
-        <section>
-          <SectionHeading kicker="2026" title="Drivers' Championship" href="/standings" linkLabel="Full standings" />
-          <div className="pt-3">
-            <StandingsTable rows={driverRows} />
+      <section className="border-y border-border bg-muted/40 py-10">
+        <Container className="grid items-start gap-8 md:grid-cols-2">
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <SectionHeading kicker="2026" title="Drivers' Championship" href="/standings" linkLabel="Full standings" />
+            <div className="pt-3">
+              <StandingsTable rows={driverRows} />
+            </div>
           </div>
-        </section>
-        <section>
-          <SectionHeading kicker="2026" title="Constructors' Championship" href="/standings" linkLabel="Full standings" />
-          <div className="pt-3">
-            <StandingsTable rows={conRows} />
+          <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+            <SectionHeading kicker="2026" title="Constructors' Championship" href="/standings" linkLabel="Full standings" />
+            <div className="pt-3">
+              <StandingsTable rows={conRows} />
+            </div>
           </div>
-        </section>
-      </Container>
+        </Container>
+      </section>
 
       {/* ------------------------------ Upcoming races ------------------------------ */}
       <Container className="flex flex-col gap-5 pb-8">
-        <SectionHeader kicker="Calendar" title="Upcoming Races" href="/calendar" linkLabel="Full schedule" />
+        <SectionHeader title="Upcoming Races" href="/calendar" linkLabel="Full schedule" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {nextRaces.map((r: Race) => {
             const date = new Date(r.dateISO).toLocaleDateString("en-GB", {
@@ -477,7 +498,7 @@ export default async function Home() {
 
       {/* ------------------------------ Recent results ------------------------------ */}
       <Container className="flex flex-col gap-5 pb-8">
-        <SectionHeader kicker="Results" title="Race Weekend" />
+        <SectionHeader title="Race Weekend" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {recentRaces.map((r: Race) => {
             const photo = `/images/f1-${((r.round - 1) % 20) + 1}.jpg`;
@@ -531,18 +552,22 @@ export default async function Home() {
 
       {/* ------------------------------ CTA ------------------------------ */}
       <Container className="pb-8">
-        <div className="flex flex-col items-start gap-4 rounded-2xl bg-carbon-deep px-6 py-8 md:px-10 md:py-10">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-            The Paddock
-          </span>
-          <h2 className="m-0 max-w-[24ch] font-heading text-[clamp(24px,3.5vw,40px)] font-bold leading-[1.05] tracking-tight text-foreground">
+        <div className="relative flex flex-col items-start gap-4 overflow-hidden rounded-2xl px-6 py-8 md:px-10 md:py-10">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/739965776_122121630080813207_1904130169033139439_n.jpg"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-top"
+          />
+          <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon via-carbon/60 to-carbon/30" />
+          <h2 className="relative z-10 m-0 max-w-[24ch] font-heading text-[clamp(24px,3.5vw,40px)] font-bold leading-[1.05] tracking-tight text-foreground">
             Find your people. Find your next race.
           </h2>
-          <p className="m-0 max-w-[60ch] text-[14px] leading-relaxed text-muted-foreground">
+          <p className="relative z-10 m-0 max-w-[60ch] text-[14px] leading-relaxed text-muted-foreground">
             Lap-by-lap verdicts, paddock stories and live 2026 data — all in one
             fan-built paddock.
           </p>
-          <div className="mt-1 flex flex-wrap gap-3">
+          <div className="relative z-10 mt-1 flex flex-wrap gap-3">
             <Button asChild className="bg-f1red text-white hover:bg-f1red-dark">
               <Link href="/standings">Explore standings</Link>
             </Button>

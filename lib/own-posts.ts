@@ -29,6 +29,65 @@ const PLACEHOLDER = (n: number) => `/images/f1-${Math.min(n, 20)}.jpg`;
 
 export const OWN_POSTS: OwnPost[] = [
   {
+    id: "road-to-f1-smooth-operator-carlos-sainz",
+    title:
+      "Road To Formula 1 Series - Ep 03 - Madrid නුවරින් ආපු Smooth Operator ගේ සම්පූර්ණ කතාව!",
+    excerpt:
+      "දශක හතරකටත් වැඩි කාලයකට පස්සේ Formula 1 ආයෙමත් මැඩ්රිඩ් නගරයට ඇවිත් තියෙනවා. ඒ නගරයම තමයි F1 ඉතිහාසයේ දැකපු අතාරින්නේ නැති, දැඩි අධිෂ්ඨානයක් තියෙන ඩ්‍රයිවර් Carlos Sainz ව ලෝකෙට බිහිකරේ. මේ සතිඅන්තයේ එයා තමන් ඉපදුනු නගරයේ පළවෙනි වතාවට F1 කාර් එකක් රේස් කරන්න ලෑස්ති වෙද්දී, අපි අද කතා කරන්නේ එයා මෙතැනට ආපු ගමන ගැනයි.",
+    content: [
+      "දශක හතරකටත් වැඩි කාලයකට පස්සේ Formula 1 ආයෙමත් මැඩ්රිඩ් නගරයට ඇවිත් තියෙනවා. ලෝකයේ තියෙන සුපිරිම මෝටර් ස්පෝර්ට්ස් ඉවෙන්ට් එක ආයෙමත් තමන්ගේ නගරයට පිළිගන්න ලෑස්ති වෙලා ඉන්න මේ මැඩ්රිඩ් නගරයම තමයි, F1 ඉතිහාසයේ දැකපු අතාරින්නෙම නැති, දැඩි අධිෂ්ඨානයක් තියෙන ඩ්‍රයිවර් කෙනෙකුත් ලෝකෙට බිහිකරේ. 1994 සැප්තැම්බර් 1 වෙනිදා මැඩ්රිඩ් වල ඉපදුනු Carlos Sainz Vázquez de Castro කියන්නේ ලෙජන්ඩ් කෙනෙක්ගේ පුතෙක්. ඒ වගේම මුළු ලෝකයක් දන්න දැවැන්ත වාසගමක් කරපින්නාගෙන ආපු කෙනෙක්. හැබැයි එයා F1 වල ගත කරපු මේ සීසන් 12 පුරාවටම ඒ නමේ සෙවනැල්ලෙන් මිදිලා, තමන්ගේම කියලා අනන්‍යතාවයක් හදාගන්න එයාට පුළුවන් වුණා.",
+      "මේ දවස්වල මැඩ්රිඩ් පාරවල් F1 උණුසුමෙන් පිරිලා තියෙද්දී, වගේම Sainz තමන් ඉපදුනු නගරයේ පළවෙනි වතාවට F1 කාර් එකක් රේස් කරන්න ලෑස්ති වෙද්දී, අපි අද කතා කරන්නේ එයා මෙතැනට ආපු ගමන ගැනයි. මේ ගමන ගොඩක් අය හිතුවාට වඩා ගොඩක් දිගයි. ඒ වගේම එයාට මුහුණ දෙන්න වුණු අභියෝග, සාමාන්‍ය කෙනෙක්ට දරාගන්න පුළුවන් මට්ටමක තිබුණේ නෑ. හැබැයි අන්තිමේදී එයා ලබාගත්ත ප්‍රතිඵල නම් ඇත්තටම අතිවිශිෂ්ටයි.",
+      "ස්පාඤ්ඤයේ හදවතින් ආපු Sainz පරම්පරාව",
+      "මැඩ්රිඩ් කියන්නේ නිකන්ම ස්පාඤ්ඤයේ අගනුවර විතරක් නෙමෙයි. ඒක තමයි ඒ රටේ සංස්කෘතික, ක්‍රීඩා සහ හැඟීම්බර හදවත. මිලියන 3.3ක ජනතාවක් ඉන්න මේ නගරයට F1 වලට දෙවෙනි නොවන අමුතුම රේසිං පිස්සුවක් සහ ඉතිහාසයක් තියෙනවා. 1994 දී Carlos Sainz Jr. ඉපදෙන්නේ රේසිං කියන දේ නිකන්ම විනෝදාංශයක් නොවුණු පවුලකට. ඒ ගෙදරට රේසිං කියන්නේ එයාලගේ මුළු ජීවිතයමයි.",
+      "එයාගේ තාත්තා, Carlos Sainz Sr. කියන්නේ ලෝක රැලි ඉතිහාසයේ බිහිවුණු සාර්ථකම ඩ්‍රයිවර් කෙනෙක්. 1962 මැඩ්රිඩ් වල ඉපදුනු එයා, දශක දෙකක් පුරාවට WRC වල උපරිම තලයේ රේස් කරලා 1990 සහ 1992 අවුරුදු වල ලෝක ශූරතාවය දිනාගත්තා. ඒ වගේම WRC ජයග්‍රහණ 26ක් එක්ක මුළු ස්පාඤ්ඤයේම ජාතික වීරයෙක් වෙන්න එයාට පුළුවන් වුණා. \"El Matador\" කියන නමින් ජනප්‍රිය වුණු එයා තමයි ලෝක රැලි ශූරතාවයක් දිනපු පළවෙනි ස්පාඤ්ඤ ජාතිකයා. අදටත් වයස අවුරුදු 64ක් වෙලත් එයා ඓතිහාසික රැලි රේස් වලට තරඟ කරනවා. ඒ මදිවට Carlos Jr. ගේ මාමා වෙන Antonio Sainz ත් රේසිං ඩ්‍රයිවර් කෙනෙක්. ඒ කියන්නේ මේ පවුලේ ලේ වලම දුවන්නේ මෝටර් ස්පෝර්ට්ස්.",
+      "මේ වගේ ගෙදරක හැදෙනවා කියන්නේ, පොඩි කාලේ සපත්තු ලේස් එක ගැටගහගන්න ඉගෙනගන්නත් කලින්ම රේසිං ගැන කතාබහ ඇහෙනවා කියන එකයි. හැබැයි ඒකෙ තව පැත්තක් තිබුණා. ඒ තමයි 'Sainz' කියන නමේ බර. Carlos Sainz Jr. මෝටර් ස්පෝර්ට්ස් වලට එද්දී එයාට කවුරුත් නොදන්න සාමාන්‍ය කෙනෙක් විදිහට එන්න බැරි වුණා. සාමාන්‍ය මානසිකත්වයක් තියෙන ඩ්‍රයිවර් කෙනෙක්ව විනාශ වෙලාම යන්න තරම් ලොකු බලාපොරොත්තු ගොඩක් සහ පීඩනයක් එයාගේ පිට උඩ තිබුණා. එයා කරපු හැම වැරැද්දක්ම මිනිස්සු මැන්නේ එයාගේ තාත්තාගේ ජයග්‍රහණ එක්ක. හැම රිසාල්ට් එකක්ම කම්පෙයාර් කරා. ඒ වගේම එයාට ලැබුණු හැම අවස්ථාවකදීම මිනිස්සු ඇහුවේ, \"මෙයා මෙතන ඉන්නේ මෙයාගේ දක්ෂකම නිසාද? නැත්නම් තාත්තාගේ නම නිසාද?\" කියන ප්‍රශ්නයයි. හැබැයි F1 වල සීසන් 12ක් රේස් කරලා එයා ඒ ප්‍රශ්නෙට උත්තරේ දුන්නා. ඒ තමයි එයා මෙතැන ඉන්නේ එයාගේම දක්ෂකම නිසා කියන එක.",
+      "පොඩි කාලේ පවුලේ අයත් එක්ක ටීවී එකෙන් F1 බලපු Carlos ට, ලොකුම ආභාෂයක් වුණේ එයාගේ තාත්තා නෙමෙයි, ඒ කාලේ F1 ලෝකයම හොල්ලපු තවත් ස්පාඤ්ඤ ජාතිකයෙක්. ඒ තමයි Fernando Alonso. 2005 සහ 2006 අවුරුදු වල Alonso පිට පිට ලෝක ශූරතා දිනාගනිද්දී, ඒක ටීවී එකෙන් බලන් හිටපු අවුරුදු 11, 12ක පොඩි Carlos ගේ හිතේ ලොකු හීනයක් පැලවුණා. තාත්තා වගේ රැලි යනවට වඩා එයාට ඕන වුණේ මෝටර් ස්පෝර්ට්ස් වල ඉහළම තැන වෙන Formula 1 වලට යන්න. ස්පාඤ්ඤ ජාතිකයෙක්ට F1 දිනන්න පුළුවන් කියලා Alonso පෙන්නලා දීලා තිබ්බා. දැන් Sainz Jr. ට ඕන වුණේ එයාටත් ඒ පාරේ යන්න පුළුවන්ද කියලා බලන්නයි.",
+      "FROM KARTS TO CHAMPIONS: THE JUNIOR CAREER",
+      "Carlos Sainz Jr. ගොඩක් පොඩි කාලෙදිම කාර්ටිං තරඟ වලට සහභාගී වෙන්න පටන් ගත්තා. වයස අවුරුදු 14 වෙද්දී එයාගේ රිසාල්ට්ස් වලට ලොකු අවධානයක් ලැබෙන්න ගත්තා. 2008 දී Asia-Pacific KF3 චැම්පියන්ශිප් එක දිනපු එයා, 2009 දී F1 ඩ්‍රයිවර්ස්ලා ගොඩක් දෙනෙක්ගේ කරියර් එකේ හැරවුම් ලක්ෂය වුණු Junior Monaco Kart Cup එකත් දිනාගත්තා. මේ වෙද්දී මෝටර් ස්පෝර්ට්ස් ලෝකයේ ලොකු ලොකු අයගේ ඇස් Carlos දිහාට හැරිලා ඉවරයි.",
+      "2010 දී, ඒ කියන්නේ වයස අවුරුදු 16ක් වෙද්දී Sainz ව ලෝකයේ වටිනාම මෝටර් ස්පෝර්ට්ස් Development program එකකට තෝරගත්තා. ඒ තමයි Red Bull Junior Team එක. Helmut Marko ගේ මේ ප්‍රෝග්‍රෑම් එක කොච්චර දරුණුද කියනවා නම්, රිසාල්ට්ස් පෙන්නුවේ නැත්නම් කිසිම අනුකම්පාවක් නැතුව ඩ්‍රයිවර්ස්ලාව එලියට විසි කරන එක ගැන මුළු පැඩොක් එකම දැනගෙන හිටියා. Sainz පළවෙනි දවසේ ඉඳන්ම තේරුම් ගත්තා එයාගෙන් එයාලා මොනවද බලාපොරොත්තු වෙන්නේ කියලා.",
+      "එයාගේ පළවෙනි Single-seater අත්දැකීම වුණේ 2010 Formula BMW Europe එක. ඒකෙන් 4 වෙනියා වුණු එයා Rookie Cup එකත් දිනාගත්තා. මැලේසියාවේ තිබ්බ Formula BMW Pacific රේස් එකට Guest කෙනෙක් විදිහට ගිහින් එයා කරපු දේට Helmut Marko ප්‍රසිද්ධියේම එයාට ප්‍රශංසා කළා. 2011 වෙද්දී Formula Renault Eurocup සහ Formula Renault NEC කියන දෙකේම රේස් කරපු එයා, NEC Title එක දිනාගෙන Eurocup එකෙන් දෙවෙනියා වුණා. 2012 දී British F3 සහ F3 Euro Series එකේ රේස් කරලා, British F3 වල රේස් 5ක්ම දිනලා පෝඩියම් 9ක් අරගන්න එයාට පුළුවන් වුණා. 2013 දී Arden ටීම් එකෙන් GP3 Series එකට ගිය එයා, අන්තිමේදී 2014 දී DAMS ටීම් එකත් එක්ක Formula Renault 3.5 Series එකට ගියා. මේක තමයි එයාට F1 සීට් එකක් අරන් දීපු සීසන් එක. ඒ අවුරුද්දේ රේස් 7ක් දිනපු එයා, මුළු චැම්පියන්ශිප් එකම Dominate කරා. Formula Renault 3.5 Title එකක් දිනපු ඉතිහාසයේ පළවෙනි Red Bull Junior ඩ්‍රයිවර් වුණේ Carlos. ඒ වගේම 1990 දී එයාගේ තාත්තා පළවෙනි WRC ටයිට්ල් එක දිනලා හරියටම අවුරුදු 24කට පස්සේ තමයි පුතා මේ ටයිට්ල් එක දිනන්නේ. පරම්පරා දෙකක්, රේසිං ජාති දෙකක්, හැබැයි එකම පවුලක්! 2014 අන්තිමේදී අබුඩාබි වල රෙඩ්බුල් RB10-Renault කාර් එක ටෙස්ට් කරපු එයාගේ දක්ෂකම් දැකපු ඉංජිනේරුවෝ 2015 ට Toro Rosso ටීම් එකෙන් එයාට F1 සීට් එකක් කන්ෆර්ම් කළා. එතකොට එයාට වයස 20යි.",
+      "STEPPING INTO F1: THE TORO ROSSO YEARS AND A RIVALRY FOR THE AGES",
+      "2015 F1 සීසන් එක හැමදාමත් මතක හිටින්නේ, අනාගතයේ F1 ලෝකයම හොල්ලපු සුපිරිම Rookie ඩ්‍රයිවර්ස්ලා දෙන්නෙක්ගේ ආරම්භය විදිහටයි. හැබැයි ඒ දෙන්නාගේ ගමන් මාර්ගයන් පස්සේ කාලෙකදී සම්පූර්ණයෙන්ම වෙනස් වුණා. 2015 Australian Grand Prix එකේදී Toro Rosso ටීම් එකෙන් Carlos Sainz Jr. සහ Max Verstappen දෙන්නම ග්‍රිඩ් එකට එද්දී ඒක ලොකු මාතෘකාවක් වුණා. දෙන්නටම රේසිං බැක්ග්‍රවුන්ඩ් එකක් තියෙන තාත්තලා හිටියා. දෙන්නම Junior categories වල පිස්සු හැදෙන ස්පීඩ් එකක් පෙන්නලා තිබ්බා.",
+      "Sainz තමන්ගේ පළවෙනි සීසන් එකේ පළවෙනි රේස් එකේම Points අරගෙන හොඳ පර්ෆෝමන්ස් එකක් පෙන්නද්දී, ලෝකයේම අවධානය Max Verstappen ගේ අමුතුම රේසිං ස්ටයිල් එකටයි, ස්පීඩ් එකටයි හැරෙන්න ගත්තා. සීසන් එක මැදදී කාටත් හිතාගන්න බැරි විදිහට Daniil Kvyat ව Red Bull එකට ප්‍රොමෝට් කරලා, ඊටපස්සේ Max වත් රෙඩ්බුල් එකට අරන් ගියා. Sainz ට Toro Rosso එකේම ඉන්න වුණා. තමන්ගේ ටීම් මේට් රෙඩ්බුල් කාර් එකට ගියපු පළවෙනි රේස් එකෙන්ම Grand Prix එකක් දිනනවා Sainz ට බලන් ඉන්න වුණා.",
+      "තමන්ටත් ලැබෙන්න තිබ්බ අවස්ථාවක් තවත් කෙනෙක්ට ලැබෙනවා බලන් ඉන්න එක ගොඩක් අයට දරාගන්න අමාරු දෙයක්. වෙන කෙනෙක් නම් එතනින්ම කඩා වැටෙන්න තිබ්බා. හැබැයි Sainz එහෙම වුණේ නෑ. එයා තවත් මහන්සි වෙලා වැඩ කරන්න ගත්තා. 2017 සීසන් එකේදී එයා Points 48ක් ගද්දී, එයාගේ ටීම් මේට් වුණු Daniil Kvyat ට ගන්න පුළුවන් වුණේ ලකුණු 4ක් විතරයි. මේකෙන්ම ටීම් එකට තේරුණා මේ ඩ්‍රයිවර් මීට වඩා ලොකු තැනකට යන්න ඕන කෙනෙක් කියලා. 2017 මැදදී Renault ටීම් එකේ හිටපු Jolyon Palmer ගේ පර්ෆෝමන්ස් මදි නිසා, රෙඩ්බුල් එකෙන් Sainz ව අන්තිම රේස් 4ට Renault එකට Loan කළා. මේක තමයි එයාට ඇත්තම Factory team එකක වැඩ කරන එක කොහොමද කියලා දැනගන්න ලැබුණු පළවෙනි අවස්ථාව. 2018 දී Renault එකේ Nico Hulkenberg එක්ක සම්පූර්ණ සීසන් එකම ගහපු එයා, Points 53ක් එක්ක චැම්පියන්ශිප් එකෙන් 9 වෙනියා වෙලා, තමන් එකතැන පල්වෙන ඩ්‍රයිවර් කෙනෙක් නෙමෙයි, දවසින් දවස දියුණු වෙන කෙනෙක් කියලා ඔප්පු කරා.",
+      "McLAREN AND THE BIRTH OF THE SMOOTH OPERATOR",
+      "2019 දී Carlos Sainz McLaren ටීම් එකට ජොයින් වුණා. ඒක එයාට සුවිශේෂී වුණේ, පොඩි කාලේ ඉඳන් එයාගේ හීරෝ වුණු Fernando Alonso ගේ සීට් එකම එයාට ලැබුණු නිසයි. Honda එන්ජිමත් එක්ක අවුරුදු ගාණක් දුක් විඳලා Alonso McLaren එකෙන් අයින් වෙද්දී, තරුණ Lando Norris එක්ක ටීම් එක ආයෙමත් ගොඩනගන්න McLaren ලා Sainz ව තෝරගත්තා.",
+      "McLaren එකේ හිටපු අවුරුදු දෙක Sainz ගේ කරියර් එකේ ගොඩක් වැදගත් වුණා. ඕනෑම ප්‍රෙෂර් එකක් මැද හොඳට රේස් කරන්න, ඕනෑම ට්‍රැක් එකක හොඳට Qualify වෙන්න වගේම, Race-winning කාර් එකක් නොවුණත් ඒකෙන් උපරිමය ගන්න එයාට පුළුවන් කියලා එයා පෙන්නුවා. ඒ වගේම ඉංජිනේරුවන්ටත් පිස්සු හැදෙන විදිහට කාර් එකේ Technical පැත්තට එයා දුන්නු අවධානය පුදුම සහගතයි. එයා නිකන්ම වේගවත් ඩ්‍රයිවර් කෙනෙක් නෙමෙයි; එයා හැමදේම ගැන හිතලා වැඩ කරන, කාර් එක ඩිවෙලොප් කරන්න උදව් කරන සුපිරි මොළයක් තියෙන කෙනෙක්. හොඳ රේසර් කෙනෙකුයි, විශිෂ්ට ඩ්‍රයිවර් කෙනෙකුයි අතර වෙනස තියෙන්නේ අන්න එතනයි.",
+      "2019 බ්‍රසීලියානු Grand Prix රේස් එකේදී Sainz පළවෙනි වතාවට F1 පෝඩියම් එකකට නැග්ගා. වැස්සත් එක්ක පිස්සු හැදුනු රේස් එකකින් 3 වෙනියා වුණු එයා, මේ මොහොත වෙනුවෙන් අවුරුදු 5ක් බලන් හිටියා. ෆිනිෂ් ලයින් එක cross කරල කාර් එකෙන් බහින්නත් කලින් ටීම් රේඩියෝ එකෙන් එයා \"Smooth Operator\" සින්දුව කියන්න ගත්තා. එදා ඉඳන් මුළු පැඩොක් එකම එයාට \"Smooth Operator\" කියලා කියන්න පටන් ගත්තා.",
+      "2019 සීසන් එක Points 96ක් එක්ක 6 වෙනියා වෙලා ඉවර කරපු එයා, 2020 දීත් හරියටම ඒ වගේම Points 105ක් අරන් 6 වෙනියා වුණා. Monza වලදී තව පෝඩියම් එකකුත් ගත්තා. McLaren ලා Constructors' Championship එකෙන් 3 වෙනියා වුණා. ඔය දේවල් වෙනකොට 2020 මැද වෙද්දී එයාගේ ජීවිතේ ඊළඟ පරිච්ඡේදය ලියවෙන්න ලෑස්ති වෙලයි තිබුණේ.",
+      "THE PRANCING HORSE: FERRARI AND THE GLORY YEARS",
+      "2021 දී Sebastian Vettel වෙනුවට F1 ඉතිහාසයේ දැවැන්තම සහ හැමෝගෙම ඇස් යොමුවෙන Scuderia Ferrari ටීම් එකට Carlos Sainz එකතු වුණා. Charles Leclerc ගේ ටීම් මේට් විදිහට එයාට ආපු අභියෝගය සුළුපටු නෑ. අලුත් ටීම් එකක්, අලුත් කාර් එකක්, Qualify වෙන්න උපන් හපනෙක් වුණු ටීම් මේට් කෙනෙක්, සහ Tifosi ලගේ බලාපොරොත්තු! මේ ඔක්කොම එයාට දරාගන්න වුණා.",
+      "Ferrari එකේ පළවෙනි අවුරුද්දේ රේස් එකක් දිනන්න බැරි වුණත්, ලකුණු 164.5ක් අරන් චැම්පියන්ශිප් එකෙන් 5 වෙනියා වෙන්න එයාට පුළුවන් වුණා. ඒකෙන්ම එයා Leclerc ට දෙවෙනි වෙන්නේ නැති Number 1 ඩ්‍රයිවර් කෙනෙක් කියලා ඔප්පු කළා.",
+      "ඊටපස්සේ ආවේ 2022. ජූලි 3 වෙනිදා Silverstone වලදී F1 ඉතිහාසයේ ලොකුම ක්‍රවුඩ් එකක් ඉස්සරහා Carlos Sainz තමන්ගේ පළවෙනි F1 Pole Position එක වගේම පළවෙනි Race win එක ගත්තා. Safety car එකෙන් පස්සේ අලුත් ටයර් දාගෙන ඇවිත්, Restart එකේදී පට්ටම රේස් එකක් දීලා Chequered flag එක පහුකරපු ගමන් එයා ආයෙමත් රේඩියෝ එකෙන් සින්දුව කිව්වා — \"Smooth Operator.\" 2013 දී Alonso දිනුවට පස්සේ අවුරුදු 9කට පස්සේ F1 රේස් එකක් දිනපු පළවෙනි ස්පාඤ්ඤ ජාතිකයා වුණේ එයායි. මැඩ්රිඩ් වලින් ආපු ඒ කොලුවා රතු කාර් එකකින් ඒ හීනේ හැබෑ කරගත්තා.",
+      "2023 දී එයා කරපු දේ මීටත් වඩා පිස්සු හැදෙනවා. Max Verstappen ගේ Red Bull එක පිට පිට රේස් 14ක් දිනලා, අනිත් හැම ටීම් එකක්ම දෙවෙනි තැනට රේස් කර කර හිටපු කාලයක් ඒක. හැබැයි සිංගප්පූරුවට ආවට පස්සේ කතාව වෙනස් වුණා. Pole Position එකෙන් රේස් එක පටන් ගත්ත Sainz, පට්ටම කන්ට්‍රෝල් එකකින් Laps 62ම ගිහින් රේස් එක දිනුවා. 2023 සීසන් එකේ Red Bull එකට පිටින් රේස් එකක් දිනපු එකම ඩ්‍රයිවර් එයා විතරයි! කඩන්න බෑ කියපු Red Bull Winning streak එක එයා කඩලා දැම්මා.",
+      "FROM THE HOSPITAL BED TO THE TOP STEP: F1 ඉතිහාසයේ සුපිරිම Comeback එකක්",
+      "2024 අවුරුද්ද පටන් ගත්තේ හිතපු නැති විදිහට. පෙබරවාරි වලදී Ferrari ලා කිව්වා 2025 ට Lewis Hamilton ව Mercedes එකෙන් ගේනවා කියලා. ඒ කියන්නේ Sainz ට ටීම් එකෙන් යන්න වෙනවා. මුළු පැඩොක් එකම ෂොක් වුණා. අවුරුදු 4ක් හොඳට රේස් කරලා, රේස් 3ක් දිනලා, කාර් එක හදන්න උදව් කරපු එයාට සීට් එක නැති වුණේ එයාගේ වැරැද්දක් නිසා නෙමෙයි, Ferrari ලට World Champion කෙනෙක්ව ගන්න ඕන වුණු නිසයි. මේ තීරණය තමන්ට 100% තේරෙනවා කියලා Sainz කිව්වත් ඒකේ වේදනාව එයාට තිබුණා.",
+      "ඊටපස්සේ ආවේ Saudi Arabia රේස් එක. Qualifying දවසේ උදේ Appendix අමාරුවක් හැදිලා එයාව ඉක්මනට රෝහල් ගත කරලා Surgery එකක් කරන්න වුණා. එයාට Saudi රේස් එක මිස් වුණා. රෝහල් ඇඳේ ඉඳන් එයාට හිතෙන්න ඇත්තේ රේස් දිනන එක ගැන නෙමෙයි, ආයේ රේස් පදින්න පුළුවන් වෙයිද කියලයි.",
+      "හැබැයි හරියටම දවස් 16කට පස්සේ ඕස්ට්‍රේලියානු GP එකට ආපු Carlos, Surgery එකේ අමාරුව තියෙද්දිත් Ferrari කාර් එකට නැගලා Practice වලට ගියා. රේස් දවසේ 2 වෙනි Lap එකේදීම Max Verstappen ව Overtake කරපු එයා, Max ගේ කාර් එකේ Brake fire එකක් ඇවිත් අයින් වුණාට පස්සේ, මුළු රේස් එකම කන්ට්‍රෝල් කරලා රේස් එක දිනුවා! බඩේ Operation එකක් කරලා දවස් 16කින් F1 රේස් එකක් දිනපු මේ සිදුවීම, F1 ඉතිහාසයේ හොඳම Injury comebacks 10 අතරට F1 නිල වෙබ් අඩවිය පවා එක්කාසු කළා. එදා රේඩියෝ එකෙන් සින්දුව කියද්දී එයා ඇඬුවත් කවුරුත් මුකුත් කියන එකක් නෑ.",
+      "2024 Mexico City GP එකෙන් එයා Ferrari එකට එයාගේ 4 වෙනි සහ අන්තිම ජයග්‍රහණය ලබාදුන්නා. Pole එකෙන් පටන් අරන් තත්පර 5ක් ඉස්සරහින් ගිහින් තමයි එයා ඒක දිනුවේ. Ferrari එකේ අවුරුදු 4ක් හිටපු එයා, 2024 සීසන් එක Points 290ක් එක්ක 5 වෙනියා වෙලා ඉවර කරලා Abu Dhabi වලින් Ferrari ගමන නිමා කළා. 2026 වෙනකන්ම Ferrari ලගේ අන්තිම Race winner විදිහට ඉතිරි වුණේ Sainz වයි.",
+      "WILLIAMS AND A LIFE PROJECT",
+      "Sainz ට Alpine සහ Audi-Sauber වලින් Offers ආවත්, එයා 2024 ජූලි මාසේ තීරණය කරා Williams Racing එක්ක එකතු වෙන්න. එයා මේක හැඳින්වුවේ එයාගේ \"Life Project\" එකක් විදිහට. එයා Williams එකට ආවේ වෙන ටීම් එකකින් හොඳ චාන්ස් එකක් එනකන් බලන් ඉන්න නෙමෙයි, Williams එක ආයෙමත් ගොඩනගන්නයි.",
+      "1997 න් පස්සේ විලියම්ස්ලා චැම්පියන්ශිප් එකක් දිනලා තිබුණේ නෑ. හැබැයි Team Principal James Vowles යටතේ මේ ටීම් එක ආයෙමත් හැදෙමින් තිබුණා. 2026 රෙගුලාසි වෙනස්වීමත් එක්ක Williams ලට ලොකු ගමනක් යන්න පුළුවන් කියලා Sainz විශ්වාස කළා.",
+      "2025 Williams එකේ එයාගේ පළවෙනි සීසන් එක පටන් ගත්තේ අවාසනාවන්ත විදිහට. ඕස්ට්‍රේලියාවේදී පළවෙනි Lap එකේම වැස්සත් එක්ක Safety car එක යටතේ හැප්පිලා රේස් එක ඉවර වුණා. Ferrari එකට වඩා ගොඩක් වෙනස් Williams කාර් එකට පුරුදු වෙන්න එයාට කාලයක් ගියා.",
+      "හැබැයි ඊටපස්සේ ආවේ Baku රේස් එක. 2025 Azerbaijan GP එකේදී 2 වෙනියාට Qualify වෙලා Laps 51ක් පුරාවට කිසිම වැරැද්දක් නැතුව රේස් කරලා එයා 3 වෙනියා වුණා. ඒක අවුරුදු 8කට පස්සේ Williams ලා ගත්ත පළවෙනි පෝඩියම් එක! \"බකු වලදී පෝඩියම් එකට යන එක මගේ පළවෙනි පෝඩියම් එකටත් වඩා ලොකු හැඟීමක් ගෙනාවා\" කියලා එයා කිව්වා. ඒ වගේම Ferrari, McLaren සහ Williams කියන ටීම් 3න්ම පෝඩියම් ගත්ත F1 ඉතිහාසයේ 2 වෙනි ඩ්‍රයිවර් (Alain Prost ට පස්සේ) වෙන්නත් එයාට පුළුවන් වුණා!",
+      "2025 දී COTA Sprint එකෙන් සහ Qatar වලින් තව පෝඩියම් 2ක් ගත්ත එයා සීසන් එක ඉවර කරේ Points 64ක් එක්ක 9 වෙනියා වෙලා. අපි මේ ගෙවන 2026 සීසන් එක නම් Williams ලට ටිකක් අමාරු වෙලා තියෙනවා. අලුත් රූල්ස් එක්ක කාර් එක තාම හරියට සෙට් වෙලා නෑ. දැනට රවුන්ඩ් 13ක් ඉවර වෙද්දී Sainz ට ගන්න පුළුවන් වෙලා තියෙන්නේ ලකුණු 6ක් විතරයි. හැබැයි එක සීසන් එකකින් විතරක් Carlos Sainz ව මනින්න බැරි බව මුළු ලෝකයම දන්නවා.",
+      "THE MATADOR RACES AT HOME",
+      "F1 කියන්නේ ලස්සන කතා හැදෙන තැනක්. ඒක පරම්පරාවෙන් එන නම් වලට, වැටිලා ආයේ නැගිටින අයට ගොඩක් ආදරෙයි. Carlos Sainz Jr. කියන්නේ මේ හැමදේම තමන්ගේ කරියර් එක ඇතුළේ පෙන්නපු කෙනෙක්. එයාට 'Sainz' කියන නම නිසා කිසිම දෙයක් නිකන් ලැබුණේ නෑ. ඒ වෙනුවට එයාට ලැබුණේ අනිත් අයට වඩා ලොකු පීඩනයක් විතරයි. එයා ඒ හැම ප්‍රශ්නෙකටම උත්තර දුන්නේ රේස් ට්‍රැක් එක ඇතුළේ රිසාල්ට්ස් වලින්. Verstappen ඉස්සරහට යද්දී එයා අතෑරියේ නෑ. McLaren එකෙන් පෝඩියම් ගත්තා. Ferrari එකෙන් අයින් කරනවා කිව්වහම, රෝහල් ඇඳේ ඉඳන් ඇවිත් දවස් 16කින් රේස් එකක් දිනලා පෙන්නුවා. Williams එකට ආවම Baku වලින් පෝඩියම් එකක් අරන් එයා කවුද කියලා ලෝකෙටම පෙන්නුවා.",
+      "මේ සතිඅන්තයේ අවුරුදු හතළිහකට පස්සේ එයා ඉපදුනු නගරයේ F1 රේස් එකක් තියෙනවා. පොඩි කාලේ Fernando Alonso දිනනවා බලන් හිටපු ඒ කොලුවා, අද තමන්ගේම නගරයේ F1 රේස් එකක් පදින්න ලෑස්තියි. එයා එතැනට එන්න ඕන කරන හැම සුදුසුකමක්ම තමන්ගේ දක්ෂකමෙන්ම හදාගත්තු කෙනෙක්.",
+      "දිගටම අපිත් එක්ක ඉන්න formula 1 වල නොදුටු දුටු අහපු නැති අහපු කතා සින්හලෙන් විස්තරාත්මකව දැනගන්න. - F1 Paddock SL",
+    ],
+    image: PLACEHOLDER(15),
+    author: {
+      name: "F1 Paddock SL",
+      role: "Road to Formula 1 Series",
+      bio: "Sinhala race-weekend stories, records and the untold tales from the Formula 1 paddock.",
+      avatar: "/images/f1-9.jpg",
+    },
+    pubDate: "2026-09-17T08:00:00.000Z",
+    readTime: "16 min read",
+    comments: [],
+  },
+  {
     id: "road-to-f1-kimi-antonelli",
     title:
       "Road To Formula 1 Series - Ep 02 - Bologna වලන් ආපු අරුම පුදුම කොල්ලා Kimi Antonelli",
@@ -91,124 +150,7 @@ export const OWN_POSTS: OwnPost[] = [
     readTime: "12 min read",
     comments: [],
   },
-  {
-    id: "pre-season-testing-2026",
-    title: "Pre-Season Testing: The Numbers Behind Bahrain",
-    excerpt:
-      "What the three days in Sakhir really told us — tyre degradation, fuel-adjusted lap times and which cars are sandbagging.",
-    content: [
-      "The paddock has packed up after three days of pre-season testing in Bahrain, and as always the stopwatch only tells half the story. Fuel loads, engine modes and tyre compounds all move the lap time more than most fans expect.",
-      "Every team ran a split programme: morning performance runs on the C5 compound, afternoon long runs on the C3. When you average the long-run pace and remove the fuel delta, a clear midfield picture starts to emerge.",
-      "Our verified fan-sourced data backs up the idea that two teams are hiding significant performance. Sandbagging in testing is a tradition, but the gap between their headline times and their long-run simulations is unusually wide this year.",
-      "By the time the season opens, expect the order to reshuffle. Testing always rewards patience — and the teams that spent the final hour of Day 3 chasing race-trim consistency rather than the fastest single lap.",
-    ],
-    image: PLACEHOLDER(1),
-    author: {
-      name: "Vihanga Nimsara",
-      role: "Founder & Chief Editor",
-      bio: "Runs the F1 Paddock SL paddock, writes race-weekend verdicts and keeps the fan data honest.",
-      avatar: "/images/f1-5.jpg",
-    },
-    pubDate: "2026-02-22T10:00:00.000Z",
-    readTime: "4 min read",
-    comments: [
-      {
-        id: "c1",
-        author: "Kavi Fernando",
-        date: "2026-02-22T11:30:00.000Z",
-        text: "The fuel-adjusted numbers are the best bit. Everyone quoting raw laps is missing the point.",
-      },
-      {
-        id: "c2",
-        author: "Dilan Perera",
-        date: "2026-02-22T13:05:00.000Z",
-        text: "Hoping the long-run pace is real — we've been waiting for a proper midfield fight since last season.",
-      },
-      {
-        id: "c3",
-        author: "Amaya Silva",
-        date: "2026-02-23T08:00:00.000Z",
-        text: "Great write-up. Do you have the same breakdown for the second Bahrain test week?",
-      },
-    ],
-  },
-  {
-    id: "rookie-driver-guide-2026",
-    title: "Rookie Guide 2026: Five New Faces To Watch",
-    excerpt:
-      "From junior-series champions to surprise signings — the 2026 grid's rookies have more pressure on them than ever.",
-    content: [
-      "The 2026 season brings the biggest rookie intake in years. Five new names fill seats that spent most of last season rotating between familiar faces, and every one of them arrives with something to prove.",
-      "Expectation is the real enemy. Formula 1 rookies now face a full calendar, sprint events and a development race that never stops — there is no such thing as a quiet debut season anymore.",
-      "The strongest rookie wing-men will be the ones who manage media days, simulator time and race-weekend debriefs without letting the noise creep into the cockpit. The talent is close; the margins are not.",
-      "Keep an eye on qualifying disappearances. A rookie who can bank a clean Q3 lap on day one is a rookie who belongs at the front of the mid-pack for the rest of the year.",
-    ],
-    image: PLACEHOLDER(3),
-    author: {
-      name: "Nethmi Jayasuriya",
-      role: "Junior Correspondent",
-      bio: "Follows the junior categories so you don't have to. Loves a good overtake and an even better excuse for it.",
-      avatar: "/images/f1-7.jpg",
-    },
-    pubDate: "2026-02-18T09:00:00.000Z",
-    readTime: "5 min read",
-    comments: [
-      {
-        id: "c1",
-        author: "Ravindu Wick",
-        date: "2026-02-18T10:15:00.000Z",
-        text: "The margins point about Q3 is so true. Rookies who nail quali are gold.",
-      },
-      {
-        id: "c2",
-        author: "Tharushi G",
-        date: "2026-02-19T12:00:00.000Z",
-        text: "Would love a similar guide for the sprint events later in the season.",
-      },
-    ],
-  },
-  {
-    id: "pit-wall-radio-gold",
-    title: "Pit Wall Radio Gold: What The Drivers Really Say",
-    excerpt:
-      "Behind the team radios — the code words, the frustration and the moments that make fan podcasts worth it.",
-    content: [
-      "Team radio is Formula 1's greatest unscripted drama. But the messages you hear on the world feed are only half of it — the bits that make it on air are hand-picked for maximum drama.",
-      "'Box, box' sounds simple, but the tone tells you everything. A clipped 'box now' means the undercut is real. The long, resigned 'we are checking' is where hope goes to die.",
-      "The real gold is in the calm swaps during the race — a driver asking one quiet question that changes an entire strategy, or a race engineer talking a driver through a lock-up like they've done it a thousand times together.",
-      "Next time you watch, listen for the silences. The best moments on the pit wall never make it to the broadcast feed.",
-    ],
-    image: PLACEHOLDER(9),
-    author: {
-      name: "Ishara Bandara",
-      role: "Strategy Analyst",
-      bio: "Obsesses over tyre windows and pit-lane maths. Also runs the Paddock's race-day live blogs.",
-      avatar: "/images/f1-12.jpg",
-    },
-    pubDate: "2026-02-10T15:00:00.000Z",
-    readTime: "3 min read",
-    comments: [
-      {
-        id: "c1",
-        author: "Mahela D.",
-        date: "2026-02-10T16:30:00.000Z",
-        text: "'We are checking' should be a fraction of what it used to be, this is comedy gold.",
-      },
-      {
-        id: "c2",
-        author: "Sachin J",
-        date: "2026-02-11T07:45:00.000Z",
-        text: "The analysis about tone is spot on. You can hear the undercut before it happens.",
-      },
-      {
-        id: "c3",
-        author: "Ruvini",
-        date: "2026-02-11T09:20:00.000Z",
-        text: "Please do one of these every month, the podcast can only replay them so many times.",
-      },
-    ],
-  },
-];
+  ];
 
 export function getOwnPosts(): OwnPost[] {
   return OWN_POSTS;

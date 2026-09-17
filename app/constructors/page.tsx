@@ -38,7 +38,10 @@ export default async function ConstructorsPage() {
                   className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-4 transition-colors duration-150 hover:bg-pebble-8"
                 >
                   <div className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-pebble-10">
+                    <span
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl"
+                      style={{ background: color }}
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={getTeamLogo(c.constructorId, 120)}
