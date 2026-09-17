@@ -37,9 +37,9 @@ export function createAppTheme(mode: "light" | "dark"): Theme {
       text: { primary: C.text, secondary: C.textDim },
       divider: C.border,
     },
-    shape: { borderRadius: 6 },
+    shape: { borderRadius: 4 },
     typography: {
-      fontFamily: 'var(--font-pjs), "Plus Jakarta Sans", sans-serif',
+      fontFamily: 'var(--font-geist), "Geist", sans-serif',
       h1: { fontWeight: 700, letterSpacing: "-0.02em" },
       h2: { fontWeight: 700, letterSpacing: "-0.02em" },
       h3: { fontWeight: 700 },

@@ -3,7 +3,7 @@ import { Container, SectionHeading } from "@/components/f1kit";
 import CalendarView from "@/components/CalendarView";
 
 export const metadata = {
-  title: "Calendar — F1 Fan Paddock",
+  title: "Calendar — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

@@ -9,7 +9,7 @@ import {
 import { Container, SectionHeading } from "@/components/f1kit";
 
 export const metadata = {
-  title: "Constructors — F1 Fan Paddock",
+  title: "Constructors — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

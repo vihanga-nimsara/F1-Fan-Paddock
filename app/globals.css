@@ -10,9 +10,9 @@
 
 @theme {
   /* Fonts */
-  --font-display: var(--font-pjs), "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-heading: var(--font-pjs), "Plus Jakarta Sans", var(--font-sinhala), system-ui, sans-serif;
-  --font-body: var(--font-pjs), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
+  --font-heading: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
+  --font-body: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-timer: var(--font-f1), "Russo One", system-ui, sans-serif;
 
   /* F1 brand red */
@@ -51,7 +51,7 @@
 /* ------------------------------------------------------------------ */
 
 @theme inline {
-  --font-sans: var(--font-pjs), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-mono: var(--font-jb), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-sm: calc(var(--radius) * 0.6);
@@ -119,7 +119,7 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --radius: 0.625rem;
+  --radius: 0.25rem;
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -255,6 +255,11 @@
   * {
     @apply border-border outline-ring/50;
   }
+
+  select option {
+    color: var(--foreground);
+    background-color: var(--card);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -262,7 +267,7 @@
 /* ------------------------------------------------------------------ */
 
 .font-headline {
-  font-family: var(--font-heading), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-heading), "Geist", ui-sans-serif, system-ui, sans-serif;
 }
 
 /* ------------------------------------------------------------------ */
@@ -285,6 +290,48 @@
 /* ------------------------------------------------------------------ */
 /* Scrollbar                                                           */
 /* ------------------------------------------------------------------ */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-f1red) var(--ink-08);
+}
+
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--ink-08);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--f1red) 60%, var(--ink-50));
+  border-radius: 999px;
+  border: 2px solid var(--ink-08);
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-f1red);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--ink-06);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--f1red) 45%, var(--ink-40));
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--color-f1red);
+}
 
 .verdict-scroll {
   scrollbar-width: thin;
@@ -320,6 +367,36 @@
 @keyframes revealUp {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
+}
+
+/* ------------------------------------------------------------------ */
+/* Standings ticker (marquee)                                          */
+/* ------------------------------------------------------------------ */
+
+.ticker-enter {
+  animation: ticker-enter 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes ticker-enter {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.ticker-shine {
+  background: linear-gradient(
+    115deg,
+    transparent 42%,
+    color-mix(in srgb, var(--f1red) 9%, transparent) 50%,
+    transparent 58%
+  );
+  background-size: 220% 100%;
+  background-repeat: no-repeat;
+  animation: ticker-shine 7s linear infinite;
+}
+
+@keyframes ticker-shine {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,7 +2,7 @@ import { Container, SectionHeading, Pill } from "@/components/f1kit";
 import { getSeasonRaces } from "@/lib/f1";
 
 export const metadata = {
-  title: "Release Schedule — F1 Fan Paddock",
+  title: "Release Schedule — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

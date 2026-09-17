@@ -29,7 +29,7 @@ export function F1Logo({ className = "" }: { className?: string }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/images/Logo.png"
-      alt="F1 Fan Paddock"
+      alt="F1 Paddock SL"
       className={`h-7 w-auto ${className}`}
     />
   );
@@ -437,7 +437,7 @@ export function Hero({
           aria-hidden="true"
         />
       )}
-      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon via-carbon/40 to-transparent" />
+      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon/70 via-carbon/20 to-transparent" />
       <span className="pointer-events-none absolute inset-x-0 top-0 h-[3px] bg-f1red" />
       <div className="relative z-10 mx-auto w-full max-w-[1640px] flex flex-col gap-4 px-4 pb-10 pt-16 md:px-6 md:pb-14">
         <span className="inline-flex w-fit items-center gap-3 rounded-sm bg-f1red px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.16em] text-white uppercase">

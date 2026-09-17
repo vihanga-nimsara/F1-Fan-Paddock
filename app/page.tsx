@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Script from "next/script";
 import {
   getConstructorStandings,
   getDriverStandings,
@@ -18,6 +19,7 @@ import {
   StandingsTable,
   MediaFallback,
   Avatar,
+  Hero,
   type StandingRow,
 } from "@/components/f1kit";
 import { Button } from "@/components/ui/button";
@@ -137,6 +139,7 @@ export default async function Home() {
     code: d.code ?? d.familyName.slice(0, 3).toUpperCase(),
     points: d.points,
     color: TEAM_COLORS[d.team],
+    avatar: headshots[d.code] ?? headshots[String(d.number)] ?? undefined,
   }));
 
   const next = nextRaces[0];
@@ -153,6 +156,18 @@ export default async function Home() {
 
   return (
     <main className="w-full">
+      {/* ------------------------------ Hero banner ------------------------------ */}
+      <Hero
+        image="/images/ChatGPT_Image_Aug_16_2026_08_13_40_PM.png"
+        kicker="F1 Paddock SL"
+        title="The Paddock Bulletin"
+        excerpt="Race analysis, paddock stories and live Formula 1 stats — in Sinhala and English."
+        primaryCta="Explore stories"
+        primaryHref="/stories"
+        secondaryCta="Live standings"
+        secondaryHref="/standings"
+      />
+
       {/* ------------------------------ Featured story ------------------------------ */}
       {featured && (
         <section className="border-b border-border">
@@ -253,8 +268,16 @@ export default async function Home() {
           </section>
 
           {/* From Facebook */}
-          <section>
+          <section className="flex flex-col gap-5">
             <SectionHeader kicker="Community" title="From Our Facebook" />
+            <div
+              className="sk-ww-facebook-page-posts"
+              data-embed-id="25713675"
+            />
+            <Script
+              src="https://widgets.sociablekit.com/facebook-page-posts/widget.js"
+              defer
+            />
             {fbPosts.length > 0 ? (
               <div className="grid gap-5 sm:grid-cols-3">
                 {fbPosts.slice(0, 3).map((p) => (
@@ -287,15 +310,27 @@ export default async function Home() {
         <aside className="flex min-w-0 flex-col gap-6 lg:sticky lg:top-20 lg:self-start">
           {next && (
             <section className="overflow-hidden rounded-2xl border border-border bg-card">
-              <div className="flex h-24 items-center justify-center bg-carbon-deep">
+              <div className="relative flex h-32 items-center justify-center bg-muted p-4">
+                {next.circuitImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={next.circuitImage}
+                    alt={`${next.circuitName} circuit`}
+                    className="h-full w-full object-contain"
+                  />
+                ) : (
+                  <span className="text-3xl">{next.flag}</span>
+                )}
                 {(() => {
                   const flag = flagImage(next.country);
                   return flag ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                    <img src={flag} alt={next.country} className="h-10 w-16 rounded object-cover shadow" />
-                  ) : (
-                    <span className="text-3xl">{next.flag}</span>
-                  );
+                    <img
+                      src={flag}
+                      alt={next.country}
+                      className="absolute right-2 bottom-2 h-5 w-8 rounded-sm object-cover shadow"
+                    />
+                  ) : null;
                 })()}
               </div>
               <div className="flex flex-col gap-2 p-5">
@@ -445,23 +480,39 @@ export default async function Home() {
         <SectionHeader kicker="Results" title="Race Weekend" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {recentRaces.map((r: Race) => {
-            const img = r.circuitImage ?? flagImage(r.country, 320);
+            const photo = `/images/f1-${((r.round - 1) % 20) + 1}.jpg`;
+            const flag = flagImage(r.country);
             return (
               <Link
                 key={r.round}
                 href="/reviews"
                 className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
               >
-                <div className="flex h-28 items-center justify-center bg-muted p-3">
-                  {img ? (
+                <div className="relative h-32 overflow-hidden bg-muted">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={photo}
+                    alt={r.raceName}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/5" />
+                  {flag && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={img}
-                      alt={`${r.circuitName} circuit`}
-                      className="h-full w-full object-contain"
+                      src={flag}
+                      alt={r.country}
+                      className="absolute top-2 right-2 h-5 w-8 rounded-sm object-cover shadow"
                     />
-                  ) : (
-                    <span className="text-4xl">{r.flag}</span>
+                  )}
+                  {r.circuitImage && (
+                    <span className="absolute bottom-2 left-2 rounded-md bg-white/85 p-1 shadow transition-opacity duration-300 group-hover:opacity-90">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={r.circuitImage}
+                        alt={`${r.circuitName} circuit`}
+                        className="h-9 w-14 object-contain"
+                      />
+                    </span>
                   )}
                 </div>
                 <div className="flex flex-col gap-1 p-4">

@@ -2,7 +2,7 @@ import { Container, SectionHeading, Pill } from "@/components/f1kit";
 import { getSeasonRaceReviews, TEAM_COLORS, type RaceReview } from "@/lib/f1";
 
 export const metadata = {
-  title: "Race Spotlight — F1 Fan Paddock",
+  title: "Race Spotlight — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

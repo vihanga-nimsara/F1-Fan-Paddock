@@ -2,13 +2,13 @@ import Link from "next/link";
 import { Container, SectionHeading, Kicker } from "@/components/f1kit";
 
 export const metadata = {
-  title: "Terms of Service — F1 Fan Paddock",
+  title: "Terms of Service — F1 Paddock SL",
 };
 
 const SECTIONS = [
   {
     title: "1. Acceptance of terms",
-    body: "By using F1 Fan Paddock you agree to these terms. This is a fan-made, non-commercial project and is not affiliated with Formula 1, the FIA, or any team.",
+    body: "By using F1 Paddock SL you agree to these terms. This is a fan-made, non-commercial project and is not affiliated with Formula 1, the FIA, or any team.",
   },
   {
     title: "2. Content accuracy",
@@ -45,7 +45,7 @@ export default function TermsPage() {
             linkLabel="Privacy Policy"
           />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
-            Last updated August 2026. The fine print for using F1 Fan Paddock.
+            Last updated August 2026. The fine print for using F1 Paddock SL.
           </p>
         </div>
 

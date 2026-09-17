@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { getDriverProfile } from "@/lib/drivers";
 
 export const metadata = {
-  title: "Drivers — F1 Fan Paddock",
+  title: "Drivers — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

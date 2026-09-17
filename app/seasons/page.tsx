@@ -2,7 +2,7 @@ import { Container, SectionHeading, Pill } from "@/components/f1kit";
 import { getDriverStandings, TEAM_COLORS } from "@/lib/f1";
 
 export const metadata = {
-  title: "Seasons — F1 Fan Paddock",
+  title: "Seasons — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

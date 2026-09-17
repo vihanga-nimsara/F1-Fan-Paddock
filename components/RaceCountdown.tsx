@@ -220,7 +220,13 @@ export default function RaceCountdown({
               <select
                 value={activeIdx}
                 onChange={(e) => setActiveIdx(Number(e.target.value))}
-                className="cursor-pointer rounded-lg border border-pebble-15 bg-pebble-5 px-2.5 py-1.5 text-[13px] font-medium text-pebble outline-none transition-colors focus:border-f1red/60"
+                className="cursor-pointer appearance-none rounded-lg border border-pebble-40 bg-card py-1.5 pl-2.5 pr-8 text-[13px] font-medium text-pebble shadow-sm outline-none transition-colors focus:border-f1red/60 [&>option]:bg-card [&>option]:text-pebble"
+                style={{
+                  backgroundImage:
+                    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23a3a3a3' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E\")",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "right 0.65rem center",
+                }}
               >
                 {items.map((it, i) => (
                   <option key={i} value={i}>
@@ -238,7 +244,7 @@ export default function RaceCountdown({
               key={u.key}
               className="flex min-w-[64px] flex-col items-center gap-1 rounded-xl bg-pebble-5 px-3 py-3 md:min-w-[78px] md:px-4 md:py-4"
             >
-              <span className="font-timer text-[clamp(26px,4vw,42px)] leading-none tabular-nums tracking-[-0.02em] text-pebble">
+              <span className="font-geist text-[clamp(26px,4vw,42px)] leading-none tabular-nums tracking-[-0.02em] text-pebble">
                 {remaining
                   ? String(remaining[u.key]).padStart(2, "0")
                   : "--"}

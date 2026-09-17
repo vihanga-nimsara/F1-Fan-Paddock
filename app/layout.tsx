@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import {
-  Plus_Jakarta_Sans,
+  Geist,
   JetBrains_Mono,
-  Gemunu_Libre,
+  Abhaya_Libre,
   Russo_One,
 } from "next/font/google";
 import Script from "next/script";
@@ -15,10 +15,11 @@ import NewsAlert from "@/components/NewsAlert";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ThemeProvider } from "@/components/theme-provider";
 import MuiProvider from "@/components/mui/MuiProvider";
+import { GridPattern } from "@/components/ui/grid-pattern";
 
-const plusJakarta = Plus_Jakarta_Sans({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-pjs",
+  variable: "--font-geist",
   display: "swap",
 });
 
@@ -28,11 +29,9 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-// The uploaded isigemun_0.ttf is a Latin-only (no Sinhala glyphs) 2002 build.
-// The proper Sinhala "IsiGemunu" design is open-sourced as Gemunu Libre
-// (same Mooniak typeface), which ships the full Sinhala Unicode block.
-const sinhala = Gemunu_Libre({
+const sinhala = Abhaya_Libre({
   subsets: ["latin", "sinhala"],
+  weight: ["400", "500", "700", "800"],
   variable: "--font-sinhala",
   display: "swap",
 });
@@ -48,7 +47,7 @@ const f1Font = Russo_One({
 });
 
 export const metadata: Metadata = {
-  title: "The Paddock — F1 Fan Blogs & Live Data",
+  title: "F1 Paddock SL — F1 Fan Blogs & Live Data",
   description:
     "Race analysis, paddock stories, and live Formula 1 stats: standings, streaks, and head-to-heads.",
 };
@@ -81,13 +80,19 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plusJakarta.variable} ${jetbrains.variable} ${sinhala.variable} ${f1Font.variable}`}
+      className={`${geist.variable} ${jetbrains.variable} ${sinhala.variable} ${f1Font.variable}`}
     >
       <body>
         <Script
           id="theme-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{ __html: themeInit }}
+        />
+        <GridPattern
+          className="fixed inset-0 -z-10 h-full w-full fill-foreground/5 stroke-foreground/5"
+          width={48}
+          height={48}
+          strokeDasharray="0"
         />
         <ThemeProvider>
           <MuiProvider>

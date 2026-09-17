@@ -1,11 +1,21 @@
 import Link from "next/link";
+import { F1Logo } from "@/components/f1kit";
 
-const LINKS = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
+const EXPLORE = [
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/stories" },
+  { label: "News", href: "/news" },
+  { label: "Videos", href: "/video" },
+  { label: "Standings", href: "/standings" },
+  { label: "Calendar", href: "/calendar" },
+];
+
+const RESOURCES = [
   { label: "About", href: "/about" },
   { label: "Team", href: "/team" },
-  { label: "Blog", href: "/stories" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
 ];
 
 const SOCIAL = [
@@ -43,23 +53,62 @@ export default function Footer() {
 
   return (
     <footer className="mt-10 border-t border-border bg-background">
-      <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-6 px-4 py-8 md:px-6">
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <div className="flex flex-col gap-1">
-            <span className="font-heading text-base font-bold tracking-tight">
-              The Paddock
-            </span>
-            <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
-              An independent F1 fan blog — race analysis, paddock stories and
-              live data for every session, every lap, every overtake.
+      <div className="mx-auto w-full max-w-[1200px] px-4 md:px-6">
+        <div className="grid gap-10 py-12 md:grid-cols-[1.5fr_1fr_1fr]">
+          {/* Brand */}
+          <div className="flex flex-col gap-3">
+            <Link href="/" className="flex items-center gap-2">
+              <F1Logo className="h-6 w-auto" />
+              <span className="font-heading text-base font-bold tracking-tight">
+                F1 Paddock SL
+              </span>
+            </Link>
+            <p className="max-w-sm text-xs leading-relaxed text-muted-foreground">
+              An independent Sri Lankan Formula 1 fan hub — race analysis,
+              paddock stories and live data for every session, every lap.
             </p>
+            <div className="mt-2 flex items-center gap-2">
+              {SOCIAL.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="flex h-8 w-8 items-center justify-center rounded-md border border-border bg-muted/50 text-muted-foreground transition-colors hover:border-f1red/50 hover:bg-f1red/10 hover:text-f1red"
+                >
+                  {s.icon}
+                </a>
+              ))}
+            </div>
           </div>
-          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2" aria-label="Footer">
-            {LINKS.map((l) => (
+
+          {/* Explore */}
+          <nav className="flex flex-col gap-3" aria-label="Explore">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Explore
+            </span>
+            {EXPLORE.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
-                className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="w-fit text-sm text-foreground/80 transition-colors hover:text-f1red"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Resources */}
+          <nav className="flex flex-col gap-3" aria-label="Resources">
+            <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Resources
+            </span>
+            {RESOURCES.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="w-fit text-sm text-foreground/80 transition-colors hover:text-f1red"
               >
                 {l.label}
               </Link>
@@ -67,24 +116,13 @@ export default function Footer() {
           </nav>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-3 border-t border-border pt-4 sm:flex-row sm:items-center">
+        <div className="flex flex-col items-center justify-between gap-2 border-t border-border py-5 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            © {year} The Paddock · F1 Fan Paddock. An independent fan project.
+            © {year} F1 Paddock SL. All rights reserved.
           </p>
-          <div className="flex items-center gap-2">
-            {SOCIAL.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                {s.icon}
-              </a>
-            ))}
-          </div>
+          <p className="text-xs text-muted-foreground">
+            Independent fan project — not affiliated with Formula 1 or the FIA.
+          </p>
         </div>
       </div>
     </footer>

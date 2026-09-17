@@ -2,13 +2,13 @@ import Link from "next/link";
 import { Container, SectionHeading, Kicker } from "@/components/f1kit";
 
 export const metadata = {
-  title: "Privacy Policy — F1 Fan Paddock",
+  title: "Privacy Policy — F1 Paddock SL",
 };
 
 const SECTIONS = [
   {
     title: "1. Information we collect",
-    body: "F1 Fan Paddock is a fan-made project. We do not require an account to browse. If you sign in, we may store your display name and preferences locally. We do not sell personal data.",
+    body: "F1 Paddock SL is a fan-made project. We do not require an account to browse. If you sign in, we may store your display name and preferences locally. We do not sell personal data.",
   },
   {
     title: "2. Cookies",
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
             linkLabel="Terms of Service"
           />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
-            Last updated August 2026. How F1 Fan Paddock handles your data.
+            Last updated August 2026. How F1 Paddock SL handles your data.
           </p>
         </div>
 

@@ -80,8 +80,7 @@ export const OWN_POSTS: OwnPost[] = [
       "ඒනම් කිමිගෙ කතාව මම මෙතනින් කියල ඉවර කරනව නමුත් එයාගෙ කතාව තාම පටන් ගත්ත විතරයි!",
       "දිගටම අපිත් එක්ක ඉන්න formula 1 වල නොදුටු දුටු අහපු නැති අහපු කතා සින්හලෙන් විස්තරාත්මකව දැනගන්න. - F1 Paddock SL",
     ],
-    image:
-      "/api/fbimg?u=https%3A%2F%2Fz-p3-scontent.fcmb9-1.fna.fbcdn.net%2Fv%2Ft39.30808-6%2F789264105_122130257480813207_3257365040956298638_n.jpg%3Fstp%3Ddst-jpg_tt6%26cstp%3Dmx1638x2048%26ctp%3Ds1638x2048%26_nc_cat%3D108%26ccb%3D1-7%26_nc_sid%3D127cfc%26_nc_eui2%3DAeHzNj6OzYGvWkI66ODCeS0KKbnBjg_VGWApucGOD9UZYN6O5mBeF-kZWtiN_KGyDRlCgkCtxbTWEXGWjRIlZZo3%26_nc_ohc%3De32ittcO-OgQ7kNvwFeHdHw%26_nc_oc%3DAdoFzCC4r9x0doTWiLgFu4oET3b0umRFm8P41DvthIftRIg7B8DSB6VR7_SCIkV1qzE%26_nc_zt%3D23%26_nc_ht%3Dz-p3-scontent.fcmb9-1.fna%26_nc_gid%3DsOnVTs3s11oICFdJvwQhtQ%26_nc_ss%3D7b2a8%26oh%3D00_AQJLWRmi4yI5CeTCFlL1XV-Ylyxtj2626I0l5hnBCd8V5A%26oe%3D6AA5E186",
+    image: "/images/kimi-antonelli.jpg",
     author: {
       name: "F1 Paddock SL",
       role: "Road to Formula 1 Series",
@@ -107,7 +106,7 @@ export const OWN_POSTS: OwnPost[] = [
     author: {
       name: "Vihanga Nimsara",
       role: "Founder & Chief Editor",
-      bio: "Runs the F1 Fan Paddock paddock, writes race-weekend verdicts and keeps the fan data honest.",
+      bio: "Runs the F1 Paddock SL paddock, writes race-weekend verdicts and keeps the fan data honest.",
       avatar: "/images/f1-5.jpg",
     },
     pubDate: "2026-02-22T10:00:00.000Z",

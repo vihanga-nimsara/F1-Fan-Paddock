@@ -6,7 +6,7 @@ import BlogList from "@/components/BlogList";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
 
 export const metadata = {
-  title: "F1 News — F1 Fan Paddock",
+  title: "F1 News — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

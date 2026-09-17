@@ -2,17 +2,17 @@ import Link from "next/link";
 import { Container, SectionHeading } from "@/components/f1kit";
 
 export const metadata = {
-  title: "About — F1 Fan Paddock",
+  title: "About — F1 Paddock SL",
 };
 
 const SECTIONS = [
   {
     title: "The website",
-    body: "F1 Fan Paddock is an independent Formula 1 fan site. It brings race analysis, paddock stories, live standings, and video together in one place — a single home for fans who want to follow the season without jumping between a dozen tabs. Everything is built to feel fast, clean, and unmistakably F1.",
+    body: "F1 Paddock SL is an independent Formula 1 fan site. It brings race analysis, paddock stories, live standings, and video together in one place — a single home for fans who want to follow the season without jumping between a dozen tabs. Everything is built to feel fast, clean, and unmistakably F1.",
   },
   {
     title: "The team",
-    body: "F1 Fan Paddock is designed, built, and maintained by an independent team of Formula 1 fans. Zagan is the developer behind the site — from the data pipelines that pull standings and timing to the frontend you're browsing. Hansaka Nethmina runs our Facebook page and brings the F1 knowledge, with the race-weekend context and paddock reads fans want to talk about. It's a passion-driven, fan-run effort with no corporate backing.",
+    body: "F1 Paddock SL is designed, built, and maintained by an independent team of Formula 1 fans. Zagan is the developer behind the site — from the data pipelines that pull standings and timing to the frontend you're browsing. Hansaka Nethmina runs our Facebook page and brings the F1 knowledge, with the race-weekend context and paddock reads fans want to talk about. It's a passion-driven, fan-run effort with no corporate backing.",
   },
   {
     title: "Data & sources",
@@ -31,12 +31,12 @@ export default function AboutPage() {
         <div className="flex flex-col gap-3">
           <SectionHeading
             kicker="About"
-            title="F1 Fan Paddock"
+            title="F1 Paddock SL"
             href="/stories"
             linkLabel="Read the blog"
           />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
-            Who builds F1 Fan Paddock, what it is, and where the data comes from.
+            Who builds F1 Paddock SL, what it is, and where the data comes from.
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export default function AboutPage() {
               href="/team"
               className="font-medium text-f1red underline-offset-2 hover:underline"
             >
-              team behind F1 Fan Paddock
+              team behind F1 Paddock SL
             </Link>
             . Follow along on{" "}
             <Link

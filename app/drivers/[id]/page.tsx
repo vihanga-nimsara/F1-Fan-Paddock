@@ -16,6 +16,7 @@ import { getDriverProfile } from "@/lib/drivers";
 import { Container, MediaFallback, Avatar } from "@/components/f1kit";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { SpinningText } from "@/components/ui/spinning-text";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -28,8 +29,8 @@ export async function generateMetadata({
   const { id } = await params;
   const drivers = await getDriverStandings().catch(() => []);
   const d = drivers.find((x) => x.driverId === id);
-  if (!d) return { title: "Driver — F1 Fan Paddock" };
-  return { title: `${d.givenName} ${d.familyName} — F1 Fan Paddock` };
+  if (!d) return { title: "Driver — F1 Paddock SL" };
+  return { title: `${d.givenName} ${d.familyName} — F1 Paddock SL` };
 }
 
 export default async function DriverPage({
@@ -115,11 +116,26 @@ export default async function DriverPage({
                 <MediaFallback label={profile.code ?? profile.familyName[0]} sublabel={name} />
               </div>
             )}
-            <div
-              className="absolute bottom-3 left-3 flex h-14 w-14 items-center justify-center rounded-full border-2 border-background font-heading text-xl font-bold text-background"
-              style={{ background: color }}
-            >
-              {driver.number}
+            {/* Number medallion with spinning ring */}
+            <div className="absolute bottom-4 left-4 flex h-32 w-32 items-center justify-center">
+              <SpinningText
+                duration={14}
+                radius={7}
+                reverse
+                className="absolute inset-0 font-heading text-[12px] font-bold uppercase text-white"
+                style={{
+                  textShadow: "0 1px 6px rgba(0,0,0,0.7)",
+                  filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.45))",
+                }}
+              >
+                {`${driver.code ?? driver.familyName.toUpperCase()} • F1 PADDOCK SL • `}
+              </SpinningText>
+              <div
+                className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-background font-heading text-xl font-bold text-background"
+                style={{ background: color, boxShadow: `0 4px 18px ${color}66` }}
+              >
+                {driver.number}
+              </div>
             </div>
             <Badge
               className="absolute right-3 top-3 gap-1"

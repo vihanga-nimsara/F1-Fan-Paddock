@@ -1,7 +1,7 @@
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
 
 export const metadata = {
-  title: "Showcase — F1 Fan Paddock",
+  title: "Showcase — F1 Paddock SL",
 };
 
 const SHOWCASES = [

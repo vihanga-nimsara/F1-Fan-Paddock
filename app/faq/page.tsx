@@ -4,9 +4,9 @@ import PageHeader from "@/components/PageHeader";
 import FaqAccordion from "@/components/FaqAccordion";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | F1 Fan Paddock",
+  title: "Frequently Asked Questions | F1 Paddock SL",
   description:
-    "Quick answers for new fans — how live timings work, where standings come from, and how to publish on F1 Fan Paddock.",
+    "Quick answers for new fans — how live timings work, where standings come from, and how to publish on F1 Paddock SL.",
 };
 
 export default function FaqPage() {

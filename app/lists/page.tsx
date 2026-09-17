@@ -9,7 +9,7 @@ import {
 import { getDriverStandings, TEAM_COLORS } from "@/lib/f1";
 
 export const metadata = {
-  title: "My Lists — F1 Fan Paddock",
+  title: "My Lists — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";

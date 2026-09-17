@@ -8,7 +8,7 @@ import { getAuthoredBlogs } from "@/lib/authored-blogs";
 import { timeAgo } from "@/lib/blog";
 
 export const metadata = {
-  title: "The Paddock Blog — F1 Fan Paddock",
+  title: "The Paddock Blog — F1 Paddock SL",
 };
 
 export default async function StoriesPage() {

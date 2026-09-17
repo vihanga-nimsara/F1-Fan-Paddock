@@ -94,7 +94,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 <Link href="/" className="flex items-center gap-2">
                   <F1Logo className="h-6 w-auto" />
                   <SheetTitle className="font-heading text-lg font-bold tracking-tight">
-                    The Paddock
+                    F1 Paddock SL
                   </SheetTitle>
                 </Link>
                 <SheetDescription>
@@ -133,7 +133,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           <Link href="/" className="flex shrink-0 items-center gap-2">
             <F1Logo className="h-6 w-auto" />
             <span className="hidden font-heading text-base font-bold tracking-tight sm:inline">
-              The Paddock
+              F1 Paddock SL
             </span>
           </Link>
 

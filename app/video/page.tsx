@@ -3,7 +3,7 @@ import YouTubePlayer from "@/components/YouTubePlayer";
 import { getPlaylistVideos } from "@/lib/youtube";
 
 export const metadata = {
-  title: "Video — F1 Fan Paddock",
+  title: "Video — F1 Paddock SL",
 };
 
 const YT_PLAYLIST = "PLo5BbNWSTIgjjZUH3GlSU5Qo029JfgUTh";

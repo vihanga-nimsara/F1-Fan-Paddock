@@ -3,7 +3,7 @@ import { Container, SectionHeading, Kicker } from "@/components/f1kit";
 import TeamAvatar from "@/components/TeamAvatar";
 
 export const metadata = {
-  title: "Team — F1 Fan Paddock",
+  title: "Team — F1 Paddock SL",
 };
 
 const ZAGAN_IMG =
@@ -20,7 +20,7 @@ const TEAM = [
   {
     name: "Zagan",
     role: "Developer",
-    bio: "Designs, builds, and maintains F1 Fan Paddock — from the data pipelines that pull standings and timing to the frontend you're browsing. A lifelong Formula 1 fan who'd rather ship clean stats and good race writing than sit still on a Sunday.",
+    bio: "Designs, builds, and maintains F1 Paddock SL — from the data pipelines that pull standings and timing to the frontend you're browsing. A lifelong Formula 1 fan who'd rather ship clean stats and good race writing than sit still on a Sunday.",
     image: ZAGAN_IMG,
     href: "https://github.com/vihanga-nimsara",
   },
@@ -46,7 +46,7 @@ export default function TeamPage() {
             linkLabel="About the site"
           />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
-            F1 Fan Paddock is an independent, fan-run project. It&apos;s designed,
+            F1 Paddock SL is an independent, fan-run project. It&apos;s designed,
             built, and maintained by people who care a lot about clean stats and
             good race writing.
           </p>

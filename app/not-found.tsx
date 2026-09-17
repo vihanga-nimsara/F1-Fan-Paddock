@@ -3,7 +3,7 @@ import { Container, Kicker } from "@/components/f1kit";
 import F1Button from "@/components/ui/F1Button";
 
 export const metadata = {
-  title: "Page Not Found — F1 Fan Paddock",
+  title: "Page Not Found — F1 Paddock SL",
 };
 
 export default function NotFound() {

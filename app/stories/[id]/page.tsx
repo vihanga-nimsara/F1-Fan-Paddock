@@ -21,7 +21,7 @@ export async function generateMetadata({
   const own = getOwnPostById(id) ?? (await getAuthoredBlogBySlug(id));
   const post = own ?? (await getCachedPostById(id));
   return {
-    title: post ? `${post.title} — F1 Fan Paddock` : "Blog Post — F1 Fan Paddock",
+    title: post ? `${post.title} — F1 Paddock SL` : "Blog Post — F1 Paddock SL",
   };}
 
 export default async function BlogPostPage({

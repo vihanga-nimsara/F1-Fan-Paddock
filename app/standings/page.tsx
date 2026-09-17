@@ -16,7 +16,7 @@ import {
 import StandingsTabs from "@/components/StandingsTabs";
 
 export const metadata = {
-  title: "Standings — F1 Fan Paddock",
+  title: "Standings — F1 Paddock SL",
 };
 
 export const dynamic = "force-dynamic";
