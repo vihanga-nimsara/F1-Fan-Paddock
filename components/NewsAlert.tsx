@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import { MediaFallback } from "@/components/f1kit";
 
 type NewsItem = {
@@ -74,14 +75,14 @@ export default function NewsAlert() {
             onClick={() => setOpen(false)}
             className="flex h-5 w-5 shrink-0 items-center justify-center rounded-sm text-pebble-50 transition-colors hover:bg-f1red hover:text-white"
           >
-            ✕
+            <X className="h-3.5 w-3.5" />
           </button>
         </div>
         <a
           href={item.link}
           target="_blank"
           rel="noopener noreferrer"
-          className="line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble transition-colors hover:text-f1red"
+          className="line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble transition-opacity hover:opacity-80"
         >
           {item.title}
         </a>

@@ -3,6 +3,7 @@ import {
   Geist,
   JetBrains_Mono,
   Abhaya_Libre,
+  Gemunu_Libre,
   Russo_One,
 } from "next/font/google";
 import Script from "next/script";
@@ -33,6 +34,15 @@ const sinhala = Abhaya_Libre({
   subsets: ["latin", "sinhala"],
   weight: ["400", "500", "700", "800"],
   variable: "--font-sinhala",
+  display: "swap",
+});
+
+// Bold Sinhala display face for headings. Latin glyphs still come from Geist
+// (first in the heading stack); Sinhala glyphs fall through to Gemunu Libre.
+const sinhalaHeading = Gemunu_Libre({
+  subsets: ["latin", "sinhala"],
+  weight: ["400", "700"],
+  variable: "--font-gemunu",
   display: "swap",
 });
 
@@ -80,7 +90,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geist.variable} ${jetbrains.variable} ${sinhala.variable} ${f1Font.variable}`}
+      className={`${geist.variable} ${jetbrains.variable} ${sinhala.variable} ${sinhalaHeading.variable} ${f1Font.variable}`}
     >
       <body>
         <Script

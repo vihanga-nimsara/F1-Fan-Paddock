@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Flag } from "lucide-react";
 import { Pill } from "@/components/f1kit";
 import { flagImage, type Race } from "@/lib/f1";
 
@@ -35,8 +36,8 @@ function FlagIcon({ race }: { race: Race }) {
     );
   }
   return (
-    <span className="w-9 shrink-0 text-center text-lg leading-none">
-      {race.flag}
+    <span className="flex w-9 shrink-0 justify-center text-center">
+      <Flag className="h-5 w-5 text-muted-foreground" aria-hidden="true" />
     </span>
   );
 }

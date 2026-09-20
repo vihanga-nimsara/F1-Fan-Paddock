@@ -1,6 +1,7 @@
 import { Container, SectionHeading } from "@/components/f1kit";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { getPlaylistVideos } from "@/lib/youtube";
+import { Clapperboard } from "lucide-react";
 
 export const metadata = {
   title: "Video — F1 Paddock SL",
@@ -17,7 +18,10 @@ export default async function VideoPage() {
         <SectionHeading kicker="Watch" title="Race Video" linkLabel="" />
         {videos.length === 0 ? (
           <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
-            <span className="text-3xl">🎬</span>
+            <Clapperboard
+              className="h-10 w-10 text-pebble-80"
+              aria-hidden="true"
+            />
             <p className="m-0 font-body text-sm text-pebble-80">
               No videos available yet. Check back after race day.
             </p>

@@ -7,6 +7,7 @@ import {
   Avatar,
   CardActionArea,
 } from "@mui/material";
+import SportsMotorsportsRounded from "@mui/icons-material/SportsMotorsportsRounded";
 
 type Props = {
   href: string;
@@ -72,10 +73,10 @@ export default function F1Card({
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: 40,
+              color: "rgba(255,255,255,0.4)",
             }}
           >
-            🏎️
+            <SportsMotorsportsRounded fontSize="inherit" sx={{ fontSize: 44 }} />
           </Box>
         )}
         {duration && (

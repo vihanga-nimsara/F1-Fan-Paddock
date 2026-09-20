@@ -91,11 +91,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <header className="fixed top-0 z-50 w-full lg:h-0">
         {/* Desktop floating nav */}
         <div className="hidden lg:absolute lg:inset-x-0 lg:top-0 lg:block">
-          <div className={`mx-auto mt-3 w-full px-6 transition-[max-width] duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${scrolled ? "max-w-[1100px]" : "max-w-[1400px]"}`}>
+          <div className={`mx-auto mt-3 w-full px-6 transition-[max-width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${scrolled ? "max-w-[1100px]" : "max-w-[1400px]"}`}>
             <div className="flex h-14 items-center gap-6 overflow-hidden rounded-[3px] border border-border bg-card/85 px-5 shadow-lg shadow-foreground/5 backdrop-blur-md transition-[background-color] duration-300">
               <Link href="/" className="flex shrink-0 items-center gap-2">
                 <F1Logo className="h-6 w-auto" />
-                <span className={cn("font-heading text-base font-bold tracking-tight transition-opacity duration-500", scrolled && "hidden")}>
+                <span className={cn("font-heading text-base font-bold tracking-tight transition-opacity duration-300", scrolled && "hidden")}>
                   F1 Paddock SL
                 </span>
               </Link>

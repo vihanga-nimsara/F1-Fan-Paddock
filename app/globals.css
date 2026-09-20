@@ -27,7 +27,7 @@
 @theme {
   /* Fonts */
   --font-display: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
-  --font-heading: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
+  --font-heading: var(--font-geist), "Geist", var(--font-gemunu), var(--font-sinhala), system-ui, sans-serif;
   --font-body: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-timer: var(--font-f1), "Russo One", system-ui, sans-serif;
   --font-f1-display: "Formula1 Display-Black", var(--font-f1), "Russo One", system-ui, sans-serif;

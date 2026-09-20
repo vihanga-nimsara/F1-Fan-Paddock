@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ArrowLeft, ExternalLink, Flag, ArrowRight } from "lucide-react";
+import { ArrowLeft, AtSign, BookOpen, Building2, Flag, Globe, ArrowRight } from "lucide-react";
 import {
   getDriverStandings,
   getConstructorStandings,
@@ -11,15 +11,75 @@ import {
   mapLimit,
   TEAM_COLORS,
   getTeamLogo,
+  flagImage,
 } from "@/lib/f1";
-import { getDriverProfile } from "@/lib/drivers";
+import { getDriverProfile, type DriverLink } from "@/lib/drivers";
+import { DRIVER_STORIES } from "@/lib/driver-stories";
 import { Container, MediaFallback, Avatar } from "@/components/f1kit";
+import DriverJourney from "@/components/driver-journey";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { SpinningText } from "@/components/ui/spinning-text";
-import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
+
+function InstagramGlyph({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className={className}
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
+
+function XGlyph({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      className={className}
+    >
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zM17.083 19.77h1.833L7.084 4.126H5.117z" />
+    </svg>
+  );
+}
+
+function linkMeta(
+  l: DriverLink,
+  team: string,
+): { color: string; Icon: React.ComponentType<{ className?: string }> } {
+  switch (l.kind) {
+    case "wiki":
+      return { color: "#202122", Icon: BookOpen };
+    case "f1":
+      return { color: "#E10600", Icon: Flag };
+    case "official":
+      return { color: "#374151", Icon: Globe };
+    case "team":
+      return { color: TEAM_COLORS[team] ?? "#374151", Icon: Building2 };
+    case "social":
+    default: {
+      if (l.href.includes("instagram")) {
+        return { color: "#E4405F", Icon: InstagramGlyph };
+      }
+      if (l.href.includes("x.com") || /twitter/i.test(l.label)) {
+        return { color: "#0F1419", Icon: XGlyph };
+      }
+      return { color: "#374151", Icon: AtSign };
+    }
+  }
+}
 
 export async function generateMetadata({
   params,
@@ -55,6 +115,7 @@ export default async function DriverPage({
     headshot: headshots[driver.number] ?? headshots[driver.code] ?? undefined,
   };
   const profile = getDriverProfile(withHeadshot);
+  const story = DRIVER_STORIES[driver.driverId];
 
   const color = TEAM_COLORS[driver.team] ?? "#888888";
   const teamStanding = constructors.find((c) => c.constructorId === driver.team);
@@ -222,31 +283,43 @@ export default async function DriverPage({
                 Find out more
               </span>
               <div className="flex flex-wrap gap-2">
-                {profile.links.map((l) => (
-                  <Button
-                    asChild
-                    key={`${l.kind}-${l.href}`}
-                    size="sm"
-                    variant={l.kind === "wiki" ? "default" : "outline"}
-                    className={cn(
-                      l.kind === "wiki" && "bg-f1red text-white hover:bg-f1red-dark",
-                      "gap-1.5",
-                    )}
-                  >
-                    <Link
-                      href={l.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                {profile.links.map((l) => {
+                  const { color, Icon } = linkMeta(l, driver.team);
+                  return (
+                    <Button
+                      asChild
+                      key={`${l.kind}-${l.href}`}
+                      size="sm"
+                      className="gap-1.5 border-0 text-white shadow-sm transition-all hover:brightness-110 hover:text-white"
+                      style={{ backgroundColor: color }}
                     >
-                      {l.label}
-                      <ExternalLink className="size-3" />
-                    </Link>
-                  </Button>
-                ))}
+                      <Link
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon className="size-3.5" />
+                        {l.label}
+                      </Link>
+                    </Button>
+                  );
+                })}
               </div>
             </div>
           </div>
         </section>
+
+        {/* The Journey — English + Sinhala from the driver bio docs */}
+        {story && (
+          <DriverJourney
+            journey={story.journey}
+            didYouKnow={story.didYouKnow}
+            journeySi={story.si?.journey}
+            didYouKnowSi={story.si?.didYouKnow}
+            stats={story.careerStats}
+            facts={story}
+          />
+        )}
 
         {/* Recent results */}
         <section className="flex flex-col gap-4">
@@ -290,11 +363,22 @@ export default async function DriverPage({
                       <td className="px-4 py-3 font-medium">{r.round}</td>
                       <td className="px-4 py-3">
                         <span className="flex items-center gap-2 font-semibold">
-                          {r.country === "Abu Dhabi"
-                            ? "🇦🇪"
-                            : r.country === "Great Britain"
-                              ? "🇬🇧"
-                              : "🏁"}
+                          {(() => {
+                            const flag = flagImage(r.country);
+                            return flag ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={flag}
+                                alt={r.country}
+                                className="h-4 w-6 shrink-0 rounded-[2px] object-cover"
+                              />
+                            ) : (
+                              <Flag
+                                className="h-3.5 w-5 shrink-0 text-muted-foreground"
+                                aria-hidden="true"
+                              />
+                            );
+                          })()}
                           <span>{r.raceName}</span>
                         </span>
                       </td>

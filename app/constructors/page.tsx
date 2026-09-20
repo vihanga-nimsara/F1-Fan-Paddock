@@ -4,7 +4,7 @@ import {
   getConstructorStandings,
   getTeamLogo,
   TEAM_COLORS,
-  TEAM_FLAGS,
+  teamFlagImage,
 } from "@/lib/f1";
 import { Container, SectionHeading } from "@/components/f1kit";
 
@@ -54,8 +54,17 @@ export default async function ConstructorsPage() {
                       <span className="truncate font-body text-base font-semibold text-pebble">
                         {c.name}
                       </span>
-                      <span className="text-[10px] text-pebble-80">
-                        {TEAM_FLAGS[c.constructorId] ?? ""} P{c.position} · {c.wins}{" "}
+                      <span className="flex items-center gap-1.5 text-[10px] text-pebble-80">
+                        {teamFlagImage(c.constructorId) && (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={teamFlagImage(c.constructorId)!}
+                            alt=""
+                            loading="lazy"
+                            className="h-3 w-4 rounded-[2px] object-cover"
+                          />
+                        )}
+                        P{c.position} · {c.wins}{" "}
                         {c.wins === 1 ? "win" : "wins"}
                       </span>
                     </div>

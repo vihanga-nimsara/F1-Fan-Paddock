@@ -2,6 +2,7 @@ import Link from "next/link";
 import MuiAvatar from "@mui/material/Avatar";
 import { ArrowRight } from "lucide-react";
 import { LineShadowText } from "@/components/ui/line-shadow-text";
+import { SourceBadge } from "@/components/source-badge";
 
 /* ------------------------------------------------------------------ */
 /* Layout                                                              */
@@ -73,10 +74,10 @@ export function SectionHeading({
       {href && (
         <Link
           href={href}
-          className="group flex shrink-0 items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80 transition-colors hover:text-f1red"
+          className="group flex shrink-0 items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80 transition-colors hover:text-pebble"
         >
           {linkLabel}
-          <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+          <ArrowRight className="size-3.5" aria-hidden="true" />
         </Link>
       )}
     </div>
@@ -167,19 +168,6 @@ export function MediaFallback({
 /* Cards                                                               */
 /* ------------------------------------------------------------------ */
 
-function FacebookIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-      className={className}
-    >
-      <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-    </svg>
-  );
-}
-
 export function NewsCard({
   href,
   image,
@@ -214,21 +202,17 @@ export function NewsCard({
             className={
               contain
                 ? "w-full h-auto max-h-[460px] object-contain"
-                : "h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                : "h-full w-full object-cover"
             }
           />
         ) : (
           <MediaFallback label={tag?.[0]} sublabel={tag} color={color} />
         )}
         <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon-deep/80 via-transparent to-transparent" />
-        {tag && (
-          <span className="absolute left-3 top-3 flex items-center gap-1 rounded-sm bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
-            {tag === "Facebook" ? <FacebookIcon className="h-3 w-3" /> : tag}
-          </span>
-        )}
+        {tag && <SourceBadge tag={tag} className="absolute left-3 top-3 z-10" />}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <h3 className={`m-0 font-display text-[15px] font-semibold leading-[1.15] tracking-[0.01em] text-pebble transition-colors group-hover:text-f1red ${description ? "line-clamp-2" : "line-clamp-3"}`}>
+        <h3 className={`m-0 font-display text-[15px] font-semibold leading-[1.15] tracking-[0.01em] text-pebble ${description ? "line-clamp-2" : "line-clamp-3"}`}>
           {title}
         </h3>
         {description && (
@@ -271,13 +255,13 @@ export function VideoCard({
             src={image}
             alt=""
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover"
           />
         ) : (
           <MediaFallback sublabel="F1 Video" />
         )}
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-transform duration-200 group-hover:scale-110">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-colors duration-200 group-hover:bg-f1red">
             <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor">
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -295,7 +279,7 @@ export function VideoCard({
         )}
       </div>
       <div className="p-3">
-          <h3 className="m-0 line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble transition-colors group-hover:text-f1red">
+          <h3 className="m-0 line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble">
           {title}
         </h3>
       </div>
@@ -362,7 +346,7 @@ export function StandingsTable({
             )}
           </span>
           <span className="flex min-w-0 flex-1 flex-col">
-            <span className="truncate font-display text-sm font-semibold leading-tight text-pebble group-hover:text-f1red">
+            <span className="truncate font-display text-sm font-semibold leading-tight text-pebble">
               {r.name}
             </span>
             <span className="flex items-center gap-2 truncate text-[11px] tracking-[0.04em] text-pebble-80">

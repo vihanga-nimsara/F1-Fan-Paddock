@@ -154,52 +154,58 @@ async function pushToVercel(token, env) {
     Authorization: `Bearer ${VERCEL_TOKEN}`,
     "Content-Type": "application/json",
   };
+  const targets = ["production", "preview", "development"];
 
-  // Find any existing env var so we can update instead of duplicate.
+  // List existing env vars once so we update instead of duplicating.
   const listRes = await fetch(
     `https://api.vercel.com/v9/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}/env`,
     { headers },
   );
   const listJson = await listRes.json().catch(() => ({}));
-  const existing = (listJson.envs ?? []).find(
-    (e) => e.key === "FB_PAGE_ACCESS_TOKEN",
-  );
+  const existing = listJson.envs ?? [];
 
-  try {
-    if (existing?.id) {
-      const res = await fetch(
-        `https://api.vercel.com/v9/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}/env/${existing.id}`,
-        {
-          method: "PATCH",
-          headers,
-          body: JSON.stringify({
-            value: token,
-            target: ["production", "preview", "development"],
-          }),
-        },
+  const values = {
+    FB_PAGE_ACCESS_TOKEN: token,
+    FB_PAGE_ID: env.FB_PAGE_ID,
+    FB_PAGE_NAME: env.FB_PAGE_NAME || "Facebook",
+  };
+
+  for (const [key, value] of Object.entries(values)) {
+    if (!value) continue;
+    const found = existing.find((e) => e.key === key);
+    try {
+      if (found?.id) {
+        const res = await fetch(
+          `https://api.vercel.com/v9/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}/env/${found.id}`,
+          {
+            method: "PATCH",
+            headers,
+            body: JSON.stringify({ value, target: targets }),
+          },
+        );
+        if (!res.ok) throw new Error(`PATCH ${res.status}`);
+        console.log(`   * updated ${key} on Vercel`);
+      } else {
+        const res = await fetch(
+          `https://api.vercel.com/v10/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}/env`,
+          {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+              key,
+              value,
+              type: "encrypted",
+              target: targets,
+            }),
+          },
+        );
+        if (!res.ok) throw new Error(`POST ${res.status}`);
+        console.log(`   * created ${key} on Vercel`);
+      }
+    } catch (e) {
+      console.warn(
+        `   (${key} push skipped — ${e.message}. Value is still updated locally.)`,
       );
-      if (!res.ok) throw new Error(`PATCH ${res.status}`);
-      console.log("   * updated FB_PAGE_ACCESS_TOKEN on Vercel");
-    } else {
-      const res = await fetch(
-        `https://api.vercel.com/v10/projects/${encodeURIComponent(VERCEL_PROJECT_ID)}/env`,
-        {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            key: "FB_PAGE_ACCESS_TOKEN",
-            value: token,
-            type: "encrypted",
-            target: ["production", "preview", "development"],
-          }),
-        },
-      );
-      if (!res.ok) throw new Error(`POST ${res.status}`);
-      console.log("   * created FB_PAGE_ACCESS_TOKEN on Vercel");
     }
-  } catch (e) {
-    console.warn(
-      `   (Vercel push skipped — ${e.message}. Token is still refreshed locally.)`,
-    );
   }
 }

@@ -76,7 +76,8 @@ export const OWN_POSTS: OwnPost[] = [
       "මේ සතිඅන්තයේ අවුරුදු හතළිහකට පස්සේ එයා ඉපදුනු නගරයේ F1 රේස් එකක් තියෙනවා. පොඩි කාලේ Fernando Alonso දිනනවා බලන් හිටපු ඒ කොලුවා, අද තමන්ගේම නගරයේ F1 රේස් එකක් පදින්න ලෑස්තියි. එයා එතැනට එන්න ඕන කරන හැම සුදුසුකමක්ම තමන්ගේ දක්ෂකමෙන්ම හදාගත්තු කෙනෙක්.",
       "දිගටම අපිත් එක්ක ඉන්න formula 1 වල නොදුටු දුටු අහපු නැති අහපු කතා සින්හලෙන් විස්තරාත්මකව දැනගන්න. - F1 Paddock SL",
     ],
-    image: PLACEHOLDER(15),
+    image:
+      "https://cdn.racingnews365.com/2026/Sainz/Sainz-Suzuka_2026-03-30-065941_yake.jpg?v=1774853982&width=1092&height=683&quality=85&crop=5185%2C3243%2C0%2C109",
     author: {
       name: "F1 Paddock SL",
       role: "Road to Formula 1 Series",

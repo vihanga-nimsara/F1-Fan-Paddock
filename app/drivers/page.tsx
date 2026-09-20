@@ -3,6 +3,7 @@ import {
   getDriverStandings,
   getDriverHeadshots,
   TEAM_COLORS,
+  isoFlagImage,
 } from "@/lib/f1";
 import { Container, MediaFallback } from "@/components/f1kit";
 import { Badge } from "@/components/ui/badge";
@@ -85,7 +86,15 @@ export default async function DriversPage() {
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                     <span className="h-2 w-2 shrink-0 rounded-xl" style={{ background: color }} />
-                    {profile.flag} {d.team.replace(/_/g, " ")}
+                    {isoFlagImage(profile.iso2) && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={isoFlagImage(profile.iso2)!}
+                        alt={profile.nationality}
+                        className="h-3 w-4 shrink-0 rounded-[2px] object-cover"
+                      />
+                    )}
+                    {d.team.replace(/_/g, " ")}
                   </span>
                   <span className="font-heading text-base font-bold text-f1red">
                     {d.points}

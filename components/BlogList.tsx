@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { LayoutGrid, List } from "lucide-react";
+import { Flag, LayoutGrid, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NewsCard } from "@/components/f1kit";
 import { BlogPost, timeAgo } from "@/lib/blog";
@@ -44,7 +44,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
       {posts.length === 0 ? (
         <div className="flex w-full flex-col items-center gap-2 rounded-2xl border border-dashed p-10 text-center">
-          <span className="text-3xl">🏁</span>
+          <Flag className="h-10 w-10 text-muted-foreground" aria-hidden="true" />
           <p className="m-0 text-sm text-muted-foreground">
             Stories unavailable right now. Try again shortly.
           </p>
@@ -77,7 +77,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 href={p.link}
                 target={p.link.startsWith("http") ? "_blank" : undefined}
                 rel={p.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-3 transition-colors duration-200"
               >
                 <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
                   {p.image ? (
@@ -86,7 +86,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                       src={p.image}
                       alt=""
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center font-heading text-lg font-bold text-muted-foreground">
@@ -95,7 +95,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                   )}
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <span className="line-clamp-2 font-heading text-[15px] font-bold leading-snug tracking-tight group-hover:text-f1red">
+                  <span className="line-clamp-2 font-heading text-[15px] font-bold leading-snug tracking-tight">
                     {p.title}
                   </span>
                   <span className="flex items-center gap-2 text-[12px] text-muted-foreground">

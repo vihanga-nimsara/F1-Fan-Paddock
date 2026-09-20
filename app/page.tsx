@@ -26,18 +26,13 @@ import PostCard from "@/components/PostCard";
 import NewsletterForm from "@/components/NewsletterForm";
 import StandingsTicker from "@/components/StandingsTicker";
 import RaceCountdown from "@/components/RaceCountdown";
-import {
-  Marquee,
-  MarqueeContent,
-  MarqueeItem,
-} from "@/components/kibo-ui/marquee";
 import MustWatchVideos from "@/components/MustWatchVideos";
 import FeaturedStorySlider from "@/components/FeaturedStorySlider";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
 import { getOwnPosts } from "@/lib/own-posts";
 import { getPlaylistVideos, getChannelVideos } from "@/lib/youtube";
 import { getFacebookPageStats } from "@/lib/facebook";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Flag } from "lucide-react";
 
 const YT_PLAYLIST = "PLo5BbNWSTIgjjZUH3GlSU5Qo029JfgUTh";
 const YT_CHANNEL = "UCtbLA0YM6EpwUQhFUyPQU9Q";
@@ -192,33 +187,27 @@ export default async function Home() {
           {/* Latest posts */}
           <section>
             <SectionHeader title="Latest from the Paddock" href="/stories" linkLabel="All posts" />
-            <Marquee className="py-4">
-              <MarqueeContent speed={35} autoFill pauseOnHover>
-                {latestPosts.map((p) => (
-                  <MarqueeItem
-                    key={p.id ?? p.href}
-                    className="mx-2 w-[300px] sm:w-[340px]"
-                  >
-                    <PostCard
-                      href={p.href}
-                      image={p.image}
-                      tag={p.tag}
-                      title={p.title}
-                      excerpt={p.excerpt}
-                      meta={
-                        <>
-                          <span className="font-medium text-foreground/80">
-                            {p.author}
-                          </span>
-                          <span aria-hidden="true">·</span>
-                          <span>{timeAgo(p.pubDate)}</span>
-                        </>
-                      }
-                    />
-                  </MarqueeItem>
-                ))}
-              </MarqueeContent>
-            </Marquee>
+            <div className="grid gap-6 py-4 sm:grid-cols-2 xl:grid-cols-3">
+              {latestPosts.slice(0, 6).map((p) => (
+                <PostCard
+                  key={p.id ?? p.href}
+                  href={p.href}
+                  image={p.image}
+                  tag={p.tag}
+                  title={p.title}
+                  excerpt={p.excerpt}
+                  meta={
+                    <>
+                      <span className="font-medium text-foreground/80">
+                        {p.author}
+                      </span>
+                      <span aria-hidden="true">·</span>
+                      <span>{timeAgo(p.pubDate)}</span>
+                    </>
+                  }
+                />
+              ))}
+            </div>
           </section>
 
           {/* Must watch */}
@@ -261,7 +250,11 @@ export default async function Home() {
                     className="h-full w-full object-contain"
                   />
                 ) : (
-                  <span className="text-3xl">{next.flag}</span>
+                  <Flag
+                    className="h-10 w-10 text-muted-foreground"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  />
                 )}
                 {(() => {
                   const flag = flagImage(next.country);
@@ -464,7 +457,7 @@ export default async function Home() {
       </section>
 
       {/* ------------------------------ Upcoming races ------------------------------ */}
-      <Container className="flex flex-col gap-5 pb-8">
+      <Container className="flex flex-col gap-5 pt-8 pb-8">
         <SectionHeader title="Upcoming Races" href="/calendar" linkLabel="Full schedule" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {nextRaces.map((r: Race) => {
@@ -483,7 +476,24 @@ export default async function Home() {
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
                     Round {r.round}
                   </span>
-                  <span className="text-xl leading-none">{r.flag}</span>
+                  <span className="flex items-center text-lg leading-none">
+                    {(() => {
+                      const f = flagImage(r.country);
+                      return f ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={f}
+                          alt={r.country}
+                          className="h-4 w-6 rounded-[2px] object-cover"
+                        />
+                      ) : (
+                        <Flag
+                          className="h-4 w-5 text-muted-foreground"
+                          aria-hidden="true"
+                        />
+                      );
+                    })()}
+                  </span>
                 </div>
                 <h3 className="m-0 font-heading text-[15px] font-bold leading-snug tracking-tight group-hover:text-f1red">
                   {r.raceName}

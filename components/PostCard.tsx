@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import { MediaFallback } from "@/components/f1kit";
+import { SourceBadge } from "@/components/source-badge";
 import { cn } from "@/lib/utils";
 
 export default function PostCard({
@@ -26,7 +26,7 @@ export default function PostCard({
     <Link
       href={href}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground ring-1 ring-foreground/10 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5 hover:ring-foreground/20",
+        "group flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground ring-1 ring-foreground/10 transition-colors duration-200 hover:ring-foreground/20",
         className,
       )}
     >
@@ -37,19 +37,15 @@ export default function PostCard({
             src={image}
             alt=""
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            className="h-full w-full object-cover"
           />
         ) : (
           <MediaFallback label={tag?.[0]} sublabel={tag} />
         )}
-        {tag && (
-          <Badge className="absolute left-3 top-3 bg-f1red text-white hover:bg-f1red-dark">
-            {tag}
-          </Badge>
-        )}
+        {tag && <SourceBadge tag={tag} className="absolute left-3 top-3 z-10" />}
       </div>
       <div className="flex flex-1 flex-col gap-2 p-4">
-        <h3 className="m-0 line-clamp-2 font-heading text-[17px] font-bold leading-snug tracking-tight group-hover:text-f1red">
+        <h3 className="m-0 line-clamp-2 font-heading text-[17px] font-bold leading-snug tracking-tight">
           {title}
         </h3>
         {excerpt && (

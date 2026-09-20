@@ -1,5 +1,11 @@
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
-import { getSeasonRaceReviews, TEAM_COLORS, type RaceReview } from "@/lib/f1";
+import {
+  getSeasonRaceReviews,
+  TEAM_COLORS,
+  flagImage,
+  type RaceReview,
+} from "@/lib/f1";
+import { Flag } from "lucide-react";
 
 export const metadata = {
   title: "Race Spotlight — F1 Paddock SL",
@@ -47,7 +53,7 @@ export default async function ReviewsPage() {
 
           {reviews.length === 0 ? (
             <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
-              <span className="text-3xl">🏁</span>
+              <Flag className="h-10 w-10 text-pebble-80" aria-hidden="true" />
               <p className="m-0 font-body text-sm text-pebble-80">
                 No completed races yet this season. Check back after race day.
               </p>
@@ -71,8 +77,19 @@ export default async function ReviewsPage() {
                           R{race.round}
                         </span>
                         <div className="flex flex-col gap-1">
-                          <span className="font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80">
-                            {race.flag} · {race.date}
+                          <span className="flex items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80">
+                            {(() => {
+                              const f = flagImage(race.country);
+                              return f ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={f}
+                                  alt={race.country}
+                                  className="h-3.5 w-5 rounded-[2px] object-cover"
+                                />
+                              ) : null;
+                            })()}
+                            {race.date}
                           </span>
                           <h3 className="m-0 font-display text-[17px] font-semibold leading-[1.05] tracking-[0.01em] text-pebble">
                             {race.raceName}

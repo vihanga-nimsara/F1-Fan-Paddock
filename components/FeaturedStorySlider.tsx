@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Container, Avatar, MediaFallback } from "@/components/f1kit";
 import { Badge } from "@/components/ui/badge";
-import { NeonGradientCard } from "@/components/ui/neon-gradient-card";
 import { timeAgo } from "@/lib/blog";
 import { cn } from "@/lib/utils";
 
@@ -64,7 +63,7 @@ export default function FeaturedStorySlider({
                   type="button"
                   onClick={() => go(-1)}
                   aria-label="Previous featured story"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-colors hover:border-f1red hover:text-f1red"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" aria-hidden="true" />
                 </button>
@@ -72,7 +71,7 @@ export default function FeaturedStorySlider({
                   type="button"
                   onClick={() => go(1)}
                   aria-label="Next featured story"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-colors hover:border-f1red hover:text-f1red"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground"
                 >
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </button>
@@ -86,29 +85,21 @@ export default function FeaturedStorySlider({
           href={`/stories/${f.id}`}
           className="group grid animate-in fade-in-0 duration-500 items-center gap-8 md:grid-cols-2 md:gap-12"
         >
-          <NeonGradientCard
-            borderSize={2}
-            borderRadius={16}
-            className="h-fit w-full"
-            contentClassName="p-0 bg-transparent dark:bg-transparent min-h-0"
-            neonColors={{ firstColor: "#e10600", secondColor: "#ff2f00" }}
-          >
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[14px] bg-muted ring-1 ring-foreground/10">
-              {f.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={f.image}
-                  alt={f.title}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              ) : (
-                <MediaFallback label="The Paddock" />
-              )}
-              <Badge className="absolute left-4 top-4 gap-1 bg-f1red py-1 text-white hover:bg-f1red-dark">
-                Featured story
-              </Badge>
-            </div>
-          </NeonGradientCard>
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
+            {f.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={f.image}
+                alt={f.title}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <MediaFallback label="The Paddock" />
+            )}
+            <Badge className="absolute left-4 top-4 gap-1 bg-f1red py-1 text-white hover:bg-f1red-dark">
+              Featured story
+            </Badge>
+          </div>
 
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3 text-[12px] font-medium text-muted-foreground">
@@ -118,7 +109,7 @@ export default function FeaturedStorySlider({
               <span aria-hidden="true">·</span>
               <span>{timeAgo(f.pubDate)}</span>
             </div>
-            <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight group-hover:text-f1red">
+            <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight">
               {f.title}
             </h1>
             <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">

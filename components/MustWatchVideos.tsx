@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import YouTubePlayer from "@/components/YouTubePlayer";
+import { SourceBadge } from "@/components/source-badge";
 
 type VideoItem = { id: string; title: string };
 
@@ -46,7 +47,7 @@ export default function MustWatchVideos({ groups }: { groups: VideoGroup[] }) {
                   href={g.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:text-f1red"
+                  className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:text-foreground"
                 >
                   View channel
                 </Link>
@@ -66,21 +67,19 @@ export default function MustWatchVideos({ groups }: { groups: VideoGroup[] }) {
                       src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`}
                       alt=""
                       loading="lazy"
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover"
                     />
                     <span className="absolute inset-0 flex items-center justify-center">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-transform duration-200 group-hover:scale-110">
+                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-colors duration-200 group-hover:bg-f1red">
                         <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                       </span>
                     </span>
-                    <span className="absolute left-3 top-3 rounded-xl bg-f1red px-2 py-1 font-display text-[10px] font-semibold tracking-[0.1em] text-white">
-                      Watch
-                    </span>
+                    <SourceBadge tag="Watch" className="absolute left-3 top-3 z-10" />
                   </div>
                   <div className="p-3">
-                    <h4 className="m-0 line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble transition-colors group-hover:text-f1red">
+                    <h4 className="m-0 line-clamp-2 font-display text-[13px] font-semibold leading-[1.2] text-pebble">
                       {v.title}
                     </h4>
                   </div>
@@ -107,7 +106,7 @@ export default function MustWatchVideos({ groups }: { groups: VideoGroup[] }) {
             <button
               type="button"
               onClick={() => setActive(null)}
-              className="absolute -top-11 right-0 flex items-center gap-1.5 rounded-xl bg-carbon-deep/90 px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.1em] text-pebble transition-colors hover:text-f1red"
+              className="absolute -top-11 right-0 flex items-center gap-1.5 rounded-xl bg-carbon-deep/90 px-3 py-1.5 font-display text-[11px] font-semibold tracking-[0.1em] text-pebble transition-opacity hover:opacity-80"
             >
               <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M6 6l12 12M18 6L6 18" />

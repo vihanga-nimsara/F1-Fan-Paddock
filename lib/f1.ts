@@ -152,6 +152,64 @@ export function flagImage(country: string, size = 80): string | null {
   return `https://flagcdn.com/w${size}/${iso}.png`;
 }
 
+export function isoFlagImage(iso: string | undefined, size = 80): string | null {
+  if (!iso) return null;
+  return `https://flagcdn.com/w${size}/${iso}.png`;
+}
+
+// Country of licence per team, used to render real flag images instead of
+// emoji flags (which don't render on Windows).
+const TEAM_ISO: Record<string, string> = {
+  mercedes: "de",
+  ferrari: "it",
+  red_bull: "at",
+  mclaren: "gb",
+  aston_martin: "gb",
+  alpine: "fr",
+  williams: "gb",
+  rb: "it",
+  haas: "us",
+  sauber: "ch",
+  audi: "de",
+  cadillac: "us",
+};
+
+export function teamFlagImage(team: string, size = 80): string | null {
+  const iso = TEAM_ISO[team];
+  if (!iso) return null;
+  return `https://flagcdn.com/w${size}/${iso}.png`;
+}
+
+// Nationality (adjective form) -> ISO 3166-1 alpha-2, used by driver pages.
+const NATIONALITY_ISO: Record<string, string> = {
+  Italian: "it",
+  British: "gb",
+  Monegasque: "mc",
+  Monégasque: "mc",
+  Dutch: "nl",
+  Australian: "au",
+  French: "fr",
+  "New Zealander": "nz",
+  Argentine: "ar",
+  Brazilian: "br",
+  German: "de",
+  Spanish: "es",
+  Thai: "th",
+  Japanese: "jp",
+  Canadian: "ca",
+  Finnish: "fi",
+  Mexican: "mx",
+};
+
+export function nationalityFlagImage(
+  nationality: string,
+  size = 80,
+): string | null {
+  const iso = NATIONALITY_ISO[nationality];
+  if (!iso) return null;
+  return `https://flagcdn.com/w${size}/${iso}.png`;
+}
+
 // Free, openly-licensed F1 circuit track-map SVGs (julesr0y/f1-circuits-svg).
 // Keyed by Jolpica/Ergast circuitId -> repo slug (repo uses "<slug>-N.svg").
 const CIRCUIT_SLUGS: Record<string, string> = {
