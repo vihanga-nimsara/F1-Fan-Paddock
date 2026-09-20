@@ -48,7 +48,7 @@ export default function NewsAlert() {
   const item = posts[index];
 
   return (
-    <div className="fixed bottom-4 right-4 z-[60] flex w-[min(94vw,380px)] overflow-hidden rounded-sm border border-pebble-15 bg-carbon-deep shadow-2xl">
+    <div className="fixed top-[76px] right-4 z-[70] flex w-[min(94vw,380px)] overflow-hidden rounded-sm border border-pebble-15 bg-carbon-deep shadow-2xl">
       {item.image ? (
         <div className="relative h-auto w-24 shrink-0 overflow-hidden bg-pebble-10 sm:w-28">
           {/* eslint-disable-next-line @next/next/no-img-element */}

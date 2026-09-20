@@ -28,6 +28,7 @@ import StandingsTicker from "@/components/StandingsTicker";
 import RaceCountdown from "@/components/RaceCountdown";
 import MustWatchVideos from "@/components/MustWatchVideos";
 import FeaturedStorySlider from "@/components/FeaturedStorySlider";
+import FbChatWidget from "@/components/FbChatWidget";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
 import { getOwnPosts } from "@/lib/own-posts";
 import { getPlaylistVideos, getChannelVideos } from "@/lib/youtube";
@@ -587,6 +588,7 @@ export default async function Home() {
           </div>
         </div>
       </Container>
+      <FbChatWidget />
     </main>
   );
 }

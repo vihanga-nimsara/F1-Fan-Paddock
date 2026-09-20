@@ -42,6 +42,26 @@ export type FetchedPost = {
   images?: string[];
 };
 
+export type FbComment = {
+  id: string;
+  name?: string;
+  avatar?: string;
+  message?: string;
+  created_time?: string;
+  replies: FbComment[];
+};
+
+export type FbChatThread = {
+  postId: string;
+  postMessage: string;
+  postTime: string;
+  link?: string;
+  postImage?: string;
+  author: string;
+  pageAvatar?: string;
+  comments: FbComment[];
+};
+
 export type FacebookPageStats = {
   id?: string;
   name?: string;
@@ -179,6 +199,125 @@ export async function getFacebookPosts(limit = 10): Promise<FetchedPost[]> {
     return json.data
       .filter((p) => p.message || p.attachments?.data?.length)
       .map((p) => toBlogPost(p, pageName));
+  } catch {
+    return [];
+  }
+}
+
+type GraphComment = {
+  id?: string;
+  from?: {
+    name?: string;
+    picture?: { data?: { url?: string; is_silhouette?: boolean } };
+  };
+  message?: string;
+  created_time?: string;
+  comments?: { data?: GraphComment[] };
+};
+
+type GraphPost = FacebookPost & {
+    comments?: { data?: GraphComment[] };
+    attachments?: { data?: { media?: { image?: { src?: string } } }[] };
+  };
+
+function mapComment(c: GraphComment): FbComment {
+  const avatarUrl = c.from?.picture?.data?.url;
+  return {
+    id: c.id ?? "",
+    name: c.from?.name,
+    avatar:
+      avatarUrl && !c.from?.picture?.data?.is_silhouette
+        ? `/api/fbimg?u=${encodeURIComponent(avatarUrl)}`
+        : undefined,
+    message: c.message,
+    created_time: c.created_time,
+    replies: (c.comments?.data ?? []).map(mapComment),
+  };
+}
+
+// Fetches the latest Page posts together with their comment threads so the
+// homepage can render a Messenger-style "live chat" widget. Requires the same
+// FB_PAGE_ID / FB_PAGE_ACCESS_TOKEN as the posts feed.
+export async function getFacebookChat(limit = 40): Promise<FbChatThread[]> {
+  const pageId = process.env.FB_PAGE_ID;
+  const token = process.env.FB_PAGE_ACCESS_TOKEN;
+  if (!pageId || !token) return [];
+
+  const commentFields = [
+    "id",
+    "from{name,picture.width(64).height(64)}",
+    "message",
+    "created_time",
+    "comments.summary(true).limit(3){id,from{name,picture.width(64).height(64)},message,created_time}",
+  ].join(",");
+  const fields = [
+    "id",
+    "message",
+    "created_time",
+    "permalink_url",
+    "full_picture",
+    "attachments{media{image}}",
+    `comments.summary(true).limit(6){${commentFields}}`,
+  ].join(",");
+
+  try {
+    const posts = await Promise.all([
+      fetch(
+        `https://graph.facebook.com/${API_VERSION}/${encodeURIComponent(pageId)}/posts` +
+          `?fields=${encodeURIComponent(fields)}&limit=${limit}` +
+          `&access_token=${encodeURIComponent(token)}`,
+        {
+          headers: { "User-Agent": "paddock-bulletin/1.0" },
+          cache: "no-store",
+        },
+      ).then((r) => r.json() as Promise<{ data?: GraphPost[]; error?: any }>),
+      fetch(
+        `https://graph.facebook.com/${API_VERSION}/${encodeURIComponent(pageId)}` +
+          `?fields=picture.width(120).height(120),name` +
+          `&access_token=${encodeURIComponent(token)}`,
+        {
+          headers: { "User-Agent": "paddock-bulletin/1.0" },
+          cache: "no-store",
+        },
+      ).then((r) =>
+        r.json() as Promise<{ name?: string; picture?: { data?: { url?: string } } }>,
+      ),
+    ]);
+
+    const data = posts[0].data;
+    const pageMeta = posts[1];
+    if (!data) return [];
+
+    const pageName = pageMeta?.name ?? process.env.FB_PAGE_NAME ?? "Facebook";
+    const pageAvatar = pageMeta?.picture?.data?.url
+      ? `/api/fbimg?u=${encodeURIComponent(pageMeta.picture.data.url)}`
+      : undefined;
+
+    return data
+      .filter(
+        (p) =>
+          p.message ||
+          p.full_picture ||
+          p.attachments?.data?.[0]?.media?.image?.src,
+      )
+      .map((p) => {
+        const mediaImage = p.attachments?.data?.[0]?.media?.image?.src;
+        const picture = p.full_picture || mediaImage;
+        return {
+          postId: p.id ?? "",
+          postMessage:
+            p.message?.trim() ??
+            (picture ? "\u{1F4F7} Photo post" : ""),
+          postTime: p.created_time,
+          link: p.permalink_url,
+          postImage: picture
+            ? `/api/fbimg?u=${encodeURIComponent(picture)}`
+            : undefined,
+          author: pageName,
+          pageAvatar,
+          comments: (p.comments?.data ?? []).map(mapComment),
+        };
+      });
   } catch {
     return [];
   }

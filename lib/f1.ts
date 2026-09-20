@@ -470,13 +470,15 @@ export async function getDriverHeadshots(
     // OpenF1 unavailable — fall through to the curated fallback below.
   }
 
-  // Fill in any roster drivers still missing a headshot using the curated,
-  // token-free Wikimedia fallback map.
+  // Fill in any roster drivers still missing (or holding a broken/placeholder)
+  // headshot using the curated, token-free Wikimedia fallback map.
   if (roster?.length) {
     for (const d of roster) {
       if (!d.code && !d.number) continue;
       const k = d.code?.toUpperCase() ?? String(d.number);
-      if (map[String(d.number)] || map[k]) continue;
+      const existing = map[String(d.number)] ?? map[k];
+      const isPlaceholder = existing?.includes("d_driver_fallback_image") === true;
+      if (existing && !isPlaceholder) continue;
       const url = DRIVER_HEADSHOTS[d.code?.toUpperCase() ?? ""];
       if (url) {
         if (d.number) map[String(d.number)] = url;
