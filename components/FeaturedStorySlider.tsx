@@ -41,7 +41,6 @@ export default function FeaturedStorySlider({
 
   if (count === 0) return null;
 
-  const f = posts[index % count];
   const go = (dir: number) => setIndex((i) => (i + dir + count) % count);
 
   return (
@@ -80,61 +79,75 @@ export default function FeaturedStorySlider({
           )}
         </div>
 
-        <Link
-          key={f.id}
-          href={`/stories/${f.id}`}
-          className="group grid animate-in fade-in-0 duration-500 items-center gap-8 md:grid-cols-2 md:gap-12"
-        >
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
-            {f.image ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={f.image}
-                alt={f.title}
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <MediaFallback label="The Paddock" />
-            )}
-            <Badge className="absolute left-4 top-4 gap-1 bg-f1red py-1 text-white hover:bg-f1red-dark">
-              Featured story
-            </Badge>
-          </div>
+        <div className="grid grid-cols-1 [&>*]:col-start-1 [&>*]:row-start-1">
+          {posts.map((p, i) => {
+            const isActive = i === index;
+            return (
+              <Link
+                key={p.id}
+                href={`/stories/${p.id}`}
+                aria-hidden={!isActive}
+                tabIndex={isActive ? 0 : -1}
+                className={cn(
+                  "group grid items-center gap-8 transition-opacity duration-500 md:grid-cols-2 md:gap-12",
+                  isActive
+                    ? "opacity-100"
+                    : "pointer-events-none opacity-0",
+                )}
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
+                  {p.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <MediaFallback label="The Paddock" />
+                  )}
+                  <Badge className="absolute left-4 top-4 gap-1 bg-f1red py-1 text-white hover:bg-f1red-dark">
+                    Featured story
+                  </Badge>
+                </div>
 
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3 text-[12px] font-medium text-muted-foreground">
-              <span className="font-semibold uppercase tracking-[0.16em] text-f1red">
-                The Paddock
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>{timeAgo(f.pubDate)}</span>
-            </div>
-            <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight">
-              {f.title}
-            </h1>
-            <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
-              {f.excerpt}
-            </p>
-            <div className="flex items-center gap-3">
-              <Avatar name={f.author.name} className="h-9 w-9 text-sm" />
-              <div className="flex flex-col leading-tight">
-                <span className="text-sm font-semibold">{f.author.name}</span>
-                <span className="text-[12px] text-muted-foreground">
-                  {f.readTime} · {f.content.length} sections
-                </span>
-              </div>
-            </div>
-            <span className="mt-1 inline-flex w-fit items-center">
-              <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-f1red px-4 py-2.5 text-sm font-medium text-white transition-colors group-hover:bg-f1red-dark">
-                Read the story
-                <ArrowRight
-                  className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
-                  aria-hidden="true"
-                />
-              </span>
-            </span>
-          </div>
-        </Link>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-3 text-[12px] font-medium text-muted-foreground">
+                    <span className="font-semibold uppercase tracking-[0.16em] text-f1red">
+                      The Paddock
+                    </span>
+                    <span aria-hidden="true">·</span>
+                    <span>{timeAgo(p.pubDate)}</span>
+                  </div>
+                  <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight">
+                    {p.title}
+                  </h1>
+                  <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
+                    {p.excerpt}
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <Avatar name={p.author.name} className="h-9 w-9 text-sm" />
+                    <div className="flex flex-col leading-tight">
+                      <span className="text-sm font-semibold">{p.author.name}</span>
+                      <span className="text-[12px] text-muted-foreground">
+                        {p.readTime} · {p.content.length} sections
+                      </span>
+                    </div>
+                  </div>
+                  <span className="mt-1 inline-flex w-fit items-center">
+                    <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-f1red px-4 py-2.5 text-sm font-medium text-white transition-colors group-hover:bg-f1red-dark">
+                      Read the story
+                      <ArrowRight
+                        className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
 
         {count > 1 && (
           <div className="mt-8 flex justify-center gap-2">

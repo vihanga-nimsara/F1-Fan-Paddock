@@ -1,20 +1,24 @@
 "use client";
 
-import { useState, useEffect, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, ChevronDown, Newspaper, PlayCircle, Home, CalendarDays, Trophy, Users, Radio, Star, Layers, Info, HelpCircle, UserRound } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetClose,
-} from "@/components/ui/sheet";
+  ChevronDown,
+  Newspaper,
+  PlayCircle,
+  Home,
+  CalendarDays,
+  Trophy,
+  Users,
+  Radio,
+  Star,
+  Layers,
+  Info,
+  HelpCircle,
+  UserRound,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,6 +28,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  MobileNavHeader,
+  MobileNavMenu,
+  MobileNavToggle,
+} from "@/components/ui/resizable-navbar";
 import { F1Logo } from "@/components/f1kit";
 import ThemeToggle from "@/components/ThemeToggle";
 import SubscribeDialog from "@/components/SubscribeDialog";
@@ -69,14 +82,7 @@ const MOBILE_NAV: { label: string; items: Entry[] }[] = [
 export default function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [subscribeOpen, setSubscribeOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -88,169 +94,135 @@ export default function AppShell({ children }: { children: ReactNode }) {
         pathname === "/" ? "lg:pt-0" : "lg:pt-20",
       )}
     >
-      <header className="fixed top-0 z-50 w-full lg:h-0">
-        {/* Desktop floating nav */}
-        <div className="hidden lg:absolute lg:inset-x-0 lg:top-0 lg:block">
-          <div className={`mx-auto mt-3 w-full px-6 transition-[max-width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${scrolled ? "max-w-[1100px]" : "max-w-[1400px]"}`}>
-            <div className="flex h-14 items-center gap-6 overflow-hidden rounded-[3px] border border-border bg-card/85 px-5 shadow-lg shadow-foreground/5 backdrop-blur-md transition-[background-color] duration-300">
-              <Link href="/" className="flex shrink-0 items-center gap-2">
+      <header className="fixed inset-x-0 top-0 z-50 w-full">
+        <Navbar className="fixed inset-x-0 top-0 z-50">
+          {/* Desktop / tablet nav */}
+          <NavBody className="justify-center">
+            <div className="relative z-20 flex items-center gap-4">
+              <Link
+                href="/"
+                className="flex shrink-0 items-center gap-2 rounded-[10px] px-2 py-1.5"
+              >
                 <F1Logo className="h-6 w-auto" />
-                <span className={cn("font-heading text-base font-bold tracking-tight transition-opacity duration-300", scrolled && "hidden")}>
+                <span className="font-heading text-base font-bold tracking-tight">
                   F1 Paddock SL
                 </span>
               </Link>
 
-              <nav className="flex flex-1 items-center justify-center gap-1" aria-label="Main navigation">
-                {PRIMARY_NAV.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "relative rounded-lg px-3 py-1.5 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground",
-                      isActive(item.href)
-                        ? "text-foreground"
-                        : "text-muted-foreground",
-                    )}
+              <NavItems
+                className="relative flex-none"
+                items={PRIMARY_NAV.map(({ label, href }) => ({
+                  name: label,
+                  link: href,
+                  active: isActive(href),
+                }))}
+              />
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="gap-1 text-muted-foreground hover:text-foreground"
                   >
-                    {item.label}
-                    {isActive(item.href) && (
-                      <span className="absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-f1red" />
-                    )}
-                  </Link>
-                ))}
-
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="gap-1 text-muted-foreground hover:text-foreground"
-                    >
-                      More
-                      <ChevronDown className="size-3.5" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-56">
-                    {MORE_NAV.map((group, i) => (
-                      <div key={group.label}>
-                        {i > 0 && <DropdownMenuSeparator />}
-                        <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
-                        <DropdownMenuGroup>
-                          {group.items.map((item) => (
-                            <DropdownMenuItem key={item.href} asChild>
-                              <Link
-                                href={item.href}
-                                className={cn(
-                                  isActive(item.href) && "bg-muted font-medium",
-                                )}
-                              >
-                                <span className="[&_svg]:size-4">{item.icon}</span>
-                                {item.label}
-                              </Link>
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuGroup>
-                      </div>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </nav>
-
-              <div className="flex shrink-0 items-center gap-2">
-                <ThemeToggle />
-                <Separator orientation="vertical" className={cn("h-6 transition-opacity duration-300", scrolled && "hidden")} />
-                <Button
-                  size="sm"
-                  onClick={() => setSubscribeOpen(true)}
-                  className="bg-f1red px-4 text-white hover:bg-f1red-dark"
+                    More
+                    <ChevronDown className="size-3.5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  sideOffset={18}
+                  className="w-56"
                 >
-                  Subscribe
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile / tablet nav */}
-        <div className="border-b border-border bg-card/85 backdrop-blur-md lg:hidden">
-          <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center gap-2 px-4 md:px-6">
-            {/* Mobile menu */}
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="lg:hidden"
-                  aria-label="Open menu"
-                >
-                  <Menu />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left" className="w-[290px]">
-                <SheetHeader className="border-b">
-                  <Link href="/" className="flex items-center gap-2">
-                    <F1Logo className="h-6 w-auto" />
-                    <SheetTitle className="font-heading text-lg font-bold tracking-tight">
-                      F1 Paddock SL
-                    </SheetTitle>
-                  </Link>
-                  <SheetDescription>
-                    F1 fan blogs, news and live data.
-                  </SheetDescription>
-                </SheetHeader>
-                <div className="flex flex-1 flex-col gap-4 overflow-y-auto px-2 py-2">
-                  {MOBILE_NAV.map((section) => (
-                    <div key={section.label} className="flex flex-col">
-                      <span className="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                        {section.label}
-                      </span>
-                      {section.items.map((item) => (
-                        <SheetClose key={item.href} asChild>
-                          <Link
-                            href={item.href}
-                            className={cn(
-                              "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
-                              isActive(item.href)
-                                ? "bg-muted text-foreground"
-                                : "text-muted-foreground",
-                            )}
-                          >
-                            <span className="[&_svg]:size-4">{item.icon}</span>
-                            {item.label}
-                          </Link>
-                        </SheetClose>
-                      ))}
+                  {MORE_NAV.map((group, i) => (
+                    <div key={group.label}>
+                      {i > 0 && <DropdownMenuSeparator />}
+                      <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
+                      <DropdownMenuGroup>
+                        {group.items.map((item) => (
+                          <DropdownMenuItem key={item.href} asChild>
+                            <Link
+                              href={item.href}
+                              className={cn(
+                                isActive(item.href) && "bg-muted font-medium",
+                              )}
+                            >
+                              <span className="[&_svg]:size-4">
+                                {item.icon}
+                              </span>
+                              {item.label}
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
                     </div>
                   ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </NavBody>
+
+          {/* Mobile nav */}
+          <MobileNav>
+            <MobileNavHeader className="px-2">
+              <Link href="/" className="flex items-center gap-2">
+                <F1Logo className="h-6 w-auto" />
+                <span className="font-heading text-base font-bold tracking-tight">
+                  F1 Paddock SL
+                </span>
+              </Link>
+              <div className="flex items-center gap-1">
+                <MobileNavToggle
+                  isOpen={mobileMenuOpen}
+                  onClick={() => setMobileMenuOpen((v) => !v)}
+                />
+              </div>
+            </MobileNavHeader>
+            <MobileNavMenu
+              isOpen={mobileMenuOpen}
+              onClose={() => setMobileMenuOpen(false)}
+            >
+              {MOBILE_NAV.map((section) => (
+                <div key={section.label} className="flex w-full flex-col">
+                  <span className="px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    {section.label}
+                  </span>
+                  {section.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={cn(
+                        "flex items-center gap-3 rounded-[10px] px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
+                        isActive(item.href)
+                          ? "bg-muted text-foreground"
+                          : "text-muted-foreground",
+                      )}
+                    >
+                      <span className="[&_svg]:size-4">{item.icon}</span>
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
-              </SheetContent>
-            </Sheet>
-
-            {/* Brand */}
-            <Link href="/" className="flex shrink-0 items-center gap-2">
-              <F1Logo className="h-6 w-auto" />
-              <span className="hidden font-heading text-base font-bold tracking-tight sm:inline">
-                F1 Paddock SL
-              </span>
-            </Link>
-
-            <div className="ml-auto flex items-center gap-2">
-              <ThemeToggle />
-              <Separator orientation="vertical" className="hidden h-6 sm:block" />
+              ))}
               <Button
                 size="sm"
-                onClick={() => setSubscribeOpen(true)}
-                className="hidden bg-f1red text-white hover:bg-f1red-dark sm:inline-flex"
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setSubscribeOpen(true);
+                }}
+                className="mt-2 w-full bg-f1red text-white hover:bg-f1red-dark"
               >
                 Subscribe
               </Button>
-            </div>
-          </div>
-        </div>
+            </MobileNavMenu>
+          </MobileNav>
+        </Navbar>
       </header>
 
       <main className="flex-1">{children}</main>
 
+      <ThemeToggle className="fixed bottom-6 left-6 z-40" />
       <SubscribeDialog open={subscribeOpen} onOpenChange={setSubscribeOpen} />
     </div>
   );

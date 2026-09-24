@@ -87,7 +87,7 @@ export default function LoadingScreen() {
       <div className="relative z-10 flex flex-col items-center gap-3">
         <span
           className="font-display text-5xl font-semibold tracking-[0.02em] text-white"
-          style={{ fontFamily: "Formula1 Display Bold Bold, var(--font-inter), sans-serif" }}
+          style={{ fontFamily: "Formula1 Display Bold Bold, var(--font-geist), sans-serif" }}
         >
           F1 <span className="text-[#ff1e00]">paddock SL</span>
         </span>

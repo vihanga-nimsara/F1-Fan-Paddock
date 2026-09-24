@@ -431,7 +431,7 @@ export function Hero({
             {primaryCta && (
               <Link
                 href={primaryHref ?? "#"}
-                className="group inline-flex items-center gap-2 rounded-sm bg-white px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-all hover:bg-f1red hover:text-white"
+                className="group inline-flex items-center gap-2 rounded-[10px] bg-white px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-all hover:bg-f1red hover:text-white"
               >
                 {primaryCta}
                 <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
@@ -440,7 +440,7 @@ export function Hero({
             {secondaryCta && (
               <Link
                 href={secondaryHref ?? "#"}
-                className="inline-flex items-center gap-2 rounded-sm border border-white/40 bg-white/10 px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-white backdrop-blur transition-colors hover:border-white hover:bg-white/20"
+                className="inline-flex items-center gap-2 rounded-[10px] border border-white/40 bg-white/10 px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-white backdrop-blur transition-colors hover:border-white hover:bg-white/20"
               >
                 {secondaryCta}
               </Link>

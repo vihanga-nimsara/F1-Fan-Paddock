@@ -12,7 +12,6 @@ import AppShell from "@/components/AppShell";
 import Footer from "@/components/Footer";
 import CookieConsent from "@/components/CookieConsent";
 import Toaster from "@/components/Toaster";
-import NewsAlert from "@/components/NewsAlert";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ThemeProvider } from "@/components/theme-provider";
 import MuiProvider from "@/components/mui/MuiProvider";
@@ -112,7 +111,6 @@ export default function RootLayout({
             </AppShell>
             <CookieConsent />
             <Toaster />
-            <NewsAlert />
             <ScrollReveal />
           </MuiProvider>
         </ThemeProvider>

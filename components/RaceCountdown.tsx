@@ -291,7 +291,7 @@ export default function RaceCountdown({
           href="/calendar"
           className="group inline-flex items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-f1red transition-all hover:gap-2.5"
         >
-          VIEW SCHEDULE
+          View Schedule
           <ArrowRight className="size-3.5" aria-hidden="true" />
         </Link>
       </div>

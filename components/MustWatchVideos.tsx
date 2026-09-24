@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { SourceBadge } from "@/components/source-badge";
 
@@ -37,22 +36,14 @@ export default function MustWatchVideos({ groups }: { groups: VideoGroup[] }) {
       <div className="flex flex-col gap-8">
         {visible.map((g) => (
           <section key={g.label} className="flex flex-col gap-3">
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="m-0 flex items-center gap-2 font-heading text-sm font-bold uppercase tracking-[0.12em] text-foreground/80">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-f1red" />
-                {g.label}
-              </h3>
-              {g.href && (
-                <Link
-                  href={g.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-display text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  View channel
-                </Link>
-              )}
-            </div>
+            {g.label && (
+              <div className="flex items-center justify-between gap-3">
+                <h3 className="m-0 flex items-center gap-2 font-heading text-sm font-bold uppercase tracking-[0.12em] text-foreground/80">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-f1red" />
+                  {g.label}
+                </h3>
+              </div>
+            )}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {g.videos.map((v) => (
                 <button

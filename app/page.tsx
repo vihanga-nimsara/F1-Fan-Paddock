@@ -24,7 +24,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PostCard from "@/components/PostCard";
 import NewsletterForm from "@/components/NewsletterForm";
-import StandingsTicker from "@/components/StandingsTicker";
 import RaceCountdown from "@/components/RaceCountdown";
 import MustWatchVideos from "@/components/MustWatchVideos";
 import FeaturedStorySlider from "@/components/FeaturedStorySlider";
@@ -142,14 +141,6 @@ export default async function Home() {
     href: "/constructors",
   }));
 
-  const tickerItems = drivers.slice(0, 10).map((d: DriverStanding) => ({
-    position: d.position,
-    code: d.code ?? d.familyName.slice(0, 3).toUpperCase(),
-    points: d.points,
-    color: TEAM_COLORS[d.team],
-    avatar: headshots[d.code] ?? headshots[String(d.number)] ?? undefined,
-  }));
-
   const next = nextRaces[0];
   const nextDay = next
     ? new Date(next.dateISO).toLocaleDateString("en-GB", {
@@ -178,9 +169,6 @@ export default async function Home() {
       {/* ------------------------------ Featured stories ------------------------------ */}
       <FeaturedStorySlider posts={ownPosts} />
 
-      {/* ------------------------------ Championship ticker ------------------------------ */}
-      <StandingsTicker items={tickerItems} href="/standings" />
-
       {/* ------------------------------ Main grid ------------------------------ */}
       <Container className="grid gap-10 py-8 md:py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
         {/* Main column */}
@@ -189,7 +177,7 @@ export default async function Home() {
           <section>
             <SectionHeader title="Latest from the Paddock" href="/stories" linkLabel="All posts" />
             <div className="grid gap-6 py-4 sm:grid-cols-2 xl:grid-cols-3">
-              {latestPosts.slice(0, 6).map((p) => (
+              {latestPosts.slice(0, 3).map((p) => (
                 <PostCard
                   key={p.id ?? p.href}
                   href={p.href}
@@ -221,7 +209,7 @@ export default async function Home() {
             <MustWatchVideos
               groups={[
                 {
-                  label: "Formula 1",
+                  label: "",
                   href: `https://www.youtube.com/playlist?list=${YT_PLAYLIST}`,
                   videos: videos.map((v) => ({ id: v.id, title: v.title })),
                 },
