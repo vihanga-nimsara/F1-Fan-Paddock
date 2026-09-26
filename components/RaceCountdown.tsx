@@ -260,7 +260,7 @@ export default function RaceCountdown({
               key={u.key}
               className="flex min-w-[64px] flex-col items-center gap-1 rounded-xl bg-pebble-5 px-3 py-3 md:min-w-[78px] md:px-4 md:py-4"
             >
-              <span className="font-geist text-[clamp(26px,4vw,42px)] leading-none tabular-nums tracking-[-0.02em] text-pebble">
+              <span className="font-f1-display text-[clamp(26px,4vw,42px)] font-bold uppercase leading-none tracking-tight tabular-nums text-pebble">
                 {remaining
                   ? String(remaining[u.key]).padStart(2, "0")
                   : "--"}

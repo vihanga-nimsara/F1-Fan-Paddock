@@ -428,7 +428,7 @@ export default async function Home() {
       )}
 
       {/* ------------------------------ Championship tables ------------------------------ */}
-      <section className="border-y border-border bg-muted/40 py-10">
+      <section className="border-y border-border bg-[#0A0A0A] py-10">
         <Container className="grid items-start gap-8 md:grid-cols-2">
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
             <SectionHeading kicker="2026" title="Drivers' Championship" href="/standings" linkLabel="Full standings" />
