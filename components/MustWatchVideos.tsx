@@ -60,13 +60,6 @@ export default function MustWatchVideos({ groups }: { groups: VideoGroup[] }) {
                       loading="lazy"
                       className="h-full w-full object-cover"
                     />
-                    <span className="absolute inset-0 flex items-center justify-center">
-                      <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-colors duration-200 group-hover:bg-f1red">
-                        <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </span>
-                    </span>
                     <SourceBadge tag="Watch" className="absolute left-3 top-3 z-10" />
                   </div>
                   <div className="p-3">

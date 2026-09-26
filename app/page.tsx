@@ -36,7 +36,6 @@ import { ArrowRight, Flag } from "lucide-react";
 
 const YT_PLAYLIST = "PLo5BbNWSTIgjjZUH3GlSU5Qo029JfgUTh";
 const YT_CHANNEL = "UCtbLA0YM6EpwUQhFUyPQU9Q";
-const YT_CHANNEL_NAME = "Driver61";
 
 export const dynamic = "force-dynamic";
 
@@ -214,7 +213,7 @@ export default async function Home() {
                   videos: videos.map((v) => ({ id: v.id, title: v.title })),
                 },
                 {
-                  label: YT_CHANNEL_NAME,
+                  label: "",
                   href: `https://www.youtube.com/channel/${YT_CHANNEL}`,
                   videos: channelVideos.map((v) => ({
                     id: v.id,

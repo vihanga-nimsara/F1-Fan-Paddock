@@ -9,12 +9,9 @@ export const metadata = {
 const ZAGAN_IMG =
   "https://github.com/vihanga-nimsara.png?size=200";
 
-const FB_AVATAR =
-  "https://z-p3-scontent.fcmb9-1.fna.fbcdn.net/v/t39.30808-6/760620612_1447878237399436_7335193726209077918_n.jpg?stp=dst-jpg_tt6&cstp=mx640x640&ctp=s640x640&_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGt6Buc3gZx9rW-zYHgSKD0fC8vIZ3dLjl8Ly8hnd0uObJ2u27uItGFJGqgmaDQq9WeCRtd5qsIMn_CGuCatf59&_nc_ohc=L4Lp85w9GtYQ7kNvwFZtIyQ&_nc_oc=AdqNjJb_NLYXfhC_UqYA-DX1KCHBeWT2QLI672jPUOkw6zFPUnnL0RrD7wPFlQRpsqE&_nc_zt=23&_nc_ht=z-p3-scontent.fcmb9-1.fna&_nc_gid=oEbf30Xj1BCpr8KNqOvwmg&_nc_ss=7b2a8&oh=00_AQE8WwpouHYBctAV7RvhvelkJ6TkFmIyhhhuag9zaTWcjA&oe=6A913641";
-
-// Facebook CDN image URLs are time-limited — route through our proxy so the
-// avatar keeps loading even after the original URL expires.
-const HANSAKA_IMG = `/api/fbimg?u=${encodeURIComponent(FB_AVATAR)}`;
+// Stored locally rather than hotlinked from Facebook's CDN — those URLs are
+// time-limited and would expire, dropping the avatar back to initials.
+const HANSAKA_IMG = "/images/hansaka-nethmina.jpg";
 
 const TEAM = [
   {

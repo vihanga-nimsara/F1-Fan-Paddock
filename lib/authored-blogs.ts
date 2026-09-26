@@ -28,6 +28,7 @@ function toOwnPost(row: AuthoredBlogRow): OwnPost {
     .split(/\n{2,}/)
     .map((p) => p.trim())
     .filter(Boolean);
+  const authorName = row.author ?? "F1 Paddock SL";
   return {
     id: row.slug || row.id,
     title: row.title,
@@ -37,10 +38,12 @@ function toOwnPost(row: AuthoredBlogRow): OwnPost {
       : [row.content],
     image: row.image ?? undefined,
     author: {
-      name: row.author ?? "F1 Paddock SL",
+      name: authorName,
       role: "Author",
-      bio: `Written by ${(row.author ?? "F1 Paddock SL").split("@")[0]} for F1 Paddock SL.`,
-      avatar: undefined,
+      bio: `Written by ${authorName.split("@")[0]} for F1 Paddock SL.`,
+      // House posts get the F1 Paddock SL logo; named third-party authors
+      // fall back to their initials.
+      avatar: authorName === "F1 Paddock SL" ? "/images/Logo.png" : undefined,
     },
     pubDate: row.created_at,
     readTime: estimateReadTime(row.content),

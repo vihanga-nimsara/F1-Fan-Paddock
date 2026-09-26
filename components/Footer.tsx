@@ -36,6 +36,15 @@ const SOCIAL = [
       </svg>
     ),
   },
+  {
+    label: "TikTok",
+    href: "https://www.tiktok.com/@f1.paddock.sl",
+    icon: (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+        <path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 1 1 .77-5.06v-3.1a5.65 5.65 0 0 0-.77-.05A5.66 5.66 0 1 0 15.54 15.4V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.24-1.48Z" />
+      </svg>
+    ),
+  },
 ];
 
 export default function Footer() {
@@ -43,10 +52,10 @@ export default function Footer() {
 
   return (
     <div
-      className="bg-black px-4 pt-20"
+      className="bg-[#0A0A0A] px-4 pt-20"
       style={{ fontFamily: "var(--font-geist, Geist), sans-serif" }}
     >
-      <footer className="mx-auto w-full max-w-[1350px] overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-[#0A0A0A] px-4 pt-8 text-white sm:px-8 md:px-16 lg:px-28 lg:pt-12">
+      <footer className="mx-auto w-full max-w-[1350px] overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-black px-4 pt-8 text-white sm:px-8 md:px-16 lg:px-28 lg:pt-12">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:gap-12 lg:grid-cols-6">
           {/* Brand */}
           <div className="space-y-6 lg:col-span-3">

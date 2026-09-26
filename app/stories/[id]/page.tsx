@@ -160,8 +160,13 @@ export default async function BlogPostPage({
 
           {/* Author — who wrote the blog */}
           <div className="flex items-center gap-3 border-y border-pebble-15 py-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-f1red font-display text-sm font-semibold text-white">
-              F
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-f1red font-display text-sm font-semibold text-white">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/Logo.png"
+                alt=""
+                className="h-full w-full object-cover"
+              />
             </span>
             <div className="flex flex-col">
               <span className="font-display text-sm font-semibold text-pebble">
