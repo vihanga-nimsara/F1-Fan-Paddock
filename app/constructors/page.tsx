@@ -7,10 +7,9 @@ import {
   teamFlagImage,
 } from "@/lib/f1";
 import { Container, SectionHeading } from "@/components/f1kit";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Constructors — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Constructors", path: "/constructors" });
 
 export const dynamic = "force-dynamic";
 

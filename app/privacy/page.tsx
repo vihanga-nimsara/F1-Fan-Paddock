@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { Container, SectionHeading, Kicker } from "@/components/f1kit";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Privacy Policy — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Privacy Policy", path: "/privacy" });
 
 const SECTIONS = [
   {

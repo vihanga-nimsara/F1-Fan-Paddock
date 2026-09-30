@@ -7,10 +7,9 @@ import { getOwnPosts } from "@/lib/own-posts";
 import { getAuthoredBlogs } from "@/lib/authored-blogs";
 import { timeAgo } from "@/lib/blog";
 import { ArrowRight } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "The Paddock Blog — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "The Paddock Blog", path: "/stories" });
 
 export default async function StoriesPage() {
   const [ownPosts, authoredBlogs] = await Promise.all([
@@ -24,13 +23,13 @@ export default async function StoriesPage() {
 
   return (
     <main className="w-full">
-      <section className="border-b border-border bg-muted/40">
+      <section className="bg-muted/40">
         <Container className="flex flex-col gap-10 py-10 md:py-14">
           <div className="flex flex-col gap-3">
             <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
               The Paddock Blog
             </span>
-            <h1 className="m-0 max-w-[22ch] font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
+            <h1 className="m-0 max-w-[22ch] font-heading-big text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
               Stories from the grid
             </h1>
             <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
@@ -66,7 +65,7 @@ export default async function StoriesPage() {
               <span className="text-[12px] font-medium text-muted-foreground">
                 {featured.author.name} · {timeAgo(featured.pubDate)} · {featured.readTime}
               </span>
-              <h2 className="m-0 font-heading text-[clamp(1.4rem,3vw,2.2rem)] font-bold leading-[1.08] tracking-tight group-hover:text-f1red">
+              <h2 className="m-0 font-heading-big text-[clamp(1.4rem,3vw,2.2rem)] font-bold leading-[1.08] tracking-tight group-hover:text-f1red">
                 {featured.title}
               </h2>
               <p className="m-0 line-clamp-3 text-[14px] leading-relaxed text-muted-foreground">
@@ -85,7 +84,7 @@ export default async function StoriesPage() {
         {rest.length > 0 ? (
           <section className="flex flex-col gap-5">
             <div className="flex items-end justify-between gap-4 border-b border-border pb-3">
-              <h2 className="m-0 font-heading text-2xl font-bold tracking-tight">
+              <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
                 More stories
               </h2>
               <span className="text-[12px] font-medium text-muted-foreground">

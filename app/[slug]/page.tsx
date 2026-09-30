@@ -1,9 +1,16 @@
 import { Container, SectionHeading, MediaFallback } from "@/components/f1kit";
 import { Flag } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "F1 Paddock SL",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const title = slug.charAt(0).toUpperCase() + slug.slice(1);
+  return pageMetadata({ title, path: `/${slug}` });
+}
 
 export default async function PlaceholderPage({
   params,

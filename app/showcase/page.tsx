@@ -1,4 +1,5 @@
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
+import { pageMetadata } from "@/lib/seo";
 import {
   BrickWall,
   CarFront,
@@ -9,9 +10,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export const metadata = {
-  title: "Showcase — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Showcase", path: "/showcase" });
 
 const SHOWCASES: {
   icon: LucideIcon;

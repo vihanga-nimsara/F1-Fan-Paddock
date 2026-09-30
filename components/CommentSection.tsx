@@ -44,7 +44,7 @@ export default function CommentSection({
   }
 
   return (
-    <section className="flex flex-col gap-4 border-t border-pebble-15 pt-6">
+    <section className="flex flex-col gap-4 pt-6">
       <h2 className="m-0 font-headline text-[20px] font-semibold text-pebble">
         Comments ({comments.length})
       </h2>

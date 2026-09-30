@@ -2,10 +2,9 @@ import { Container, SectionHeading } from "@/components/f1kit";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import { getPlaylistVideos } from "@/lib/youtube";
 import { Clapperboard } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Video — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Video", path: "/video" });
 
 const YT_PLAYLIST = "PLo5BbNWSTIgjjZUH3GlSU5Qo029JfgUTh";
 

@@ -6,10 +6,9 @@ import {
   type RaceReview,
 } from "@/lib/f1";
 import { Flag } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Race Spotlight — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Race Spotlight", path: "/reviews" });
 
 export const dynamic = "force-dynamic";
 

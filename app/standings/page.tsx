@@ -14,10 +14,9 @@ import {
   type StandingRow,
 } from "@/components/f1kit";
 import StandingsTabs from "@/components/StandingsTabs";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Standings — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Standings", path: "/standings" });
 
 export const dynamic = "force-dynamic";
 

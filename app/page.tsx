@@ -58,7 +58,7 @@ function SectionHeader({
             {kicker}
           </span>
         )}
-        <h2 className="m-0 font-heading text-2xl font-bold tracking-tight md:text-3xl">
+        <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight md:text-3xl">
           {title}
         </h2>
       </div>
@@ -299,7 +299,7 @@ export default async function Home() {
                     </span>
                     Facebook followers
                   </span>
-                  <span className="font-heading text-3xl font-bold tracking-tight text-foreground">
+                  <span className="font-heading-big text-3xl font-bold tracking-tight text-foreground">
                     {new Intl.NumberFormat("en-US").format(
                       fbStats.followers_count ?? fbStats.fan_count ?? 0,
                     )}
@@ -558,7 +558,7 @@ export default async function Home() {
             className="absolute inset-0 h-full w-full object-cover object-top"
           />
           <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon via-carbon/60 to-carbon/30" />
-          <h2 className="relative z-10 m-0 max-w-[24ch] font-heading text-[clamp(24px,3.5vw,40px)] font-bold leading-[1.05] tracking-tight text-foreground">
+          <h2 className="relative z-10 m-0 max-w-[24ch] font-heading-big text-[clamp(24px,3.5vw,40px)] font-bold leading-[1.05] tracking-tight text-foreground">
             Find your people. Find your next race.
           </h2>
           <p className="relative z-10 m-0 max-w-[60ch] text-[14px] leading-relaxed text-muted-foreground">

@@ -1,9 +1,8 @@
 import LiveDashboard from "@/components/LiveDashboard";
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Live Dashboard — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Live Dashboard", path: "/dashboard" });
 
 export default function DashboardPage() {
   return (

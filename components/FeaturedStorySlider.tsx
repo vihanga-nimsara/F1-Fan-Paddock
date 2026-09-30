@@ -119,7 +119,7 @@ export default function FeaturedStorySlider({
                     <span aria-hidden="true">·</span>
                     <span>{timeAgo(p.pubDate)}</span>
                   </div>
-                  <h1 className="m-0 font-heading text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight">
+                  <h1 className="m-0 font-heading-big text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight">
                     {p.title}
                   </h1>
                   <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">

@@ -7,10 +7,9 @@ import {
   type StandingRow,
 } from "@/components/f1kit";
 import { getDriverStandings, TEAM_COLORS } from "@/lib/f1";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "My Lists — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "My Lists", path: "/lists" });
 
 export const dynamic = "force-dynamic";
 

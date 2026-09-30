@@ -2,10 +2,13 @@ import Link from "next/link";
 import { Container, Kicker } from "@/components/f1kit";
 import F1Button from "@/components/ui/F1Button";
 import { ArrowLeft } from "lucide-react";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Page Not Found — F1 Paddock SL",
-};
+export const metadata = pageMetadata({
+  title: "Page Not Found",
+  path: "/404",
+  noIndex: true,
+});
 
 export default function NotFound() {
   return (

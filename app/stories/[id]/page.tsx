@@ -9,6 +9,7 @@ import { getAuthoredBlogBySlug } from "@/lib/authored-blogs";
 import { getComments } from "@/lib/comments";
 import CommentSection from "@/components/CommentSection";
 import { timeAgo } from "@/lib/blog";
+import { pageMetadata } from "@/lib/seo";
 
 export const dynamic = "force-dynamic";
 
@@ -20,9 +21,16 @@ export async function generateMetadata({
   const { id } = await params;
   const own = getOwnPostById(id) ?? (await getAuthoredBlogBySlug(id));
   const post = own ?? (await getCachedPostById(id));
-  return {
-    title: post ? `${post.title} — F1 Paddock SL` : "Blog Post — F1 Paddock SL",
-  };}
+  return pageMetadata({
+    title: post ? post.title : "Blog Post",
+    path: `/stories/${id}`,
+    description: post
+      ? "excerpt" in post
+        ? post.excerpt
+        : post.description
+      : undefined,
+  });
+}
 
 export default async function BlogPostPage({
   params,
@@ -74,12 +82,8 @@ export default async function BlogPostPage({
             {/* Author — who wrote the vlog */}
             <div className="flex items-center gap-3 border-y border-pebble-15 py-3">
               <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-f1red font-display text-sm font-semibold text-white">
-                {own.author.avatar ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={own.author.avatar} alt="" className="h-full w-full object-cover" />
-                ) : (
-                  own.author.name.charAt(0)
-                )}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/favicon.svg" alt="" className="h-full w-full object-cover" />
               </span>
               <div className="flex flex-col">
                 <span className="font-display text-sm font-semibold text-pebble">
@@ -163,7 +167,7 @@ export default async function BlogPostPage({
             <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-f1red font-display text-sm font-semibold text-white">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/Logo.png"
+                src="/favicon.svg"
                 alt=""
                 className="h-full w-full object-cover"
               />

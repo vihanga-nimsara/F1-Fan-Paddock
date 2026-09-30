@@ -4,10 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import BlogList from "@/components/BlogList";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "F1 News — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "F1 News", path: "/news" });
 
 export const dynamic = "force-dynamic";
 
@@ -17,13 +16,13 @@ export default async function NewsPage() {
 
   return (
     <main className="w-full">
-      <section className="border-b border-border bg-muted/40">
+      <section className="bg-muted/40">
         <Container className="flex flex-col gap-10 py-10 md:py-14">
           <div className="flex flex-col gap-3">
             <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
               F1 News Wire
             </span>
-            <h1 className="m-0 max-w-[22ch] font-heading text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
+            <h1 className="m-0 max-w-[22ch] font-heading-big text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
               Latest from across the web
             </h1>
             <p className="m-0 max-w-[60ch] text-[15px] leading-relaxed text-muted-foreground">
@@ -62,7 +61,7 @@ export default async function NewsPage() {
               </Badge>
             </div>
             <div className="flex flex-col justify-center gap-3 p-6 md:p-10">
-              <h2 className="m-0 font-heading text-[clamp(1.4rem,3vw,2.2rem)] font-bold leading-[1.08] tracking-tight group-hover:text-f1red">
+              <h2 className="m-0 font-heading-big text-[clamp(1.4rem,3vw,2.2rem)] font-bold leading-[1.08] tracking-tight group-hover:text-f1red">
                 {featured.title}
               </h2>
               <p className="m-0 line-clamp-4 text-[14px] leading-relaxed text-muted-foreground">
@@ -86,7 +85,7 @@ export default async function NewsPage() {
               <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
                 Latest
               </span>
-              <h2 className="m-0 font-heading text-2xl font-bold tracking-tight">
+              <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
                 More from the wire
               </h2>
             </div>

@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { Container, SectionHeading } from "@/components/f1kit";
 import TeamAvatar from "@/components/TeamAvatar";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Team — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Team", path: "/team" });
 
 const ZAGAN_IMG =
   "https://github.com/vihanga-nimsara.png?size=200";

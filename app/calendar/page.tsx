@@ -1,10 +1,9 @@
 import { getSeasonRaces } from "@/lib/f1";
 import { Container, SectionHeading } from "@/components/f1kit";
 import CalendarView from "@/components/CalendarView";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Calendar — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Calendar", path: "/calendar" });
 
 export const dynamic = "force-dynamic";
 

@@ -1,6 +1,10 @@
 {
-  "name": "MyWebSite",
-  "short_name": "MySite",
+  "name": "F1 Paddock SL",
+  "short_name": "F1 Paddock SL",
+  "description": "Race analysis, paddock stories, and live Formula 1 stats: standings, streaks, and head-to-heads.",
+  "start_url": "/",
+  "scope": "/",
+  "id": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

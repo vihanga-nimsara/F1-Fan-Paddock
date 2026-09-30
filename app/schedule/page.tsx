@@ -1,5 +1,6 @@
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
 import { getSeasonRaces } from "@/lib/f1";
+import { pageMetadata } from "@/lib/seo";
 import {
   ChartColumn,
   Flag,
@@ -9,9 +10,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-export const metadata = {
-  title: "Release Schedule — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Release Schedule", path: "/schedule" });
 
 export const dynamic = "force-dynamic";
 

@@ -28,6 +28,7 @@
   /* Fonts */
   --font-display: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-heading: var(--font-geist), "Geist", var(--font-gemunu), var(--font-sinhala), system-ui, sans-serif;
+  --font-heading-big: var(--font-bricolage), "Bricolage Grotesque", var(--font-geist), "Geist", var(--font-gemunu), var(--font-sinhala), system-ui, sans-serif;
   --font-body: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-timer: var(--font-f1), "Russo One", system-ui, sans-serif;
   --font-f1-display: "Formula1 Display-Black", var(--font-f1), "Russo One", system-ui, sans-serif;
@@ -325,7 +326,14 @@
 /* ------------------------------------------------------------------ */
 
 .font-headline {
-  font-family: var(--font-heading), "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-heading-big), "Bricolage Grotesque", "Geist", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Bricolage Grotesque ships an optical-size axis; `auto` lets the browser pick
+   the display cut for the larger headline sizes. */
+.font-heading-big,
+.font-headline {
+  font-optical-sizing: auto;
 }
 
 /* ------------------------------------------------------------------ */

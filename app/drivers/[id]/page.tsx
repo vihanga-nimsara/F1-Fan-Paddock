@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { ArrowLeft, AtSign, BookOpen, Building2, Flag, Globe, ArrowRight } from "lucide-react";
 import {
   getDriverStandings,
@@ -89,8 +90,14 @@ export async function generateMetadata({
   const { id } = await params;
   const drivers = await getDriverStandings().catch(() => []);
   const d = drivers.find((x) => x.driverId === id);
-  if (!d) return { title: "Driver — F1 Paddock SL" };
-  return { title: `${d.givenName} ${d.familyName} — F1 Paddock SL` };
+  if (!d) {
+    return pageMetadata({ title: "Driver", path: `/drivers/${id}` });
+  }
+  return pageMetadata({
+    title: `${d.givenName} ${d.familyName}`,
+    path: `/drivers/${id}`,
+    description: `${d.givenName} ${d.familyName} — ${d.nationality} Formula 1 driver profile: standings, results, team, and race-by-race form on F1 Paddock SL.`,
+  });
 }
 
 export default async function DriverPage({
@@ -219,7 +226,7 @@ export default async function DriverPage({
             </div>
 
             <div className="flex flex-col gap-1">
-              <h1 className="m-0 font-heading text-[clamp(2rem,5vw,3.4rem)] font-bold leading-[1.03] tracking-tight">
+              <h1 className="m-0 font-heading-big text-[clamp(2rem,5vw,3.4rem)] font-bold leading-[1.03] tracking-tight">
                 {name}
               </h1>
               <p className="m-0 text-sm text-muted-foreground">
@@ -328,7 +335,7 @@ export default async function DriverPage({
               <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
                 2026 season
               </span>
-              <h2 className="m-0 font-heading text-2xl font-bold tracking-tight">
+              <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
                 Recent results
               </h2>
             </div>

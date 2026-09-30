@@ -84,7 +84,7 @@ export default function DriverJourney({
           <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
             {t.eyebrow}
           </span>
-          <h2 className="m-0 font-heading text-2xl font-bold tracking-tight">
+          <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
             {t.title}
           </h2>
         </div>

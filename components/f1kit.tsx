@@ -63,7 +63,7 @@ export function SectionHeading({
 }) {
   return (
     <div
-      className={`flex w-full items-end justify-between gap-4 border-b border-pebble-15 pb-3 ${className}`}
+      className={`flex w-full items-end justify-between gap-4 pb-3 ${className}`}
     >
       <div className="flex flex-col gap-1.5">
         {kicker && <Kicker>{kicker}</Kicker>}

@@ -1,9 +1,8 @@
 import { Container, SectionHeading, Pill } from "@/components/f1kit";
 import { getDriverStandings, TEAM_COLORS } from "@/lib/f1";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = {
-  title: "Seasons — F1 Paddock SL",
-};
+export const metadata = pageMetadata({ title: "Seasons", path: "/seasons" });
 
 export const dynamic = "force-dynamic";
 

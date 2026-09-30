@@ -57,8 +57,8 @@ function placeholderResponse(): Response {
     ).join("")}
   </g>
   <rect x="0" y="0" width="10" height="675" fill="#e10600"/>
-  <text x="600" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#ffffff">F1 FAN PADDOCK</text>
-  <text x="600" y="386" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="6" fill="#e10600">F1 · PADDOCK · SL</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="700" fill="#ffffff">F1 PADDOCK SL</text>
+  <text x="600" y="386" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" letter-spacing="6" fill="#e10600">FORMULA 1 · SRI LANKA</text>
 </svg>`;
   return new Response(svg, {
     status: 200,

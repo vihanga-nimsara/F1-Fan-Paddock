@@ -1,13 +1,14 @@
-import type { Metadata } from "next";
 import { Container } from "@/components/f1kit";
 import PageHeader from "@/components/PageHeader";
 import FaqAccordion from "@/components/FaqAccordion";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Frequently Asked Questions | F1 Paddock SL",
+export const metadata = pageMetadata({
+  title: "Frequently Asked Questions",
+  path: "/faq",
   description:
     "Quick answers for new fans — how live timings work, where standings come from, and how to publish on F1 Paddock SL.",
-};
+});
 
 export default function FaqPage() {
   return (
