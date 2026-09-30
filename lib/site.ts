@@ -8,7 +8,7 @@
 
 export const SITE_NAME = "F1 Paddock SL";
 
-export const SITE_URL = "https://f1-fan-paddock.vercel.app";
+export const SITE_URL = "https://www.f1paddocksl.com";
 
 export const SITE_DESCRIPTION =
   "F1 Paddock SL is a Sri Lankan Formula 1 fan site: race analysis, paddock stories, and live F1 data with standings, streaks, and head-to-heads.";
