@@ -74,7 +74,7 @@ export const TEAM_FLAGS: Record<string, string> = {
   cadillac: "🇺🇸",
 };
 
-const TEAM_LOGO_SLUG: Record<string, string> = {
+const TEAM_SLUG: Record<string, string> = {
   mercedes: "mercedes",
   ferrari: "ferrari",
   red_bull: "redbullracing",
@@ -90,8 +90,15 @@ const TEAM_LOGO_SLUG: Record<string, string> = {
 };
 
 export function getTeamLogo(team: string, width = 200): string {
-  const slug = TEAM_LOGO_SLUG[team] ?? team.replace(/_/g, "");
+  const slug = TEAM_SLUG[team] ?? team.replace(/_/g, "");
   return `https://media.formula1.com/image/upload/c_lfill,w_${width}/q_auto/v1740000001/common/f1/2026/${slug}/2026${slug}logowhite.webp`;
+}
+
+// Side-profile car renders ("...carright.webp"). Landscape, so callers should
+// give it a wide slot and use object-contain rather than object-cover.
+export function getTeamCar(team: string, height = 120): string {
+  const slug = TEAM_SLUG[team] ?? team.replace(/_/g, "");
+  return `https://media.formula1.com/image/upload/c_lfill,h_${height}/q_auto/v1740000001/common/f1/2026/${slug}/2026${slug}carright.webp`;
 }
 
 const COUNTRY_FLAGS: Record<string, string> = {

@@ -273,6 +273,7 @@ export type StandingRow = {
   color?: string;
   logo?: string;
   avatar?: string;
+  car?: string;
   href?: string;
 };
 
@@ -299,8 +300,21 @@ export function StandingsTable({
             style={{ background: r.color ?? "transparent" }}
             aria-hidden="true"
           />
-          <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-pebble-10">
-            {r.avatar ? (
+          <span
+            className={
+              r.car
+                ? "flex h-9 w-[132px] shrink-0 items-center justify-center overflow-hidden rounded-lg bg-pebble-5 p-1"
+                : "relative h-9 w-9 shrink-0 overflow-hidden rounded-xl bg-pebble-10"
+            }
+          >
+            {r.car ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={r.car}
+                alt=""
+                className="h-full w-full object-contain"
+              />
+            ) : r.avatar ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={r.avatar}

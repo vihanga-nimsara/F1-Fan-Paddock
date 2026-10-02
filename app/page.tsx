@@ -8,6 +8,7 @@ import {
   getRecentRaces,
   TEAM_COLORS,
   getTeamLogo,
+  getTeamCar,
   flagImage,
   type ConstructorStanding,
   type DriverStanding,
@@ -111,6 +112,7 @@ export default async function Home() {
     points: c.points,
     color: TEAM_COLORS[c.constructorId],
     logo: getTeamLogo(c.constructorId, 80),
+    car: getTeamCar(c.constructorId),
     href: "/constructors",
   }));
 

@@ -3,6 +3,7 @@ import {
   getDriverStandings,
   getDriverHeadshots,
   getTeamLogo,
+  getTeamCar,
   TEAM_COLORS,
   type ConstructorStanding,
   type DriverStanding,
@@ -49,6 +50,7 @@ export default async function StandingsPage() {
     wins: c.wins,
     color: TEAM_COLORS[c.constructorId],
     logo: getTeamLogo(c.constructorId, 80),
+    car: getTeamCar(c.constructorId),
     href: "/constructors",
   }));
 
