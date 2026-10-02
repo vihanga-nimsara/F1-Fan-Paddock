@@ -12,10 +12,11 @@ const ZAGAN_IMG =
 // time-limited and would expire, dropping the avatar back to initials.
 const HANSAKA_IMG = "/images/hansaka-nethmina.jpg";
 
+const HIRUNA_IMG = "/images/hiruna-paththuwage.jpg";
+
 type TeamMember = {
   name: string;
   role: string;
-  bio: string;
   image?: string;
   href: string;
   linkLabel: string;
@@ -26,7 +27,6 @@ const TEAM: TeamMember[] = [
   {
     name: "Zagan",
     role: "Developer",
-    bio: "Designs, builds, and maintains F1 Paddock SL — from the data pipelines that pull standings and timing to the frontend you're browsing. A lifelong Formula 1 fan who'd rather ship clean stats and good race writing than sit still on a Sunday.",
     image: ZAGAN_IMG,
     href: "https://zagan.space",
     linkLabel: "Zagan's website",
@@ -35,7 +35,6 @@ const TEAM: TeamMember[] = [
   {
     name: "Hansaka Nethmina",
     role: "Blogger & Facebook Admin",
-    bio: "Runs our Facebook page and brings the F1 knowledge — race-weekend context, paddock reads, and the stories fans actually want to talk about.",
     image: HANSAKA_IMG,
     href: "https://hansaka-sigma.vercel.app/",
     linkLabel: "Hansaka's website",
@@ -44,7 +43,7 @@ const TEAM: TeamMember[] = [
   {
     name: "Hiruna M. Paththuwage",
     role: "Admin",
-    bio: "Looks after the admin side of F1 Paddock SL — handling the day-to-day of the page, fielding what fans send our way, and helping keep the paddock running smoothly.",
+    image: HIRUNA_IMG,
     href: "https://web.facebook.com/profile.php?id=61550067544824",
     linkLabel: "Hiruna on Facebook",
     icon: "facebook",
@@ -122,9 +121,6 @@ export default function TeamPage() {
                   {m.role}
                 </span>
               </div>
-              <p className="m-0 font-body text-sm leading-relaxed text-pebble-80">
-                {m.bio}
-              </p>
               <div className="mt-auto flex items-center justify-between border-t border-pebble-10 pt-4">
                 <Link
                   href={m.href}
