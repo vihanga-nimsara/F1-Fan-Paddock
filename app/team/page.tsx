@@ -91,12 +91,7 @@ export default function TeamPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8 md:py-12">
         <div className="flex flex-col gap-3">
-          <SectionHeading
-            kicker="Team"
-            title="Who keeps it running"
-            href="/about"
-            linkLabel="About the site"
-          />
+          <SectionHeading kicker="Team" title="Who keeps it running" />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
             F1 Paddock SL is an independent, fan-run project. It&apos;s designed,
             built, and maintained by people who care a lot about clean stats and
