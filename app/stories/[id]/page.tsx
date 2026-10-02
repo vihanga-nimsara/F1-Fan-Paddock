@@ -40,7 +40,7 @@ export default async function BlogPostPage({
   const { id } = await params;
   const own = getOwnPostById(id) ?? (await getAuthoredBlogBySlug(id));
   const post = await getCachedPostById(id);
-  const userComments = getComments(id);
+  const userComments = await getComments(id);
 
   if (!own && !post) notFound();
 

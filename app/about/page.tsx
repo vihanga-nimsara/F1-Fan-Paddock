@@ -11,7 +11,7 @@ const SECTIONS = [
   },
   {
     title: "The team",
-    body: "F1 Paddock SL is designed, built, and maintained by an independent team of Formula 1 fans. Zagan is the developer behind the site — from the data pipelines that pull standings and timing to the frontend you're browsing. Hansaka Nethmina runs our Facebook page and brings the F1 knowledge, with the race-weekend context and paddock reads fans want to talk about. It's a passion-driven, fan-run effort with no corporate backing.",
+    body: "F1 Paddock SL is designed, built, and maintained by an independent team of Formula 1 fans. Zagan is the developer behind the site — from the data pipelines that pull standings and timing to the frontend you're browsing. Hansaka Nethmina runs our Facebook page and brings the F1 knowledge, with the race-weekend context and paddock reads fans want to talk about. Hiruna M. Paththuwage handles the admin side, keeping the day-to-day running smoothly. It's a passion-driven, fan-run effort with no corporate backing.",
   },
   {
     title: "Data & sources",

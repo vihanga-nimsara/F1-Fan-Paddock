@@ -59,6 +59,46 @@ All variables live in `.env.local`, which is gitignored and must never be commit
 Variables prefixed `NEXT_PUBLIC_` are bundled into client JavaScript and are therefore
 public. Never place a secret in one.
 
+## Supabase setup (comments)
+
+Comments are stored in Supabase. One-time setup:
+
+1. Open the Supabase dashboard → **SQL Editor**.
+2. Paste and run [`supabase/comments.sql`](supabase/comments.sql).
+
+That creates the `comments` table, enables Row Level Security, and grants `anon` only
+`select` + `insert`. The script is idempotent, so re-running it is safe.
+
+Without this step comments silently return empty and the form returns `503`.
+
+### Moderating comments
+
+`anon` has no `update`/`delete` grant, so nobody can edit or remove comments with the
+public key. To moderate, use the Supabase dashboard's table editor (or the SQL editor):
+
+```sql
+-- remove one
+delete from comments where id = 42;
+
+-- remove anything link-spammy
+delete from comments where body ilike '%http%';
+```
+
+`target_type` / `target_id` are NOT NULL columns that predate this table's use for site
+comments; the app writes `target_type = 'post'` and `target_id = <post id>`. If they were
+meant for something else, `lib/comments.ts` is the only place that sets them.
+
+### A note on the anon key
+
+`NEXT_PUBLIC_SUPABASE_ANON_KEY` is readable by anyone who opens the site, so RLS is the
+only thing enforcing the rules above. Two consequences worth knowing:
+
+- The per-IP rate limit in `app/api/comments/route.ts` is in-memory and therefore only a
+  speed bump — a determined bot can post straight to Supabase with the anon key and skip
+  it entirely. The RLS length checks still apply to those writes.
+- If spam becomes a real problem, the fix is a Supabase Edge Function or an auth
+  requirement, not more code in the route handler.
+
 ## Project layout
 
 ```
@@ -72,6 +112,7 @@ lib/            Data access and helpers
   own-posts.ts  Hand-written stories
   supabase.ts   Comments client
 scripts/        Maintenance scripts (fb token refresh)
+supabase/       SQL schema (run supabase/comments.sql once)
 public/         Static assets
 data/           Runtime caches (gitignored)
 ```
@@ -93,7 +134,9 @@ URLs site-wide. Use the `www` form if the apex redirects.
   covers externally authored ones.
 - **Drivers** — sourced live from OpenF1; profile pages are generated under
   `app/drivers/[driverId]`.
-- **Comments** — stored in Supabase and rendered by `components/CommentSection.tsx`.
+- **Comments** — stored in the Supabase `comments` table (see
+  [Supabase setup](#supabase-setup-comments)), read and written through
+  `app/api/comments/route.ts`, and rendered by `components/CommentSection.tsx`.
 
 ## Deployment
 

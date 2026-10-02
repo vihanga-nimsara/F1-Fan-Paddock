@@ -7,6 +7,7 @@
 node_modules
 .next
 out
+*.tsbuildinfo
 
 # persisted blog cache (runtime data)
 data/
@@ -15,3 +16,8 @@ data/
 dev.log
 
 .vercel
+
+# working documents — anything in public/ is served at a public URL, so keep
+# drafts and source docs out of it
+public/*.docx
+BLOG-DEVTO.md

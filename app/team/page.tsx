@@ -12,7 +12,17 @@ const ZAGAN_IMG =
 // time-limited and would expire, dropping the avatar back to initials.
 const HANSAKA_IMG = "/images/hansaka-nethmina.jpg";
 
-const TEAM = [
+type TeamMember = {
+  name: string;
+  role: string;
+  bio: string;
+  image?: string;
+  href: string;
+  linkLabel: string;
+  icon: "globe" | "facebook";
+};
+
+const TEAM: TeamMember[] = [
   {
     name: "Zagan",
     role: "Developer",
@@ -20,6 +30,7 @@ const TEAM = [
     image: ZAGAN_IMG,
     href: "https://zagan.space",
     linkLabel: "Zagan's website",
+    icon: "globe",
   },
   {
     name: "Hansaka Nethmina",
@@ -28,8 +39,53 @@ const TEAM = [
     image: HANSAKA_IMG,
     href: "https://hansaka-sigma.vercel.app/",
     linkLabel: "Hansaka's website",
+    icon: "globe",
+  },
+  {
+    name: "Hiruna M. Paththuwage",
+    role: "Admin",
+    bio: "Looks after the admin side of F1 Paddock SL — handling the day-to-day of the page, fielding what fans send our way, and helping keep the paddock running smoothly.",
+    href: "https://web.facebook.com/profile.php?id=61550067544824",
+    linkLabel: "Hiruna on Facebook",
+    icon: "facebook",
   },
 ];
+
+function LinkIcon({ kind }: { kind: TeamMember["icon"] }) {
+  if (kind === "facebook") {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 1.9h-2.3V22A10 10 0 0 0 22 12Z" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="10" />
+      <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+      <path d="M2 12h20" />
+    </svg>
+  );
+}
 
 export default function TeamPage() {
   return (
@@ -77,22 +133,7 @@ export default function TeamPage() {
                   aria-label={m.linkLabel}
                   className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-muted/60 text-pebble transition-all hover:border-f1red/40 hover:text-f1red"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                    <path d="M2 12h20" />
-                  </svg>
+                  <LinkIcon kind={m.icon} />
                 </Link>
               </div>
             </article>

@@ -21,6 +21,7 @@ export default function CommentSection({
   const [author, setAuthor] = useState("");
   const [text, setText] = useState("");
   const [status, setStatus] = useState<"idle" | "posting" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("Something went wrong — try again.");
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,11 +33,15 @@ export default function CommentSection({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ postId, author, text }),
       });
-      if (!res.ok) throw new Error("Failed to post");
-      const { comment } = await res.json();
+      const json = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(json?.error ?? "Something went wrong — try again.");
+      const { comment } = json;
       setComments((prev) => [comment, ...prev]);
       setText("");
-    } catch {
+    } catch (err) {
+      setErrorMsg(
+        err instanceof Error ? err.message : "Something went wrong — try again.",
+      );
       setStatus("error");
       return;
     }
@@ -101,7 +106,7 @@ export default function CommentSection({
           className="resize-none rounded-lg border border-pebble-15 bg-carbon-deep px-3 py-2 font-body text-sm text-pebble placeholder:text-pebble-40 focus:border-f1red focus:outline-none"
         />
         {status === "error" && (
-          <p className="m-0 text-xs text-f1red">Something went wrong — try again.</p>
+          <p className="m-0 text-xs text-f1red">{errorMsg}</p>
         )}
         <button
           type="submit"
