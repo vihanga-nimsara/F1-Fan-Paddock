@@ -9,7 +9,6 @@ type Lang = "en" | "si";
 
 const T = {
   en: {
-    eyebrow: "Career profile",
     title: "The Journey",
     statsTitle: "Career stats",
     quickTitle: "Quick facts",
@@ -25,7 +24,6 @@ const T = {
     dyk: "Did you know?",
   },
   si: {
-    eyebrow: "වෘත්තීය පැතිකඩ",
     title: "ගමන",
     statsTitle: "තරඟ වාර්තා",
     quickTitle: "කෙටි කරුණු",
@@ -80,14 +78,9 @@ export default function DriverJourney({
   return (
     <section className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end justify-between gap-3 border-b border-border pb-3">
-        <div>
-          <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-            {t.eyebrow}
-          </span>
-          <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
-            {t.title}
-          </h2>
-        </div>
+        <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
+          {t.title}
+        </h2>
 
         {hasSi && (
           <div className="flex w-fit items-center rounded-full border border-border bg-muted/40 p-1">

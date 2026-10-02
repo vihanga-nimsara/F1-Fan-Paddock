@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
-import { ArrowLeft, AtSign, BookOpen, Building2, Flag, Globe, ArrowRight } from "lucide-react";
+import { ArrowLeft, AtSign, BookOpen, Building2, Flag, Globe } from "lucide-react";
 import {
   getDriverStandings,
   getConstructorStandings,
@@ -330,22 +330,10 @@ export default async function DriverPage({
 
         {/* Recent results */}
         <section className="flex flex-col gap-4">
-          <div className="flex items-end justify-between gap-4 border-b border-border pb-3">
-            <div>
-              <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-                2026 season
-              </span>
-              <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
-                Recent results
-              </h2>
-            </div>
-            <Link
-              href="/reviews"
-              className="group flex items-center gap-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
-            >
-              Race reviews
-              <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
-            </Link>
+          <div className="flex items-end border-b border-border pb-3">
+            <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
+              Recent results
+            </h2>
           </div>
 
           {raced.length > 0 ? (

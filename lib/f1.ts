@@ -226,8 +226,8 @@ const CIRCUIT_SLUGS: Record<string, string> = {
   marina_bay: "marina-bay",
   albert_park: "melbourne",
   rodriguez: "mexico-city",
-  las_vegas: "las-vegas",
-  lusail: "lusail",
+  vegas: "las-vegas",
+  losail: "lusail",
   americas: "austin",
   interlagos: "interlagos",
   yas_marina: "yas-marina",
@@ -238,6 +238,7 @@ const CIRCUIT_SLUGS: Record<string, string> = {
   shanghai: "shanghai",
   baku: "baku",
   madring: "madring",
+  sepang: "sepang",
 };
 
 export function getCircuitImage(

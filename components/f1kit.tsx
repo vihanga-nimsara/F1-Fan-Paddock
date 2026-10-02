@@ -41,45 +41,18 @@ export function F1Logo({ className = "" }: { className?: string }) {
 /* Typography helpers                                                  */
 /* ------------------------------------------------------------------ */
 
-export function Kicker(_props: {
-  children?: React.ReactNode;
-  className?: string;
-}) {
-  return null;
-}
-
 export function SectionHeading({
-  kicker,
   title,
-  href,
-  linkLabel = "View all",
   className = "",
 }: {
-  kicker?: string;
   title: string;
-  href?: string;
-  linkLabel?: string;
   className?: string;
 }) {
   return (
-    <div
-      className={`flex w-full items-end justify-between gap-4 pb-3 ${className}`}
-    >
-      <div className="flex flex-col gap-1.5">
-        {kicker && <Kicker>{kicker}</Kicker>}
-        <h2 className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold leading-[0.95] tracking-[0.02em] text-pebble">
-          {title}
-        </h2>
-      </div>
-      {href && (
-        <Link
-          href={href}
-          className="group flex shrink-0 items-center gap-1.5 font-display text-[11px] font-semibold tracking-[0.12em] text-pebble-80 transition-colors hover:text-pebble"
-        >
-          {linkLabel}
-          <ArrowRight className="size-3.5" aria-hidden="true" />
-        </Link>
-      )}
+    <div className={`flex w-full items-end pb-3 ${className}`}>
+      <h2 className="m-0 font-headline text-[clamp(20px,2.4vw,30px)] font-semibold leading-[0.95] tracking-[0.02em] text-pebble">
+        {title}
+      </h2>
     </div>
   );
 }

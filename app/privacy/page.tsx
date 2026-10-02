@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container, SectionHeading, Kicker } from "@/components/f1kit";
+import { Container, SectionHeading } from "@/components/f1kit";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({ title: "Privacy Policy", path: "/privacy" });
@@ -36,13 +36,7 @@ export default function PrivacyPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8 md:py-12">
         <div className="flex flex-col gap-3">
-          <Kicker>Legal</Kicker>
-          <SectionHeading
-            kicker="Legal"
-            title="Privacy Policy"
-            href="/terms"
-            linkLabel="Terms of Service"
-          />
+          <SectionHeading title="Privacy Policy" />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
             Last updated August 2026. How F1 Paddock SL handles your data.
           </p>

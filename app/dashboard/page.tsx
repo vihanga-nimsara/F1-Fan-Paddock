@@ -10,7 +10,7 @@ export default function DashboardPage() {
       <Container className="flex flex-col gap-10 py-8">
         <div className="flex items-center gap-3">
           <Pill tone="accent">Live</Pill>
-          <SectionHeading kicker="Timing" title="Live Dashboard" linkLabel="" />
+          <SectionHeading title="Live Dashboard" />
         </div>
         <LiveDashboard />
       </Container>

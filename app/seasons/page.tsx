@@ -31,7 +31,7 @@ export default async function SeasonsPage() {
   return (
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
-        <SectionHeading kicker="Archive" title="Seasons" linkLabel="" />
+        <SectionHeading title="Seasons" />
         <div className="flex w-full flex-col overflow-hidden rounded-xl bg-pebble-5">
           {champions.map((s) => {
             const isCurrent = s.year === "2026";

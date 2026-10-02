@@ -55,7 +55,7 @@ export default async function SchedulePage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
         <section className="flex flex-col gap-5">
-          <SectionHeading kicker="Updates" title="Release Schedule" />
+          <SectionHeading title="Release Schedule" />
 
           <div className="flex flex-col gap-3">
             {items.map((item) => (

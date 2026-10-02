@@ -39,38 +39,12 @@ const YT_CHANNEL = "UCtbLA0YM6EpwUQhFUyPQU9Q";
 
 export const dynamic = "force-dynamic";
 
-function SectionHeader({
-  kicker,
-  title,
-  href,
-  linkLabel = "View all",
-}: {
-  kicker?: string;
-  title: string;
-  href?: string;
-  linkLabel?: string;
-}) {
+function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="mb-5 flex items-end justify-between gap-4 border-b border-border pb-3">
-      <div>
-        {kicker && (
-          <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-            {kicker}
-          </span>
-        )}
-        <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight md:text-3xl">
-          {title}
-        </h2>
-      </div>
-      {href && (
-        <Link
-          href={href}
-          className="group flex shrink-0 items-center gap-1.5 text-[13px] font-semibold text-muted-foreground transition-colors hover:text-f1red"
-        >
-          {linkLabel}
-          <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
-        </Link>
-      )}
+    <div className="mb-5 flex items-end border-b border-border pb-3">
+      <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight md:text-3xl">
+        {title}
+      </h2>
     </div>
   );
 }
@@ -174,7 +148,7 @@ export default async function Home() {
         <div className="flex min-w-0 flex-col gap-14">
           {/* Latest posts */}
           <section>
-            <SectionHeader title="Latest from the Paddock" href="/stories" linkLabel="All posts" />
+            <SectionHeader title="Latest from the Paddock" />
             <div className="grid gap-6 py-4 sm:grid-cols-2 xl:grid-cols-3">
               {latestPosts.slice(0, 3).map((p) => (
                 <PostCard
@@ -200,11 +174,7 @@ export default async function Home() {
 
           {/* Must watch */}
           <section>
-            <SectionHeader
-              title="Must Watch"
-              href={`https://www.youtube.com/playlist?list=${YT_PLAYLIST}`}
-              linkLabel="All videos"
-            />
+            <SectionHeader title="Must Watch" />
             <MustWatchVideos
               groups={[
                 {
@@ -430,13 +400,13 @@ export default async function Home() {
       <section className="border-y border-border bg-[#0A0A0A] py-10">
         <Container className="grid items-start gap-8 md:grid-cols-2">
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <SectionHeading kicker="2026" title="Drivers' Championship" href="/standings" linkLabel="Full standings" />
+            <SectionHeading title="Drivers' Championship" />
             <div className="pt-3">
               <StandingsTable rows={driverRows} />
             </div>
           </div>
           <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-            <SectionHeading kicker="2026" title="Constructors' Championship" href="/standings" linkLabel="Full standings" />
+            <SectionHeading title="Constructors' Championship" />
             <div className="pt-3">
               <StandingsTable rows={conRows} />
             </div>
@@ -446,7 +416,7 @@ export default async function Home() {
 
       {/* ------------------------------ Upcoming races ------------------------------ */}
       <Container className="flex flex-col gap-5 pt-8 pb-8">
-        <SectionHeader title="Upcoming Races" href="/calendar" linkLabel="Full schedule" />
+        <SectionHeader title="Upcoming Races" />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {nextRaces.map((r: Race) => {
             const date = new Date(r.dateISO).toLocaleDateString("en-GB", {

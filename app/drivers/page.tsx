@@ -22,9 +22,6 @@ export default async function DriversPage() {
     <main className="w-full">
       <section className="bg-muted/40">
         <Container className="flex flex-col gap-3 py-10 md:py-14">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-            2026 Grid
-          </span>
           <h1 className="m-0 max-w-[22ch] font-heading-big text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
             Meet the drivers
           </h1>

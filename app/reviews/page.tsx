@@ -43,12 +43,7 @@ export default async function ReviewsPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
         <section className="flex flex-col gap-5">
-          <SectionHeading
-            kicker="Verdicts"
-            title="Race Spotlight"
-            href="/reviews"
-            linkLabel=""
-          />
+          <SectionHeading title="Race Spotlight" />
 
           {reviews.length === 0 ? (
             <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">

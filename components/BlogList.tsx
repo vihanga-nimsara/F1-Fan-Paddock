@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Flag, LayoutGrid, List } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { NewsCard } from "@/components/f1kit";
 import { BlogPost, timeAgo } from "@/lib/blog";
 import { cn } from "@/lib/utils";
@@ -13,33 +12,33 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex items-center justify-end gap-1 rounded-full border border-border bg-muted/50 p-1">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setView("grid")}
-          aria-pressed={view === "grid"}
-          className={cn(
-            "gap-1.5",
-            view === "grid" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground",
-          )}
-        >
-          <LayoutGrid className="size-3.5" />
-          Grid
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setView("list")}
-          aria-pressed={view === "list"}
-          className={cn(
-            "gap-1.5",
-            view === "list" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground",
-          )}
-        >
-          <List className="size-3.5" />
-          List
-        </Button>
+      <div
+        role="group"
+        aria-label="Post layout"
+        className="ml-auto flex w-fit items-center rounded-full border border-border bg-muted/40 p-1"
+      >
+        {(
+          [
+            { key: "grid", label: "Grid", icon: LayoutGrid },
+            { key: "list", label: "List", icon: List },
+          ] as const
+        ).map((opt) => (
+          <button
+            key={opt.key}
+            type="button"
+            onClick={() => setView(opt.key)}
+            aria-pressed={view === opt.key}
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold tracking-[0.12em] uppercase transition-colors",
+              view === opt.key
+                ? "bg-f1red text-white"
+                : "text-muted-foreground hover:text-foreground",
+            )}
+          >
+            <opt.icon className="size-3.5" aria-hidden="true" />
+            {opt.label}
+          </button>
+        ))}
       </div>
 
       {posts.length === 0 ? (

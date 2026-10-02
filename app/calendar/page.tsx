@@ -13,7 +13,7 @@ export default async function CalendarPage() {
   return (
     <main className="relative w-full">
       <Container className="flex flex-col gap-8 py-8">
-        <SectionHeading kicker="2026" title="Race Calendar" linkLabel="" />
+        <SectionHeading title="Race Calendar" />
         <CalendarView races={races} />
       </Container>
     </main>

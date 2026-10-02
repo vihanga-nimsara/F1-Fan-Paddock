@@ -55,11 +55,7 @@ export default async function StandingsPage() {
   return (
     <main className="relative w-full">
       <Container className="flex flex-col gap-8 py-8">
-        <SectionHeading
-          kicker="2026"
-          title="Season Standings"
-          linkLabel=""
-        />
+        <SectionHeading title="Season Standings" />
         <div className="flex items-center gap-2">
           <Pill tone="accent">Live</Pill>
           <span className="text-xs text-pebble-80">

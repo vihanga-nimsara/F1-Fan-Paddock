@@ -61,7 +61,7 @@ export default function ShowcasePage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
         <section className="flex flex-col gap-5">
-          <SectionHeading kicker="Collections" title="Showcases" />
+          <SectionHeading title="Showcases" />
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {SHOWCASES.map((s) => (

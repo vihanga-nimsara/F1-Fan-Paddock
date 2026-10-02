@@ -113,10 +113,6 @@ export default function FeaturedStorySlider({
 
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3 text-[12px] font-medium text-muted-foreground">
-                    <span className="font-semibold uppercase tracking-[0.16em] text-f1red">
-                      The Paddock
-                    </span>
-                    <span aria-hidden="true">·</span>
                     <span>{timeAgo(p.pubDate)}</span>
                   </div>
                   <h1 className="m-0 font-heading-big text-[clamp(1.9rem,4.5vw,3.2rem)] font-bold leading-[1.05] tracking-tight">

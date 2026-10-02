@@ -23,7 +23,7 @@ export default async function PlaceholderPage({
   return (
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
-        <SectionHeading kicker="Coming Soon" title={title} linkLabel="" />
+        <SectionHeading title={title} />
         <div className="flex flex-col items-center gap-4 rounded-xl bg-pebble-5 p-12 text-center">
           <div className="h-40 w-full max-w-md overflow-hidden rounded-xl">
             <MediaFallback

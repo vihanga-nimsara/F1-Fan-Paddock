@@ -20,12 +20,7 @@ export default async function ConstructorsPage() {
   return (
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
-        <SectionHeading
-          kicker="2026"
-          title="Constructors"
-          linkLabel="Standings"
-          href="/standings"
-        />
+        <SectionHeading title="Constructors" />
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {constructors.map((c, i) => {
             const color = TEAM_COLORS[c.constructorId] ?? "#888888";

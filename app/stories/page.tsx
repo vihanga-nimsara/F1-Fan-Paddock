@@ -25,10 +25,7 @@ export default async function StoriesPage() {
     <main className="w-full">
       <section className="bg-muted/40">
         <Container className="flex flex-col gap-10 py-10 md:py-14">
-          <div className="flex flex-col gap-3">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-              The Paddock Blog
-            </span>
+<div className="flex flex-col gap-3">
             <h1 className="m-0 max-w-[22ch] font-heading-big text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
               Stories from the grid
             </h1>

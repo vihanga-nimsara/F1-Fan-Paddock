@@ -30,7 +30,7 @@ export default async function ListsPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
         <section className="flex flex-col gap-5">
-          <SectionHeading kicker="Your Paddock" title="My Lists" />
+          <SectionHeading title="My Lists" />
 
           <div className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-5">
             <div className="flex items-center justify-between gap-2">

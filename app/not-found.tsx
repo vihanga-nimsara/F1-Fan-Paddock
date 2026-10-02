@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { Container, Kicker } from "@/components/f1kit";
+import { Container } from "@/components/f1kit";
 import F1Button from "@/components/ui/F1Button";
 import { ArrowLeft } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
@@ -14,7 +13,6 @@ export default function NotFound() {
   return (
     <main className="relative w-full">
       <Container className="flex flex-col items-center gap-6 py-24 text-center md:py-32">
-        <Kicker>Error</Kicker>
         <h1 className="m-0 font-headline text-[clamp(96px,20vw,220px)] font-semibold leading-[0.8] tracking-[0.01em] text-f1red">
           404
         </h1>

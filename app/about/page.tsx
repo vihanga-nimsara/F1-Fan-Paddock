@@ -28,12 +28,7 @@ export default function AboutPage() {
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8 md:py-12">
         <div className="flex flex-col gap-3">
-          <SectionHeading
-            kicker="About"
-            title="F1 Paddock SL"
-            href="/stories"
-            linkLabel="Read the blog"
-          />
+          <SectionHeading title="F1 Paddock SL" />
           <p className="m-0 max-w-[820px] font-body text-sm text-pebble-80">
             Who builds F1 Paddock SL, what it is, and where the data comes from.
           </p>

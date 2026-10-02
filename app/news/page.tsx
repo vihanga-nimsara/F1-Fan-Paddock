@@ -19,9 +19,6 @@ export default async function NewsPage() {
       <section className="bg-muted/40">
         <Container className="flex flex-col gap-10 py-10 md:py-14">
           <div className="flex flex-col gap-3">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-              F1 News Wire
-            </span>
             <h1 className="m-0 max-w-[22ch] font-heading-big text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.02] tracking-tight">
               Latest from across the web
             </h1>
@@ -80,15 +77,10 @@ export default async function NewsPage() {
         ) : null}
 
         <section className="flex flex-col gap-5">
-          <div className="flex items-end justify-between gap-4 border-b border-border pb-3">
-            <div>
-              <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.18em] text-f1red">
-                Latest
-              </span>
-              <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
-                More from the wire
-              </h2>
-            </div>
+          <div className="flex items-end border-b border-border pb-3">
+            <h2 className="m-0 font-heading-big text-2xl font-bold tracking-tight">
+              More from the wire
+            </h2>
           </div>
           <BlogList posts={rest} />
         </section>

@@ -14,7 +14,7 @@ export default async function VideoPage() {
   return (
     <main className="relative w-full">
       <Container className="flex flex-col gap-10 py-8">
-        <SectionHeading kicker="Watch" title="Race Video" linkLabel="" />
+        <SectionHeading title="Race Video" />
         {videos.length === 0 ? (
           <div className="flex w-full flex-col items-center gap-2 rounded-xl bg-pebble-5 p-10 text-center">
             <Clapperboard
