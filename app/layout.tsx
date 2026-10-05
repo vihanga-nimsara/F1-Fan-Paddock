@@ -17,7 +17,13 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { ThemeProvider } from "@/components/theme-provider";
 import MuiProvider from "@/components/mui/MuiProvider";
 import { GridPattern } from "@/components/ui/grid-pattern";
-import { SITE_DESCRIPTION, SITE_LOCALE, SITE_NAME, SITE_URL } from "@/lib/site";
+import {
+  ADSENSE_CLIENT,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_URL,
+} from "@/lib/site";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -112,6 +118,9 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  other: {
+    "google-adsense-account": ADSENSE_CLIENT,
+  },
 };
 
 // Tells search engines the preferred site name for the domain. Kept in one
@@ -163,6 +172,13 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
+        />
+        <Script
+          id="adsense-loader"
+          strategy="afterInteractive"
+          async
+          crossOrigin="anonymous"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
         />
         <GridPattern
           className="fixed inset-0 -z-10 h-full w-full fill-foreground/5 stroke-foreground/5"

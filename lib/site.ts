@@ -16,3 +16,9 @@ export const SITE_DESCRIPTION =
 export const SITE_LOCALE = "en_US";
 
 export const SITE_THEME_COLOR = "#e10600";
+
+/**
+ * Google AdSense publisher ID. Public by design (it ships inside the adsbygoogle
+ * loader URL on every page), so it lives here rather than in the environment.
+ */
+export const ADSENSE_CLIENT = "ca-pub-1374208293260558";

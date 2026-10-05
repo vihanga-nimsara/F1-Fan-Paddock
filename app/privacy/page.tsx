@@ -11,22 +11,26 @@ const SECTIONS = [
   },
   {
     title: "2. Cookies",
-    body: "We use a minimal set of cookies and local storage to remember your cookie choice and your welcome-screen preference. No advertising or cross-site tracking cookies are used.",
+    body: "We store your cookie preference and theme choice locally on your device. Advertising and measurement are handled by third parties as described below.",
   },
   {
-    title: "3. Third-party data",
+    title: "3. Advertising",
+    body: "We use Google AdSense to display advertisements. Google and its partners use cookies or similar technologies to serve and measure ads, and may personalise them based on your prior visits to this or other websites. You can opt out of personalised advertising in Google's Ads Settings, and learn more in Google's Privacy & Terms page.",
+  },
+  {
+    title: "4. Third-party data",
     body: "Standings, race results, and live timing data are provided by Jolpica-F1 and OpenF1, which are open, free public APIs. Driver headshots and team logos are served from media.formula1.com.",
   },
   {
-    title: "4. External links",
+    title: "5. External links",
     body: "Paddock stories link out to external publishers (ESPN, BBC Sport, Sky Sports). Their sites have their own privacy policies. Embedded YouTube videos are governed by Google's privacy policy.",
   },
   {
-    title: "5. Data retention",
-    body: "Anything stored locally on your device (cookie preferences, welcome flags) can be cleared at any time through your browser settings. We do not operate our own analytics backend.",
+    title: "6. Data retention",
+    body: "Anything stored locally on your device (cookie preferences, theme choice) can be cleared at any time through your browser settings. We do not operate our own analytics backend.",
   },
   {
-    title: "6. Contact",
+    title: "7. Contact",
     body: "Questions about this policy can be raised by opening an issue on the project repository. This policy may be updated as the site evolves.",
   },
 ];

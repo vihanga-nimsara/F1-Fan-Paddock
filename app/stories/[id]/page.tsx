@@ -8,6 +8,8 @@ import { getOwnPostById } from "@/lib/own-posts";
 import { getAuthoredBlogBySlug } from "@/lib/authored-blogs";
 import { getComments } from "@/lib/comments";
 import CommentSection from "@/components/CommentSection";
+import AdSlot from "@/components/AdSlot";
+import { AD_SLOTS } from "@/lib/adsense";
 import { timeAgo } from "@/lib/blog";
 import { pageMetadata } from "@/lib/seo";
 
@@ -113,18 +115,22 @@ export default async function BlogPostPage({
               <span className="block">{own.author.bio}</span>
             </div>
 
-            {/* Full text */}
+            {/* Full text — mid-article unit sits about a third in */}
             <div className="flex flex-col gap-5">
-              {own.content.map((paragraph, i) => (
-                <p
-                  key={i}
-                  className="m-0 text-[16px] leading-[1.7] text-pebble"
-                >
-                  {paragraph}
-                </p>
+              {own.content.map((paragraph, i, all) => (
+                <div key={i} className="contents">
+                  <p className="m-0 text-[16px] leading-[1.7] text-pebble">
+                    {paragraph}
+                  </p>
+                  {i === Math.max(1, Math.floor(all.length / 3)) && (
+                    <AdSlot slot={AD_SLOTS.article} className="my-2" />
+                  )}
+                </div>
               ))}
             </div>
           </article>
+
+          <AdSlot slot={AD_SLOTS.article} />
 
           {/* Comments */}
           <CommentSection postId={own.id} initialComments={comments} />
@@ -228,7 +234,11 @@ export default async function BlogPostPage({
               ))}
             </div>
           ) : null}
+
+          <AdSlot slot={AD_SLOTS.article} />
         </article>
+
+        <AdSlot slot={AD_SLOTS.article} />
 
         {/* Comments */}
         <CommentSection postId={id} initialComments={userComments} />

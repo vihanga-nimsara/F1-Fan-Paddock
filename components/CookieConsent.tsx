@@ -62,8 +62,9 @@ export default function CookieConsent() {
             We value your privacy
           </h2>
           <p className="m-0 text-xs leading-relaxed text-pebble-80">
-            We use cookies to improve your experience on F1 Paddock SL and
-            analyze site traffic. You can read more in our{" "}
+            We use cookies to improve your experience on F1 Paddock SL, serve
+            ads through Google AdSense, and analyze site traffic. You can read
+            more in our{" "}
             <Link
               href="/privacy"
               className="font-medium text-f1red underline-offset-2 hover:underline"

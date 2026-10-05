@@ -29,6 +29,8 @@ import RaceCountdown from "@/components/RaceCountdown";
 import MustWatchVideos from "@/components/MustWatchVideos";
 import FeaturedStorySlider from "@/components/FeaturedStorySlider";
 import FbChatWidget from "@/components/FbChatWidget";
+import AdSlot from "@/components/AdSlot";
+import { AD_SLOTS } from "@/lib/adsense";
 import { getBlogPosts, timeAgo } from "@/lib/blog";
 import { getOwnPosts } from "@/lib/own-posts";
 import { getPlaylistVideos, getChannelVideos } from "@/lib/youtube";
@@ -148,6 +150,9 @@ export default async function Home() {
       <Container className="grid gap-10 py-8 md:py-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
         {/* Main column */}
         <div className="flex min-w-0 flex-col gap-14">
+          {/* In-feed unit */}
+          <AdSlot slot={AD_SLOTS.homepage} />
+
           {/* Latest posts */}
           <section>
             <SectionHeader title="Latest from the Paddock" />
@@ -199,6 +204,8 @@ export default async function Home() {
 
         {/* Sidebar */}
         <aside className="flex min-w-0 flex-col gap-6 lg:sticky lg:top-20 lg:self-start">
+          <AdSlot slot={AD_SLOTS.sidebar} format="vertical" />
+
           {next && (
             <section className="overflow-hidden rounded-2xl border border-border bg-card">
               <div className="relative flex h-32 items-center justify-center bg-muted p-4">
