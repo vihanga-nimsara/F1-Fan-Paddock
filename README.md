@@ -151,3 +151,7 @@ secrets `FB_PAGE_ID`, `FB_LONG_LIVED_USER_TOKEN`, `FB_APP_ID`, `FB_APP_SECRET`,
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)...
+
+---
+
+Built with love for the F1 paddock.
