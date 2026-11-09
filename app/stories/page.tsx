@@ -39,11 +39,14 @@ export default async function StoriesPage() {
 
       <Container className="flex flex-col gap-12 py-10 md:py-12">
         {featured ? (
-          <Link
-            href={`/stories/${featured.id}`}
+          <article
             className="group grid overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:shadow-xl hover:shadow-foreground/5 md:grid-cols-2"
           >
-            <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted md:aspect-auto">
+            <Link
+              href={`/stories/${featured.id}`}
+              className="relative aspect-[16/10] w-full overflow-hidden bg-muted md:aspect-auto"
+              aria-label={`Read ${featured.title}`}
+            >
               {featured.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -57,13 +60,15 @@ export default async function StoriesPage() {
               <Badge className="absolute left-4 top-4 bg-f1red text-white hover:bg-f1red-dark">
                 Latest
               </Badge>
-            </div>
+            </Link>
             <div className="flex flex-col justify-center gap-3 p-6 md:p-10">
               <span className="text-[12px] font-medium text-muted-foreground">
                 {featured.author.name} · {timeAgo(featured.pubDate)} · {featured.readTime}
               </span>
               <h2 className="m-0 font-heading-big text-[clamp(1.4rem,3vw,2.2rem)] font-bold leading-[1.08] tracking-tight group-hover:text-f1red">
-                {featured.title}
+                <Link href={`/stories/${featured.id}`}>
+                  {featured.title}
+                </Link>
               </h2>
               <p className="m-0 line-clamp-3 text-[14px] leading-relaxed text-muted-foreground">
                 {featured.excerpt}
@@ -75,7 +80,7 @@ export default async function StoriesPage() {
                 </Link>
               </Button>
             </div>
-          </Link>
+          </article>
         ) : null}
 
         {rest.length > 0 ? (

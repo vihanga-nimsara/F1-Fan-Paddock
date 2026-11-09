@@ -164,11 +164,7 @@ export default function RootLayout({
       className={`${geist.variable} ${jetbrains.variable} ${sinhala.variable} ${sinhalaHeading.variable} ${f1Font.variable} ${bigHeading.variable}`}
     >
       <body>
-        <Script
-          id="theme-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: themeInit }}
-        />
+        <script id="theme-init" dangerouslySetInnerHTML={{ __html: themeInit }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}

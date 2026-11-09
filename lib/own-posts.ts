@@ -29,6 +29,119 @@ const PLACEHOLDER = (n: number) => `/images/f1-${Math.min(n, 20)}.jpg`;
 
 export const OWN_POSTS: OwnPost[] = [
   {
+    id: "road-to-f1-ayrton-senna",
+    title:
+      "Road To Formula 1 Series - Ep 04 - THE MAN. THE MYTH. THE MAGIC. - කවුද මේ Ayrton Senna කියන්නෙ? ඇයි අදටත් Interlagos circuit එක ඔහු වෙනුවෙන් හඬන්නේ?",
+    excerpt:
+      "Formula 1 බ්‍රසීලයේ São Paulo නගරය අද්දර තියෙන ඒ ඓතිහාසික Interlagos circuit එකට ආවම. එතන grandstands ඇතුලෙ එක නමක් තියෙනවා, මුළු රටකම බරක් එක්ක හැරෙන්න නිකන්ම කටින් කියන්න බැරි. ලොකු මිනිස්සුන්ව පවා තත්පරේකට නතර කරලා, ඇස් පියාගෙන වචනෙන් විස්තර කරන්න බැරි තරමේ හැඟීමක් ඇති කරන නමක්. ඒ නම තමයි Ayrton Senna da Silva.",
+    content: `මේ සතියේ Formula 1 ආයෙමත් බ්‍රසීලයේ São Paulo නගරය අද්දර තියෙන ඒ ඓතිහාසික Interlagos circuit එකට එනවා. එතන grandstands ඇතුලෙ එක නමක් තියෙනවා, මුළු රටකම බරක් එක්ක හැරෙන්න නිකන්ම කටින් කියන්න බැරි. ලොකු මිනිස්සුන්ව පවා තත්පරේකට නතර කරලා, ඇස් පියාගෙන වචනෙන් විස්තර කරන්න බැරි තරමේ හැඟීමක් ඇති කරන නමක්. ඒ නම තමයි Ayrton Senna da Silva.
+
+තුන් වතාවක් World Champion. ලෝකෙ දැකපු භයානකම wet-weather driver. තමන්ගේ racing helmet එක මුළු රටකම පාට වලින් හැඩ කරපු මිනිසා. ඉතින් මේ සතිඅන්තයේ, අපේ අලුත්ම 2026 champion වෙන Kimi Antonelli ඒ paddock gates වලින් ඇතුළට එද්දී (Senna ගේ සොහොනට ගිහින් එයාගෙ පරණ Lotus car එකේ වාඩිවෙලා දවස් දෙකකට පස්සේ), අපිට හිතුනා පොඩ්ඩක් නතර වෙලා අහන්න: කවුද ඇත්තටම මේ Ayrton Senna කියන්නෙ? මේ තියෙන්නේ ඒ සම්පූර්ණ කතාව.
+
+🇧🇷 THE BOY FROM SÃO PAULO
+
+Ayrton Senna da Silva ඉපදුනේ 1960 මාර්තු 21, බ්‍රසීලයේ São Paulo වල Santana කියන පැත්තේ තියෙන Pro-Matre රෝහලේ. එයා සල්ලි බාගේ තියෙන පවුලක මැද ළමයා. තාත්තා Milton Guirado da Silva, ඉඩම් සහ ෆැක්ටරි අයිතිකාරයෙක්. අම්මා Neide Joanna Senna da Silva. එයාට හිටියා වැඩිමහල් අක්කා කෙනෙක් (Viviane) සහ මල්ලි කෙනෙක් (Leonardo). පවුලේ අය Senna ට ආදරේට කිව්වේ "Beco" කියලා.
+
+Senna ට වයස අවුරුදු හතරෙදි තාත්තා එයාට පළවෙනි go-kart එක හැදුවා, lawnmower engine එකක් දාලා. ඒ ෆාම් එකේ හදපු කාර් එකෙන් තමයි ඔක්කොම පටන් ගත්තේ. වයස හත වෙද්දී අනිත් ළමයි හරියට බයිසිකලයක්වත් පදින්න ඉගෙන ගන්න කලින් Senna ෆාම් එකේ Jeep එකක් එලෙව්වා.
+
+1973 ජූලි මාසේ, වයස 13 දී එයාගේ පළවෙනි official kart race එකට ගිහින් ඒක දිනුවා විතරක් නෙවෙයි අලුත් track record එකකුත් තිබ්බා. 1970 ගණන්වල අග භාගය පුරාවටම Brazilian karting වල තරඟ කරපු එයා 1977 දී South American Kart Championship එකත් දිනුවා. ඊටපස්සේ 1979 සහ 1980 Karting World Championship එකේ runner-up වුණා. ඒ කොච්චර ට්‍රයි කලත් කවදාවත් දිනන්න බැරි වුණ ලෝක ශූරතාවය එයාට මුලදීම එක දෙයක් ඉගැන්නුවා: talent එක විතරක් තිබිලා මදි කියලා. එයා race කලේ අම්මගේ නම වුණ "Senna" කියන නමින්. මොකද "da Silva" කියන්නේ බ්‍රසීලයේ grid එකක කැපිලා පේන්නේ නැති ගොඩක් common නමක් නිසා. එයාට ඕනේ වුණේ මිනිස්සුන්ගේ මතකයේ රැඳෙන්න.
+
+THE ROAD TO FORMULA ONE
+
+Karting වල අවුරුදු 8කට පස්සේ එයා ජීවිතේ ලොකුම තීරණයක් ගත්තා. 1981 දී එංගලන්තෙට ගියා single-seater racing career එකක් හොයාගෙන. ඒක එච්චර ලේසි, ග්ලැමරස් ගමනක් වුණේ නෑ. සල්ලි අරපිරිමැස්මෙන් පාවිච්චි කරපු එයා second-hand van එකක රේස් වලට ගියේ, ඉංග්‍රීසිත් වැඩිය කතා කරන්න බැරුව. හැබැයි track එකේ එයා electric!
+
+1981 දී British Formula Ford 1600 Championship එක සම්පූර්ණයෙන්ම dominate කරලා titles ගොඩක් දිනුවා. එයාගේ පර්ෆෝමන්ස් එක කොච්චර දරුණුද කියනවනම්, එයා ටික කාලෙකට racing වලින් අයින් වෙලා තාත්තගේ බිස්නස් එකට එකතු වෙන්න හිතාගෙන ආයෙත් බ්‍රසීලයට ගියා. හැබැයි racing පිස්සුව එයාට කොහොමවත් අතාරින්න බැරි වුණා. 1982 දී ආයෙත් එංගලන්තෙට ඇවිත් British සහ European Formula Ford 2000 championships ඔක්කොම වගේ sweep කරලා දැම්මා (British series එකේ විතරක් රේස් 17න් 15ක් දිනුවා). ඒව වෙන ග්‍රහලෝකෙකින් ආපු කෙනෙක්ගේ numbers.
+
+1983 දි British Formula Three වලට ගියා West Surrey Racing එක්ක. Ralt RT3 Toyota එකක් drive කරපු එයා Martin Brundle එක්ක අන්තිම මොහොත වෙනකන් ඇදුනු, F3 දැකපු දරුණුම battle එකකින් පස්සේ title එක දිනුවා. ඒ අවුරුද්දේ නොවැම්බර් වල Macau Grand Prix එකත් දිනුවා. 1983 වෙද්දී එයා McLaren, Brabham, Williams, සහ Toleman කියන F1 ලෝකේ දැවැන්ත teams 4ටම test කරලා ඉවරයි. අන්තිමේදී එයා තමන්ගේ debut එකට තෝරගත්තේ Toleman team එක. සල්ලි අඩු පොඩි ටීම් එකක් වුණත්, ඒගොල්ලෝ තමයි Senna ට චාන්ස් එක දුන්නේ. අනිත් දේවල් ඉතින් ඔයාලා දන්නවනේ!
+
+THE F1 DEBUT - AND THAT MONACO MOMENT
+
+Senna ගේ F1 debut එක වුණේ 1984 Brazilian Grand Prix එකේදී. එයා පද්දේ Toleman-Hart එකක්. ඒ කාලේ තිබුණ Renault හරි BMW engines වල power එක කිට්ටුවටවත් යන්න බැරි turbocharged Hart engine එකක් තමයි ඒකේ තිබ්බේ. ඒත් රේස් 6ක් යද්දී Senna F1 ඉතිහාසයේ jaw-dropping ම performance එකක් දුන්නා.
+
+ඒ 1984 Monaco. Track එකට හොඳටම වැහැලා. තමන්ගේ uncompetitive Toleman කාර් එකෙන් 13 වෙනියට පටන් ගත්ත Senna පලවෙනි lap එක ඉවර වෙද්දී 9 වෙනියා. Lap 19 වෙද්දී 2nd place ඇවිත් ඉස්සරහින්ම හිටපු Alain Prost ගේ McLaren එක පස්සේ එලෙව්වා, physics සහ logic වලටවත් තේරුම් ගන්න බැරි වේගෙකින්. Dry conditions වලදිවත් overtake කරන්න අමාරු මේ track එකේ Senna අනිත් හැමෝටම වඩා fast වුණා. Prost ගේ lead එක වේගෙන් අඩු වෙද්දී, ගෙවල් වල ඉඳන් match එක බලපු අයට තමන්ගේ ඇස් අදහාගන්න බැරි වුණා. ඊටපස්සේ, lap 32 දී වැස්ස වැඩි වුණාම race director Jacky Ickx රතු කොඩිය දාලා රේස් එක නැවැත්තුවා. Prost ව winner කළා, Senna second. ගොඩක් අය අදටත් කියන්නේ Senna දිනන එක නවත්තන්නමයි ඒක කලේ කියලා. කොහොම වුණත්, inferior car එකකින් ඇවිත් Monaco දිනන්න ඔන්න මෙන්න හිටපු මේ rookie F1 වලට එක දෙයක් තේරුම් කරලා දුන්නා: මෙයා නිකන්ම තවත් talented young driver කෙනෙක් නෙවෙයි, ඊට ගොඩක් එහා ගියපු කෙනෙක්!
+
+LOTUS AND THE FIRST VICTORIES
+
+1985 දි Team Lotus වලට ගිය Senna ට, එයාගේ talent එකට හරියන wins ටික ලැබෙන්න ගත්තා. පළවෙනි win එක ආවේ 1985 Portuguese Grand Prix (Estoril) වලදී, ඒකත් වැස්සේ! Drive කරන්නම බැරි conditions වල අනිත් හැමෝවම වගේ (second ආපු Michele Alboreto ඇරෙන්න) lap කරලා ඔහු ඒක දිනුවා. ඒකෙන් ඔහුව නිකන්ම "very promising" තත්වේ ඉඳන් "generational talent" කෙනෙක් බවට පත් කළා.
+
+Lotus එකේ හිටපු 1985-1987 අවුරුදු 3 ඇතුලත victories 6ක් ගත්තා වගේම එයාගේ qualifying හැකියාව ගැන මුළු ලෝකෙම කතා කරන්න ගත්තා. එයාගේ pole position frequency එක හිතාගන්නවත් බැරි තරම්. Car එකේ absolute limit එකටම ගිහින් single flying lap එකක් යන්න එයාට තිබ්බේ driving technique එකකට වඩා supernatural හැකියාවක්.
+
+THE McLAREN YEARS - DYNASTY, DOMINANCE, AND DESTINY
+
+Senna ගේ career එකේ ලොකුම පරිච්ඡේදය පටන් ගත්තේ 1988 දී McLaren එකට ආවම. ඒ වෙද්දී reigning World Champion වුණ Alain Prost තමයි එයාගේ teammate. McLaren Honda MP4/4 කියන්නේ F1 දැකපු dominant ම car එක. 1988 රේස් 16න් 15ක් ඒක දිනුවා. 16න් 15ක්! මේක අදටත් F1 ඉතිහාසයේ ලොකුම single-season record එකක්. Senna 8යි, Prost 7යි. ජපානයේ Suzuka වලදී race start එකේදී engine එක stall වෙලත්, ආපහු recover වෙලා ගිහින් රේස් එක දිනපු 28 හැවිරිදි Senna තමන්ගේ පළවෙනි World Champion title එක දිනාගත්තා.
+
+හැබැයි 1988 දිම McLaren garage එක ඇතුලේ ප්‍රශ්න පටන් ගත්තා. ලෝකෙ හොඳම drivers ලා දෙන්නෙක් එකම කාර් එකේ, දෙන්නටම දිනන්න ඕනේ වුණාම ලොකු conflict එකක් එන එක සාමාන්‍යයිනෙ.
+
+1989 දී ඒක පුපුරලා ගියා. Suzuka වලදී Prost යි Senna යි හැප්පුණා (collided). Track එකෙන් එලියට ගිය Senna marshals ලගේ උදව්වෙන් ආයෙත් track එකට ඇවිත් Alessandro Nannini ව overtake කරලා රේස් එක දිනුවත්, එයාව controversially disqualify කළා (collision එක වෙලාවේ chicane එක miss කරපු නිසා). ඒකෙන් Prost 1989 World Champion වුණා. FIA president Jean-Marie Balestre (Prost ගේ යාළුවෙක් විදිහට ප්‍රසිද්ධ) ගත්තු මේ තීරණය Senna ව වගේම ගොඩක් අයව තරහ ගැස්සුවා. ඒක ඒ කාලේ F1 ඉතිහාසයේ ලොකුම ප්‍රශ්නකාරී තීරණය වුණා.
+
+1990 දි Prost McLaren එකෙන් අයින් වෙලා Ferrari එකට ගියා. ඒත් rivalry එක අඩු වුණේ නෑ. ආයෙමත් Suzuka වල. Senna pole position එකේ හිටියත් එයාට track එකේ clean side එක දුන්නේ නෑ. Lap 1, corner 1 වලදීම Senna කෙලින්ම ගිහින් Prost ගේ Ferrari එකේ හැප්පුවා. දෙන්නම out, Senna World Champion වුණා. පස්සේ කාලෙක Senna පිළිගත්තා ඒක 1989 දී එයාට කරපු දේට දුන්න deliberate answer එකක් (හිතාමතා කරපු දෙයක්) කියලා. මේ වගේ championship-deciding collisions දෙකක් එකම drivers ලා දෙන්නා අතරේ, එකම track එකේ, පිට පිට අවුරුදු දෙකකදී වුණ එක ආයෙ කවදාවත් F1 වල දකින්න ලැබෙන එකක් නෑ.
+
+1991 දි තුන්වෙනි title එකත් දිනුවා (රේස් 7ක් දිනලා). ඒ වෙද්දී එයා තමයි වයස 31න් මේක කරපු F1 ඉතිහාසයේ ලාබාලතම 3-time World Champion.
+
+TEARS AT INTERLAGOS - THE 1991 BRAZIL GP
+
+Senna ගේ victories 41 න්, 1991 මාර්තු 24 Interlagos වල වුණ දේ තරම් emotional බරක් තියෙන වෙන කිසිම රේස් එකක් නෑ. ඒ එයාගේ home race එක. අවුරුදු 7ක් තිස්සේ දිනන්න ට්‍රයි කරපු රේස් එක. 1984, 1985, 1987, 1988, 1990 හැම අවුරුද්දෙම මොකක් හරි වෙලා එයාට ඒක නැති වුණා. බ්‍රසීලියානුවන් 70,000ක් grandstands වල බලාගෙන හිටියා මේ පාරවත් දිනයි කියලා.
+
+Pole එකෙන් පටන් අරන් race එකම ලීඩ් කළා. හැබැයි අන්තිම laps ටිකේදී එයාගේ McLaren MP4/6 එකේ gearbox එක fail වෙන්න ගත්තා. අන්තිමට 6th gear එක ඇරෙන්න අනිත් ඔක්කොම නැති වුණා (6th කියන්නේ fastest sections වලට විතරක් පාවිච්චි කරන එක). Slow corners වලදි පවා එයා ගියේ 6th gear එකෙන් (engine එක stall වෙන එක නවත්තගන්න ගමන්). කායිකව වගේම තාක්ෂණිකව මේක කරන්නම බැරි දෙයක්. පිටිපස්සෙන් Nigel Mansell තමන්ගේ Williams එකෙන් වේගෙන් එනවා, gap එක අඩු වෙනවා.
+
+හැබැයි Senna අතෑරියේ නෑ. F1 ඉතිහාසයේ අමාරුම laps ටිකක් ගිහින් කොහොමහරි එයා දිනුවා. Race එක ඉවරවෙලා මිනිස්සු track එකට පනිද්දී, එයා කාර් එකෙන් බැස්සේ ඇඟට පණ නැතුව. Muscle cramps ඇවිත් අත් උස්සගන්නවත් බැරුව. Podium එකට යන්නත් එයාට අනිත් අයගේ උදව් ඕනේ වුණා. බ්‍රසීලියානු කොඩිය අතේ තියාගෙන, ඇස්වලින් කඳුළු පෙරාගෙන එයා හිටපු විදිහ මුළු බ්‍රසීලයටම කවදාවත් අමතක වෙන්නේ නෑ.
+
+එයා කිව්වා: "ඒක මගේ ජීවිතේ ලොකුම victory එක නෙවෙයි, හැබැයි මම මගේ උපරිමයම දීපු එක." බ්‍රසීලයේ මිලියන ගාණක් මිනිස්සුන්ට නම්, ඒක ඒගොල්ලෝ දැකපු ශ්‍රේෂ්ඨතම ජයග්‍රහණය!
+
+1992, 1993, AND THE FINAL SEASONS
+
+1992 season එකේ Williams FW14B (ඒ කාලේ තිබුණ advanced ම කාර් එක) එක්ක Nigel Mansell සම්පූර්ණයෙන්ම dominate කළා. 1993 දී Honda F1 වලින් අයින් වුණාම Senna ට drive කරන්න වුණේ power අඩු McLaren Ford එකක්. Prost තමන්ගේ Williams FW15C එකෙන් title එක දිනුවා. හැබැයි ඒ අවුරුද්දේ Senna ලෝකෙට පෙන්නුවා එයා කවුද කියලා. පළවෙනි එක තමයි 1993 European Grand Prix (Donington Park). ගොඩක් අයට survive වෙන්නවත් බැරි වුණ ඒ මහා වැස්සේ, පලවෙනි lap එකේදීම කාර් 4ක් (Schumacher, Wendlinger, Hill, Prost) overtake කරලා ලීඩ් එක ගත්තා. ඒක අදටත් හඳුන්වන්නේ "The Lap of God" කියලා. දෙවෙනි එක තමයි 6 වෙනි වතාවටත් Monaco Grand Prix එක දිනපු එක. ඒක all-time record එකක්!
+
+Senna ගේ අන්තිම win එක ආවේ 1993 Australian GP (Adelaide) වලදී. ඊටපස්සේ දශකයකට පස්සේ McLaren එකෙන් අයින් වෙලා 1994 දී Williams Renault එකට ගියා 4 වෙනි title එක දිනන්න. හැබැයි FW16 කාර් එක drive කරන්න හරිම අමාරු, unpredictable එකක් වුණා. 1994 මුල් රේස් දෙකේම pole ගත්තත් දිනන්න බැරි වුණා. Michael Schumacher එක්ක හැප්පෙන්න ගිය Senna, Imola (San Marino GP) වලට එද්දී points 20ක් පිටිපස්සෙන් හිටියේ.
+
+MAY 1, 1994 — THE DAY RACING CHANGED FOREVER
+
+1994 San Marino GP (Imola) කියන්නේ motorsport ඉතිහාසයේ අඳුරුතම සතිඅන්තයක්. සෙනසුරාදා (අප්‍රේල් 30) Austrian driver කෙනෙක් වුණ Roland Ratzenberger qualifying වලදී මැරුණා. Senna ඒකෙන් ගොඩක් කම්පනයට පත් වුණා. Race කරන්නේ නැතුව ඉන්නත් හිතුවා. ඒ වගේම drivers ලගේ safety එක ගැන කතා කරන්න Grand Prix Drivers' Association එක ආයේ පටන් ගන්න Gerhard Berger එක්ක කතා කළා.
+
+මැයි 1 ඉරිදා, Senna pole එකෙන් පටන් අරන් ලීඩ් කරගෙන ගියා. Lap 7 දී safety car එක අයින් වුණාම, 305 km/h වේගෙන් Tamburello corner එකට එද්දී එයාගේ Williams FW16 එක හැරුණේ නෑ. Steering input එකක් නැතුව කෙලින්ම ගිහින් concrete barrier එකේ හැප්පුණා (impact speed එක 211 km/h).
+
+තත්පර 26ක් යද්දී Professor Sid Watkins ඇතුළු medical team එක ආවත් Senna critically injured. හවස 6:40 ට එයා මියගිය බව නිවේදනය කළා (වයස 34). හැප්පිච්ච වේගෙට suspension piece එකක් helmet visor එක විදගෙන ගිහින් තිබුණා.
+
+පස්සේ කරපු පරීක්ෂණ වලින් හෙළිවුණේ steering column එකේ modification එකක් නිසා මේක වුණා කියලා. Steering wheel එක ළඟ වැඩියි කියලා Senna කියපු නිසා 2mm වලින් ඒක පහත් කරලා weld කරලා තිබුණා. ඒ welded joint එක කැඩිලා ගිය නිසා තමයි හැරවෙන්නේ නැතුව කෙලින්ම ගියේ කියලයි හොයාගත්තේ. කොහොම වුණත් හරියටම මොකද වුණේ කියන එක අදටත් විවාදයට ලක්වෙන දෙයක්.
+
+බ්‍රසීලයේ 200,000කට වඩා සෙනඟක් පැය ගණන් පෝලිමේ හිටියා තත්පර 10ක් එයාගේ දේහය දිහා බලන්න. Rubens Barrichello, Gerhard Berger, Damon Hill, Alain Prost, Emerson Fittipaldi වගේ අය තමයි එයාගේ coffin එක ඉස්සුවා. බ්‍රසීලයට එදා වගේ කඳුළු පිරුණු දවසක් ආයෙත් ආවේ නෑ.
+
+THE NUMBERS THAT DEFINE A LEGEND
+
+Seasons 11ක්, 161 starts. 41 wins. 65 pole positions (40.1% rate!). 80 podiums. 3 World Championships. Sebastian Vettel 2012 දි ඒ record එක කඩනකන් F1 ඉතිහාසයේ ලාබාලතම 3-time champ වුණේ එයා. එයා කවදාවත් දිනන්න බැරි team එකකට drive කලේ නෑ. උපරිමයෙන් පහල කිසිම දෙයක් බාරගත්තෙත් නෑ.
+
+THE LEGACY - A LIGHT THAT REFUSES TO GO OUT
+
+1994 නොවැම්බර් වල සහෝදරිය Viviane, Instituto Ayrton Senna (Ayrton Senna Institute) පටන් ගත්තා. ඒක Senna මැරෙන්න කලින් කරපු පොරොන්දුවක්. ඒ හරහා මේ වෙද්දී $80 million වලට වඩා බ්‍රසීලයේ දුප්පත් ළමයින්ගේ අධ්‍යාපනයට වියදම් කරලා තියෙනවා. ඒක තමයි Senna අන්තිමට දිනපු, හැබැයි කවදාවත් points හරි podiums හරි නොලැබුණු අනිත් Championship එක!
+
+එයාගේ බෑනා Bruno Senna 2012 දි Williams එකෙන් F1 වලට ආවා (Senna 1994 drive කරපු team එකෙන්ම). 2012 Brazil GP එකේදී එයා FW34 එකක් අරන් Interlagos වල රේස් කරපු විදිහ ගොඩක් emotional moment එකක් වුණා.
+
+ඒ වගේම 2024 නොවැම්බර් වල Netflix එකෙන් "Senna" miniseries එක රිලීස් කළා. $170 million වියදම් කරලා හදපු මේකට Gabriel Leone තමයි Senna ට හිටියේ. Critics ලගෙන් mixed reviews ආවත් (Metacritic 50/100), Senna ව ලයිව් දැකපු නැති අලුත් පරම්පරාවට මේක ලොකු හැඟීමක් ගෙනාවා.
+
+2026 - SENNA'S SPIRIT LIVES AT INTERLAGOS THIS VERY WEEKEND
+
+මේ සතිඅන්තයේ තියෙන 2026 São Paulo Grand Prix එකට කලින් දවසේ (බදාදා), අපේ අලුත්ම 2026 World Champion (ගිය සතියේ Mexico වලදී දිනපු ඉතිහාසයේ ලාබාලතම ශූරයා) Kimi Antonelli, පිට පිට දෙවෙනි අවුරුද්දටත් Senna ගේ සොහොනට ගියා. එයා Senna ගේ 1986 Lotus එකේ වාඩි වෙලත් බැලුවා.
+
+"එයා හිටපු driver, ඒක incredible. ඒ වගේම එයාගේ work ethic, dedication, passion එක... එයාගේ empathy එක තමයි මාව පොඩි කාලේ ඉඳන් inspire කලේ" කියලා 20 හැවිරිදි Antonelli කිව්වා. මේ සතිඅන්තයේ 1991 Senna ගේ පළවෙනි home win එකට අවුරුදු 35ක් පිරෙන නිසා Antonelli special Senna tribute helmet එකක් දාගෙන තමයි රේස් කරන්නේ.
+
+කතාව දිගටම යනවා... හැබැයි ඒ පරණ ගිනිසිළුව කවදාවත් නිවෙන්නේ නෑ. මේ සතිඅන්තයේ Interlagos වල ග්‍රෑන්ඩ්ස්ටෑන්ඩ් එක කෑගහද්දී, බ්‍රසීල කොඩි වැනෙද්දී, ඒ එක්කෙනෙක්ගේ ආත්මය හැමතැනම තියෙයි. ඒ Ayrton Senna da Silva (March 21, 1960 — May 1, 1994).
+
+161 starts. 41 wins. 65 poles. 3 championships. 1 soul of Brazil.
+
+a කවදාවත් එතනින් ඈත් වෙලා නෑ. එයා ඒ circuit එකේම කොටසක් වෙලා ඉවරයි!
+
+මේ ආටිකල් එක කියවද්දී ඔයාටත් මොකක් හරි දැනුනා නම් — පල්ලෙහායින් කමෙන්ට් එකක් දාගෙන යන්න: ඔයා ආසම කරන Senna moment එක මොකක්ද? 1984 Monaco rain drive එකද? 1991 Interlagos වල podium එකේ වැටිච්ච එකද? Donington වල The Lap of God ද? අපිට කියන්න. ඔයා Senna ගේ කතාව අහපු පළවෙනි වතාව මේක නම් - Welcome! ඔයා මේ ආදරේ කරන්න පටන් ගත්තේ F1 ඉතිහාසයේ හිටපු ශ්‍රේෂ්ඨතමයාට. ❤️🇧🇷`.split(/\n{2,}/),
+    author: {
+      name: "F1 Paddock SL",
+      role: "Road to Formula 1 Series",
+      bio: "Sinhala race-weekend stories, records and the untold tales from the Formula 1 paddock.",
+      avatar: "/images/Logo.png",
+    },
+    pubDate: "2026-11-09T12:00:00.000Z",
+    readTime: "11 min read",
+    comments: [],
+  },
+  {
     id: "road-to-f1-smooth-operator-carlos-sainz",
     title:
       "Road To Formula 1 Series - Ep 03 - Madrid නුවරින් ආපු Smooth Operator ගේ සම්පූර්ණ කතාව!",
