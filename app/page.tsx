@@ -278,7 +278,7 @@ export default async function Home() {
                     </span>
                     Facebook followers
                   </span>
-                  <span className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold tracking-tight text-foreground">
+                  <span className="font-space-grotesk text-3xl font-bold tracking-tight text-foreground">
                     {new Intl.NumberFormat("en-US").format(
                       fbStats.followers_count ?? fbStats.fan_count ?? 0,
                     )}

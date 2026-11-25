@@ -11,6 +11,20 @@
   font-display: swap;
 }
 
+/* Space Grotesk — used for countdown numbers and FB follower count. Loaded via Google Fonts link. */
+.font-space-grotesk {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+}
+
+/* Bagovick — custom display face for the hero title. Served from /public. */
+@font-face {
+  font-family: "Bagovick";
+  src: url("/bagovick.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ */
