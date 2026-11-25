@@ -2,7 +2,6 @@
 
 import type { JSX } from "react";
 import { Newspaper, Play } from "lucide-react";
-import { TextShimmer } from "@/components/text-shimmer";
 import { cn } from "@/lib/utils";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -53,16 +52,9 @@ export function SourceBadge({
       style={{ backgroundColor: meta.color }}
     >
       {renderIcon?.(cn("h-3 w-3 shrink-0", tag.trim().toLowerCase() === "facebook" && "h-3.5 w-3.5"))}
-      <TextShimmer
-        as="span"
-        className="inline-block text-[10px] font-semibold leading-none tracking-[0.1em]"
-        shimmerColor="rgba(255,255,255,0.95)"
-        baseColor="rgba(255,255,255,0.6)"
-        duration={2.4}
-        spread={1.6}
-      >
+      <span className="inline-block text-[10px] font-semibold leading-none tracking-[0.1em]">
         {tag}
-      </TextShimmer>
+      </span>
     </span>
   );
 }

@@ -5,7 +5,8 @@ import {
   Abhaya_Libre,
   Gemunu_Libre,
   Russo_One,
-  Bricolage_Grotesque,
+  Poppins,
+  Space_Grotesk,
 } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -64,13 +65,19 @@ const f1Font = Russo_One({
 });
 
 // Big English display face for large headlines (h1s, hero + section titles).
-// Latin-only, so Sinhala glyphs fall through to Gemunu/Abhaya further down
-// the heading stack. The optical-size axis is requested so the browser can
-// pick the display cut for the larger sizes (see `font-optical-sizing`).
-const bigHeading = Bricolage_Grotesque({
+// Poppins carries the display weight now. Latin-only, so Sinhala glyphs fall
+// through to Gemunu/Abhaya further down the heading stack.
+const bigHeading = Poppins({
   subsets: ["latin"],
-  axes: ["opsz"],
-  variable: "--font-bricolage",
+  weight: ["400", "500", "600"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -161,10 +168,13 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geist.variable} ${jetbrains.variable} ${sinhala.variable} ${sinhalaHeading.variable} ${f1Font.variable} ${bigHeading.variable}`}
+      data-scroll-behavior="smooth"
+      className={`${geist.variable} ${jetbrains.variable} ${sinhala.variable} ${sinhalaHeading.variable} ${f1Font.variable} ${bigHeading.variable} ${spaceGrotesk.variable}`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body>
-        <script id="theme-init" dangerouslySetInnerHTML={{ __html: themeInit }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}

@@ -52,7 +52,7 @@ export default async function StoriesPage() {
                 <img
                   src={featured.image}
                   alt=""
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                 />
               ) : (
                 <div className="absolute inset-0" />
@@ -76,7 +76,7 @@ export default async function StoriesPage() {
               <Button asChild className="mt-1 w-fit gap-2 bg-f1red text-white hover:bg-f1red-dark">
                 <Link href={`/stories/${featured.id}`} className="gap-1.5">
                   Read the story
-                  <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                  <ArrowRight className="size-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5" aria-hidden="true" />
                 </Link>
               </Button>
             </div>

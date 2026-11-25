@@ -56,7 +56,7 @@ export default function AboutPage() {
             </Link>
             . Follow along on{" "}
             <Link
-              href="https://web.facebook.com/profile.php?id=61574396222083"
+              href="https://web.facebook.com/f1paddockslr/"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-f1red underline-offset-2 hover:underline"

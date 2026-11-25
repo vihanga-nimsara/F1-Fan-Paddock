@@ -111,7 +111,7 @@ export default function CommentSection({
         <button
           type="submit"
           disabled={status === "posting"}
-          className="w-fit rounded-lg bg-pebble px-4 py-2 font-display text-[12px] font-semibold tracking-[0.08em] text-carbon transition-colors hover:bg-f1red hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+          className="w-fit rounded-lg bg-pebble px-4 py-2 font-display text-[12px] font-semibold tracking-[0.08em] text-carbon transition-refined hover:bg-f1red hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
         >
           {status === "posting" ? "Posting…" : "Post comment"}
         </button>

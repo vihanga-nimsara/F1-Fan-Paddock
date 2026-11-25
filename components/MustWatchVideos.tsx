@@ -50,7 +50,7 @@ export default function MustWatchVideos({ groups }: { groups: VideoGroup[] }) {
                   key={v.id}
                   type="button"
                   onClick={() => setActive(v)}
-                  className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 text-left transition-colors duration-200 hover:bg-pebble-8"
+                  className="group flex flex-col overflow-hidden rounded-xl bg-pebble-5 text-left transition-refined hover:bg-pebble-8"
                 >
                   <div className="relative aspect-video w-full overflow-hidden">
                     {/* eslint-disable-next-line @next/no-img-element, @next/next/no-img-element */}

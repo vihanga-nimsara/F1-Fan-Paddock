@@ -101,7 +101,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             <div className="relative z-20 flex items-center gap-4">
               <Link
                 href="/"
-                className="flex shrink-0 items-center gap-2 rounded-[10px] px-2 py-1.5"
+                className="flex shrink-0 items-center gap-2 rounded-[5px] px-2 py-1.5"
               >
                 <F1Logo className="h-6 w-auto" />
                 <span className="font-heading text-base font-bold tracking-tight">
@@ -193,7 +193,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
                       href={item.href}
                       onClick={() => setMobileMenuOpen(false)}
                       className={cn(
-                        "flex items-center gap-3 rounded-[10px] px-3 py-2 text-sm font-medium transition-colors hover:bg-muted",
+                        "flex items-center gap-3 rounded-[5px] px-3 py-2 text-sm font-medium transition-refined hover:bg-muted",
                         isActive(item.href)
                           ? "bg-muted text-foreground"
                           : "text-muted-foreground",

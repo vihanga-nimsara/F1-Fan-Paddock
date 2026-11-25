@@ -60,7 +60,7 @@ export default async function ReviewsPage() {
                 return (
                   <article
                     key={race.round}
-                    className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-5 transition-colors duration-200 hover:bg-pebble-8"
+                    className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-5 transition-refined hover:bg-pebble-8"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">

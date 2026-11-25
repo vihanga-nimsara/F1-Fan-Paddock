@@ -217,8 +217,8 @@ export function nationalityFlagImage(
   return `https://flagcdn.com/w${size}/${iso}.png`;
 }
 
-// Free, openly-licensed F1 circuit track-map SVGs (julesr0y/f1-circuits-svg).
-// Keyed by Jolpica/Ergast circuitId -> repo slug (repo uses "<slug>-N.svg").
+// Free, openly-licensed F1 circuit track-map SVGs (MisterSix2295/f1-circuits-svg).
+// Keyed by Jolpica/Ergast circuitId -> repo slug (repo uses "<slug>-1.svg").
 const CIRCUIT_SLUGS: Record<string, string> = {
   monaco: "monaco",
   bahrain: "bahrain",
@@ -244,7 +244,6 @@ const CIRCUIT_SLUGS: Record<string, string> = {
   red_bull_ring: "spielberg",
   shanghai: "shanghai",
   baku: "baku",
-  madring: "madring",
   sepang: "sepang",
 };
 
@@ -255,7 +254,7 @@ export function getCircuitImage(
   if (!circuitId) return null;
   const slug = CIRCUIT_SLUGS[circuitId];
   if (!slug) return null;
-  return `https://raw.githubusercontent.com/julesr0y/f1-circuits-svg/main/circuits/minimal/black/${slug}-1.svg`;
+  return `https://raw.githubusercontent.com/MisterSix2295/f1-circuits-svg/main/circuits/black/${slug}-1.svg`;
 }
 
 const isServer = typeof window === "undefined";
@@ -269,12 +268,24 @@ function openf1Headers(): Record<string, string> {
   return token ? { Authorization: `Bearer ${token}` } : {};
 }
 
-async function fetchJson(url: string, revalidate = 3600) {
+async function fetchJson(url: string, revalidate = 3600, attempt = 0): Promise<any> {
   const res = await fetch(url, {
-    headers: { Accept: "application/json", ...(isServer ? openf1Headers() : {}) },
+    headers: {
+      Accept: "application/json",
+      "User-Agent": "paddock-bulletin/1.0",
+      ...(isServer ? openf1Headers() : {}),
+    },
     ...(isServer ? { next: { revalidate } } : {}),
   });
-  if (!res.ok) throw new Error(`API error ${res.status}: ${url}`);
+  if (!res.ok) {
+    // Retry on rate-limit / transient errors with exponential backoff.
+    if ((res.status === 429 || res.status === 403 || res.status >= 500) && attempt < 3) {
+      const delay = 500 * Math.pow(2, attempt);
+      await new Promise((r) => setTimeout(r, delay));
+      return fetchJson(url, revalidate, attempt + 1);
+    }
+    throw new Error(`API error ${res.status}: ${url}`);
+  }
   return res.json();
 }
 

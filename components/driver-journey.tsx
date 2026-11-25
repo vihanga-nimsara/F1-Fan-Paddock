@@ -96,7 +96,7 @@ export default function DriverJourney({
                 onClick={() => setLang(opt.key)}
                 aria-pressed={active === opt.key}
                 className={cn(
-                  "rounded-full px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors",
+                  "rounded-full px-4 py-1.5 text-[12px] font-semibold uppercase tracking-[0.12em] transition-refined",
                   active === opt.key
                     ? "bg-f1red text-white"
                     : "text-muted-foreground hover:text-foreground",

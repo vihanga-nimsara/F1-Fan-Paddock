@@ -29,7 +29,7 @@ const PADDOCK = [
 const SOCIAL = [
   {
     label: "Facebook",
-    href: "https://web.facebook.com/profile.php?id=61574396222083",
+    href: "https://web.facebook.com/f1paddockslr/",
     icon: (
       <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
         <path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 1.9h-2.3V22A10 10 0 0 0 22 12Z" />
@@ -78,7 +78,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="text-white transition-opacity hover:opacity-75"
+                  className="text-white transition-refined hover:opacity-75"
                 >
                   {s.icon}
                 </a>
@@ -93,7 +93,7 @@ export default function Footer() {
               <ul className="space-y-3 text-sm text-neutral-300">
                 {EXPLORE.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="transition-colors hover:text-neutral-400">
+                    <Link href={l.href} className="transition-refined hover:text-neutral-400">
                       {l.label}
                     </Link>
                   </li>
@@ -106,7 +106,7 @@ export default function Footer() {
               <ul className="space-y-3 text-sm text-neutral-300">
                 {RESOURCES.map((l) => (
                   <li key={l.href}>
-                    <Link href={l.href} className="transition-colors hover:text-neutral-400">
+                    <Link href={l.href} className="transition-refined hover:text-neutral-400">
                       {l.label}
                     </Link>
                   </li>
@@ -121,7 +121,7 @@ export default function Footer() {
                   <li key={l.label}>
                     <Link
                       href={l.href}
-                      className="flex items-center gap-2 transition-colors hover:text-neutral-400"
+                      className="flex items-center gap-2 transition-refined hover:text-neutral-400"
                     >
                       {l.label}
                       {l.live && (

@@ -86,21 +86,22 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       animate={{
         backdropFilter: visible ? "blur(10px)" : "none",
         boxShadow: visible
-          ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
+          ? "0 0 0 1px rgba(34, 42, 53, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05), 0 12px 40px rgba(47, 48, 55, 0.08)"
           : "none",
         width: visible ? "40%" : "100%",
         y: visible ? 20 : 0,
       }}
       transition={{
         type: "spring",
-        stiffness: 200,
-        damping: 50,
+        stiffness: 260,
+        damping: 34,
+        mass: 0.9,
       }}
       style={{
         minWidth: "800px",
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-[10px] border border-transparent bg-transparent px-4 py-2 lg:flex dark:bg-transparent lg:mt-3",
+        "relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-[5px] border border-transparent bg-transparent px-4 py-2 lg:flex dark:bg-transparent lg:mt-3",
         visible && "border border-border bg-card/85 dark:bg-neutral-950/85",
         className,
       )}
@@ -137,12 +138,14 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           {item.active && (
             <motion.div
               layoutId="nav-active"
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
               className="absolute inset-0 h-full w-full rounded-full bg-muted"
             />
           )}
           {hovered === idx && !item.active && (
             <motion.div
               layoutId="nav-hover"
+              transition={{ type: "spring", stiffness: 380, damping: 30 }}
               className="absolute inset-0 h-full w-full rounded-full bg-muted/70"
             />
           )}
@@ -161,7 +164,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
       animate={{
         backdropFilter: visible ? "blur(10px)" : "none",
         boxShadow: visible
-          ? "0 0 24px rgba(34, 42, 53, 0.06), 0 1px 1px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(34, 42, 53, 0.04), 0 0 4px rgba(34, 42, 53, 0.08), 0 16px 68px rgba(47, 48, 55, 0.05), 0 1px 0 rgba(255, 255, 255, 0.1) inset"
+          ? "0 0 0 1px rgba(34, 42, 53, 0.05), 0 1px 2px rgba(0, 0, 0, 0.05), 0 12px 40px rgba(47, 48, 55, 0.08)"
           : "none",
         width: visible ? "90%" : "100%",
         paddingRight: visible ? "12px" : "0px",
@@ -171,8 +174,9 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
       }}
       transition={{
         type: "spring",
-        stiffness: 200,
-        damping: 50,
+        stiffness: 260,
+        damping: 34,
+        mass: 0.9,
       }}
       className={cn(
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
@@ -211,9 +215,11 @@ export const MobileNavMenu = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, y: -8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -6, scale: 0.98 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+          style={{ transformOrigin: "top center" }}
           className={cn(
             "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg border border-border bg-card px-4 py-8 shadow-lg dark:bg-card",
             className,
@@ -276,15 +282,15 @@ export const NavbarButton = ({
   | React.ComponentPropsWithoutRef<"button">
 )) => {
   const baseStyles =
-    "px-4 py-2 rounded-[10px] bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center";
+    "px-4 py-2 rounded-[5px] bg-white button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] inline-block text-center";
 
   const variantStyles = {
     primary:
-      "shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+      "shadow-[0_0_0_1px_rgba(34,_42,_53,_0.04),_0_1px_2px_rgba(0,_0,_0,_0.05),_0_12px_40px_rgba(47,_48,_55,_0.08)]",
     secondary: "bg-transparent shadow-none dark:text-white",
-    dark: "bg-black text-white shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]",
+    dark: "bg-black text-white shadow-[0_0_0_1px_rgba(34,_42,_53,_0.04),_0_1px_2px_rgba(0,_0,_0,_0.05),_0_12px_40px_rgba(47,_48,_55,_0.08)]",
     gradient:
-      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0px_2px_0px_0px_rgba(255,255,255,0.3)_inset]",
+      "bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-[0_1px_2px_rgba(0,_0,_0,_0.2)]",
   };
 
   return (

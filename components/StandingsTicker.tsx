@@ -65,7 +65,6 @@ export default function StandingsTicker({
           ))}
       </MarqueeContent>
       <MarqueeFade side="right" />
-      <span className="ticker-shine pointer-events-none absolute inset-0 z-[15]" aria-hidden="true" />
     </Marquee>
   );
 }
@@ -73,13 +72,12 @@ export default function StandingsTicker({
 function TickerRow({ item }: { item: TickerItem }) {
   const color = item.color ?? "var(--f1red)";
   return (
-    <span className="flex items-center gap-2.5 rounded-[5px] border border-border bg-card py-1.5 pr-3.5 pl-2.5 shadow-sm transition-colors duration-200 group-hover:border-f1red/50">
+    <span className="flex items-center gap-2.5 rounded-[5px] border border-border bg-card py-1.5 pr-3.5 pl-2.5 shadow-sm transition-refined group-hover:border-f1red/50">
       <span className="relative shrink-0">
         <span
           className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 bg-muted"
           style={{
             borderColor: color,
-            boxShadow: `0 0 14px ${color}40`,
           }}
         >
           {item.avatar ? (

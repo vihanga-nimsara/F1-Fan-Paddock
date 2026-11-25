@@ -2,6 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Bagovick — custom display face for the hero title. Served from /public. */
+@font-face {
+  font-family: "Bagovick";
+  src: url("/bagovick.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ */
@@ -28,7 +37,7 @@
   /* Fonts */
   --font-display: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-heading: var(--font-geist), "Geist", var(--font-gemunu), var(--font-sinhala), system-ui, sans-serif;
-  --font-heading-big: var(--font-bricolage), "Bricolage Grotesque", var(--font-geist), "Geist", var(--font-gemunu), var(--font-sinhala), system-ui, sans-serif;
+  --font-heading-big: var(--font-poppins), "Poppins", var(--font-geist), "Geist", var(--font-gemunu), var(--font-sinhala), system-ui, sans-serif;
   --font-body: var(--font-geist), "Geist", var(--font-sinhala), system-ui, sans-serif;
   --font-timer: var(--font-f1), "Russo One", system-ui, sans-serif;
   --font-f1-display: "Formula1 Display-Black", var(--font-f1), "Russo One", system-ui, sans-serif;
@@ -196,6 +205,18 @@
   /* F1 brand */
   --f1red: #e10600;
 
+  /* Motion system --------------------------------------------------
+     One shared vocabulary for every transition in the UI.
+     Fast + decisive: short durations, a single expressive ease-out for
+     entrances, a plain ease-in for exits, and a small press scale. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --press-scale: 0.97;
+
   /* Ink alpha palette — light = near-black on white */
   --ink-04: rgb(10 10 10 / 4%);
   --ink-05: rgb(10 10 10 / 5%);
@@ -326,11 +347,10 @@
 /* ------------------------------------------------------------------ */
 
 .font-headline {
-  font-family: var(--font-heading-big), "Bricolage Grotesque", "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-heading-big), "Poppins", "Geist", ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Bricolage Grotesque ships an optical-size axis; `auto` lets the browser pick
-   the display cut for the larger headline sizes. */
+/* Poppins is a geometric sans; keep optical sizing automatic for headlines. */
 .font-heading-big,
 .font-headline {
   font-optical-sizing: auto;
@@ -346,6 +366,38 @@
     max-width: 1200px;
     margin-inline: auto;
     padding-inline: var(--spacing-lg, 24px);
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion utilities                                                    */
+/* ------------------------------------------------------------------ */
+
+@layer utilities {
+  /* Shared timing for colour / background / opacity changes. */
+  .transition-refined {
+    transition-property: color, background-color, border-color, fill, stroke, opacity;
+    transition-duration: var(--dur-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  /* Transform-only motion (GPU friendly) for press + lift affordances. */
+  .pressable {
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .pressable:active {
+    transform: scale(var(--press-scale));
+  }
+
+  .hover-lift {
+    transition:
+      transform var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      border-color var(--dur-base) var(--ease-out);
+    will-change: transform;
+  }
+  .hover-lift:hover {
+    transform: translateY(-2px);
   }
 }
 
@@ -424,11 +476,11 @@ html::-webkit-scrollbar-thumb {
 
 .js-reveal [data-reveal] { opacity: 0; }
 .js-reveal [data-reveal].is-visible {
-  animation: revealUp 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: revealUp 0.55s var(--ease-out) both;
 }
 
 @keyframes revealUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: none; }
 }
 
@@ -437,29 +489,12 @@ html::-webkit-scrollbar-thumb {
 /* ------------------------------------------------------------------ */
 
 .ticker-enter {
-  animation: ticker-enter 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation: ticker-enter 0.55s var(--ease-out) both;
 }
 
 @keyframes ticker-enter {
-  from { opacity: 0; transform: translateX(-16px); }
+  from { opacity: 0; transform: translateX(-10px); }
   to   { opacity: 1; transform: none; }
-}
-
-.ticker-shine {
-  background: linear-gradient(
-    115deg,
-    transparent 42%,
-    color-mix(in srgb, var(--f1red) 9%, transparent) 50%,
-    transparent 58%
-  );
-  background-size: 220% 100%;
-  background-repeat: no-repeat;
-  animation: ticker-shine 7s linear infinite;
-}
-
-@keyframes ticker-shine {
-  from { background-position: 200% 0; }
-  to   { background-position: -200% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {

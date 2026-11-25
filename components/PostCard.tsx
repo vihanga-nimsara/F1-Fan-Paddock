@@ -26,7 +26,7 @@ export default function PostCard({
     <Link
       href={href}
       className={cn(
-        "group flex flex-col overflow-hidden rounded-xl bg-card text-card-foreground ring-1 ring-foreground/10 transition-colors duration-200 hover:ring-foreground/20",
+        "group flex flex-col overflow-hidden rounded-xl border border-foreground/10 bg-card text-card-foreground hover:border-foreground/20",
         className,
       )}
     >

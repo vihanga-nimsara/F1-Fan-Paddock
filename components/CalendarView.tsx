@@ -101,7 +101,7 @@ function GridCard({
 
   return (
     <article
-      className={`flex flex-col overflow-hidden rounded-xl border transition-shadow ${cardClass}`}
+      className={`flex flex-col overflow-hidden rounded-xl border transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${cardClass}`}
     >
       <div
         className={`flex items-center gap-3 border-b p-3 ${

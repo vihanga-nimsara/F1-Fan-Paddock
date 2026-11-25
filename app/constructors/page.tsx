@@ -29,7 +29,7 @@ export default async function ConstructorsPage() {
               <Reveal key={c.constructorId} delay={i * 0.04}>
                 <Link
                   href="/constructors"
-                  className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-4 transition-colors duration-150 hover:bg-pebble-8"
+                  className="flex flex-col gap-3 rounded-xl bg-pebble-5 p-4 transition-refined hover:bg-pebble-8"
                 >
                   <div className="flex items-center gap-3">
                     <span

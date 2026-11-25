@@ -55,13 +55,13 @@ function SectionHeader({ title }: { title: string }) {
 export default async function Home() {
   const [drivers, constructors, nextRaces, recentRaces, fbPosts, videos, channelVideos, fbStats] =
     await Promise.all([
-      getDriverStandings(),
-      getConstructorStandings(),
-      getNextRaces(7),
-      getRecentRaces(4),
-      getBlogPosts(10, "Facebook"),
-      getPlaylistVideos(YT_PLAYLIST, 6),
-      getChannelVideos(YT_CHANNEL, 3),
+      getDriverStandings().catch(() => []),
+      getConstructorStandings().catch(() => []),
+      getNextRaces(7).catch(() => []),
+      getRecentRaces(4).catch(() => []),
+      getBlogPosts(10, "Facebook").catch(() => []),
+      getPlaylistVideos(YT_PLAYLIST, 6).catch(() => []),
+      getChannelVideos(YT_CHANNEL, 3).catch(() => []),
       getFacebookPageStats().catch(() => null),
     ]);
 
@@ -70,7 +70,7 @@ export default async function Home() {
   );
 
   const ownPosts = getOwnPosts();
-  const moreOwn = ownPosts.slice(1);
+  const moreOwn = ownPosts;
 
   const latestPosts = [
     ...moreOwn.map((p) => ({
@@ -157,7 +157,7 @@ export default async function Home() {
           <section>
             <SectionHeader title="Latest from the Paddock" />
             <div className="grid gap-6 py-4 sm:grid-cols-2 xl:grid-cols-3">
-              {latestPosts.slice(0, 3).map((p) => (
+              {latestPosts.slice(0, 6).map((p) => (
                 <PostCard
                   key={p.id ?? p.href}
                   href={p.href}
@@ -278,7 +278,7 @@ export default async function Home() {
                     </span>
                     Facebook followers
                   </span>
-                  <span className="font-heading-big text-3xl font-bold tracking-tight text-foreground">
+                  <span className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold tracking-tight text-foreground">
                     {new Intl.NumberFormat("en-US").format(
                       fbStats.followers_count ?? fbStats.fan_count ?? 0,
                     )}
@@ -293,7 +293,7 @@ export default async function Home() {
                   className="shrink-0 bg-[#1877F2] text-white hover:bg-[#1877F2]/90"
                 >
                   <Link
-                    href="https://web.facebook.com/profile.php?id=61574396222083"
+                    href="https://web.facebook.com/f1paddockslr/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -311,7 +311,7 @@ export default async function Home() {
             <Button asChild variant="ghost" size="sm" className="mt-2 w-full">
               <Link href="/standings" className="gap-1.5">
                 Full standings
-                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowRight className="size-3.5 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             </Button>
           </section>
@@ -333,7 +333,7 @@ export default async function Home() {
                 <Link
                   key={t.href}
                   href={t.href}
-                  className="rounded-full border border-border bg-card px-3 py-1.5 text-[12px] font-medium text-foreground/80 transition-colors hover:border-f1red/50 hover:text-f1red"
+                  className="rounded-full border border-border bg-card px-3 py-1.5 text-[12px] font-medium text-foreground/80 transition-refined hover:border-f1red/50 hover:text-f1red"
                 >
                   {t.label}
                 </Link>
@@ -437,7 +437,7 @@ export default async function Home() {
               <Link
                 key={r.round}
                 href="/calendar"
-                className="group flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+                className="group hover-lift flex flex-col gap-2 rounded-2xl border border-border bg-card p-5 hover:shadow-lg hover:shadow-foreground/5"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
@@ -484,14 +484,14 @@ export default async function Home() {
               <Link
                 key={r.round}
                 href="/reviews"
-                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+                className="group hover-lift flex flex-col overflow-hidden rounded-2xl border border-border bg-card hover:shadow-lg hover:shadow-foreground/5"
               >
                 <div className="relative h-32 overflow-hidden bg-muted">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={photo}
                     alt={r.raceName}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                   />
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/5" />
                   {flag && (
@@ -503,7 +503,7 @@ export default async function Home() {
                     />
                   )}
                   {r.circuitImage && (
-                    <span className="absolute bottom-2 left-2 rounded-md bg-white/85 p-1 shadow transition-opacity duration-300 group-hover:opacity-90">
+                    <span className="absolute bottom-2 left-2 rounded-md bg-white/85 p-1 shadow transition-opacity duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-90">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={r.circuitImage}

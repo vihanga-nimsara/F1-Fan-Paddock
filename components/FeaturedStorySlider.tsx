@@ -62,7 +62,7 @@ export default function FeaturedStorySlider({
                   type="button"
                   onClick={() => go(-1)}
                   aria-label="Previous featured story"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground"
+                  className="pressable flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-refined hover:border-foreground/30 hover:text-foreground"
                 >
                   <ArrowLeft className="size-4" aria-hidden="true" />
                 </button>
@@ -70,7 +70,7 @@ export default function FeaturedStorySlider({
                   type="button"
                   onClick={() => go(1)}
                   aria-label="Next featured story"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground"
+                  className="pressable flex h-9 w-9 items-center justify-center rounded-full border border-foreground/15 bg-background text-foreground/80 transition-refined hover:border-foreground/30 hover:text-foreground"
                 >
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </button>
@@ -89,13 +89,13 @@ export default function FeaturedStorySlider({
                 aria-hidden={!isActive}
                 tabIndex={isActive ? 0 : -1}
                 className={cn(
-                  "group grid items-center gap-8 transition-opacity duration-500 md:grid-cols-2 md:gap-12",
+                  "group grid items-center gap-8 transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:grid-cols-2 md:gap-12",
                   isActive
-                    ? "opacity-100"
-                    : "pointer-events-none opacity-0",
+                    ? "translate-y-0 opacity-100"
+                    : "pointer-events-none translate-y-2 opacity-0",
                 )}
               >
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-muted ring-1 ring-foreground/10">
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-foreground/10 bg-muted">
                   {p.image ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -134,7 +134,7 @@ export default function FeaturedStorySlider({
                     <span className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-f1red px-4 py-2.5 text-sm font-medium text-white transition-colors group-hover:bg-f1red-dark">
                       Read the story
                       <ArrowRight
-                        className="size-4 transition-transform duration-300 group-hover:translate-x-0.5"
+                        className="size-4 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5"
                         aria-hidden="true"
                       />
                     </span>
@@ -155,7 +155,7 @@ export default function FeaturedStorySlider({
                 aria-label={`Show featured story ${i + 1}`}
                 aria-current={i === index}
                 className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
+                  "h-1.5 rounded-full transition-[width,background-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
                   i === index
                     ? "w-8 bg-f1red"
                     : "w-3 bg-foreground/20 hover:bg-foreground/40",

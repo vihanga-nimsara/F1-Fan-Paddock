@@ -46,7 +46,7 @@ export default async function DriversPage() {
               <Link
                 key={d.driverId}
                 href={`/drivers/${d.driverId}`}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-foreground/5"
+                className="group hover-lift flex flex-col overflow-hidden rounded-2xl border border-border bg-card hover:shadow-lg hover:shadow-foreground/5"
               >
                 <div className="relative aspect-[4/5] w-full overflow-hidden bg-muted">
                   {profile.headshot ? (
@@ -55,7 +55,7 @@ export default async function DriversPage() {
                       src={profile.headshot}
                       alt={name}
                       loading="lazy"
-                      className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                     />
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-2">

@@ -40,7 +40,7 @@ export default async function NewsPage() {
                 ? "noopener noreferrer"
                 : undefined
             }
-            className="group grid overflow-hidden rounded-2xl border border-border bg-card transition-all duration-200 hover:shadow-xl hover:shadow-foreground/5 md:grid-cols-2"
+            className="group hover-lift grid overflow-hidden rounded-2xl border border-border bg-card hover:shadow-xl hover:shadow-foreground/5 md:grid-cols-2"
           >
             <div className="relative aspect-[16/10] w-full overflow-hidden bg-muted md:aspect-auto">
               {featured.image ? (
@@ -48,7 +48,7 @@ export default async function NewsPage() {
                 <img
                   src={featured.image}
                   alt=""
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
                 />
               ) : (
                 <MediaFallback label={featured.source?.[0]} sublabel={featured.source} />

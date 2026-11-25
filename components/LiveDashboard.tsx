@@ -253,7 +253,7 @@ export default function LiveDashboard() {
           <button
             type="button"
             onClick={() => load()}
-            className="rounded-xl border border-pebble-40 bg-pebble-10 px-2 py-1 text-[10px] font-medium tracking-[0.06em] text-pebble transition-colors hover:bg-f1red-15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-f1red"
+            className="rounded-xl border border-pebble-40 bg-pebble-10 px-2 py-1 text-[10px] font-medium tracking-[0.06em] text-pebble transition-refined hover:bg-f1red-15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-f1red"
           >
             Refresh
           </button>

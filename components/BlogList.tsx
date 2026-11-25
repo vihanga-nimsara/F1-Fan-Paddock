@@ -29,7 +29,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
             onClick={() => setView(opt.key)}
             aria-pressed={view === opt.key}
             className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold tracking-[0.12em] uppercase transition-colors",
+              "inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-semibold tracking-[0.12em] uppercase transition-refined",
               view === opt.key
                 ? "bg-f1red text-white"
                 : "text-muted-foreground hover:text-foreground",
@@ -76,7 +76,7 @@ export default function BlogList({ posts }: { posts: BlogPost[] }) {
                 href={p.link}
                 target={p.link.startsWith("http") ? "_blank" : undefined}
                 rel={p.link.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-3 transition-colors duration-200"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-3 transition-refined hover:border-foreground/20"
               >
                 <div className="h-14 w-20 shrink-0 overflow-hidden rounded-lg bg-muted">
                   {p.image ? (

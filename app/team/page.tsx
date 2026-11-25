@@ -103,9 +103,9 @@ export default function TeamPage() {
           {TEAM.map((m) => (
             <article
               key={m.name}
-              className="group flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-f1red/30 hover:shadow-lg hover:shadow-foreground/5"
+              className="group hover-lift flex flex-col gap-4 rounded-2xl border border-border bg-card p-6 shadow-sm hover:border-f1red/30 hover:shadow-lg hover:shadow-foreground/5"
             >
-              <span className="inline-flex w-fit rounded-full bg-gradient-to-br from-f1red to-f1red-dark p-[3px]">
+              <span className="inline-flex w-fit rounded-full border-2 border-f1red/50 p-0.5">
                 <TeamAvatar src={m.image} name={m.name} className="ring-2 ring-card" />
               </span>
               <div className="flex flex-col gap-1">
@@ -122,7 +122,7 @@ export default function TeamPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={m.linkLabel}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-muted/60 text-pebble transition-all hover:border-f1red/40 hover:text-f1red"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-muted/60 text-pebble transition-refined hover:border-f1red/40 hover:text-f1red"
                 >
                   <LinkIcon kind={m.icon} />
                 </Link>

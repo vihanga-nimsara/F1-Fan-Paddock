@@ -1,7 +1,6 @@
 import Link from "next/link";
 import MuiAvatar from "@mui/material/Avatar";
 import { ArrowRight } from "lucide-react";
-import { LineShadowText } from "@/components/ui/line-shadow-text";
 import { SourceBadge } from "@/components/source-badge";
 
 /* ------------------------------------------------------------------ */
@@ -163,7 +162,7 @@ export function NewsCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-sm bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-sm bg-pebble-5 transition-refined hover:bg-pebble-8"
     >
       <div className={`relative w-full overflow-hidden ${contain ? "" : "aspect-[16/9]"}`}>
         {image ? (
@@ -219,7 +218,7 @@ export function VideoCard({
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-sm bg-pebble-5 transition-colors duration-200 hover:bg-pebble-8"
+      className="group flex flex-col overflow-hidden rounded-sm bg-pebble-5 transition-refined hover:bg-pebble-8"
     >
       <div className="relative aspect-video w-full overflow-hidden">
         {image ? (
@@ -234,7 +233,7 @@ export function VideoCard({
           <MediaFallback sublabel="F1 Video" />
         )}
         <span className="absolute inset-0 flex items-center justify-center">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-colors duration-200 group-hover:bg-f1red">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-f1red/90 text-white shadow-lg transition-refined group-hover:bg-f1red">
             <svg viewBox="0 0 24 24" className="ml-0.5 h-5 w-5" fill="currentColor">
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -290,7 +289,7 @@ export function StandingsTable({
         <Link
           key={r.position}
           href={r.href ?? "#"}
-          className="group flex items-center gap-3 border-b border-pebble-10 py-2.5 transition-colors last:border-b-0 hover:bg-pebble-5"
+          className="group flex items-center gap-3 border-b border-pebble-10 py-2.5 transition-refined last:border-b-0 hover:bg-pebble-5"
         >
           <span className="w-6 shrink-0 text-center font-display text-base font-semibold text-pebble-50">
             {r.position}
@@ -382,7 +381,7 @@ export function Hero({
   color?: string;
 }) {
   return (
-    <div className="group relative flex min-h-[420px] w-full flex-col justify-end md:min-h-[540px]">
+    <div className="group relative flex min-h-[500px] w-full flex-col justify-end md:min-h-[640px]">
       {image ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -401,13 +400,9 @@ export function Hero({
       )}
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-carbon/70 via-carbon/20 to-transparent" />
       <div className="relative z-10 mx-auto w-full max-w-[1640px] flex flex-col items-center gap-4 px-4 pb-10 pt-16 text-center md:px-6 md:pb-14">
-        <LineShadowText
-          as="h1"
-          shadowColor="rgba(255,255,255,0.45)"
-          className="m-0 font-f1-display text-[clamp(56px,11vw,126px)] font-bold uppercase leading-[0.9] tracking-tight text-white"
-        >
+        <h1 className="m-0 font-[family-name:Bagovick] text-[clamp(56px,11vw,126px)] font-normal uppercase leading-[0.9] tracking-tight text-white">
           {title}
-        </LineShadowText>
+        </h1>
         {excerpt && (
           <p className="m-0 max-w-[55ch] text-[17px] leading-[1.4] text-white/85">
             {excerpt}
@@ -418,16 +413,16 @@ export function Hero({
             {primaryCta && (
               <Link
                 href={primaryHref ?? "#"}
-                className="group inline-flex items-center gap-2 rounded-[10px] bg-white px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-all hover:bg-f1red hover:text-white"
+                className="group pressable inline-flex items-center gap-2 rounded-[5px] bg-white px-5 py-2.5 font-[family-name:var(--font-poppins)] text-[12px] font-semibold tracking-[0.08em] text-[#15151e] transition-refined hover:bg-f1red hover:text-white"
               >
                 {primaryCta}
-                <ArrowRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                <ArrowRight className="size-3.5 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5" aria-hidden="true" />
               </Link>
             )}
             {secondaryCta && (
               <Link
                 href={secondaryHref ?? "#"}
-                className="inline-flex items-center gap-2 rounded-[10px] border border-white/40 bg-white/10 px-5 py-2.5 font-display text-[12px] font-semibold tracking-[0.08em] text-white backdrop-blur transition-colors hover:border-white hover:bg-white/20"
+                className="pressable inline-flex items-center gap-2 rounded-[5px] border border-white/40 bg-white/10 px-5 py-2.5 font-[family-name:var(--font-poppins)] text-[12px] font-semibold tracking-[0.08em] text-white backdrop-blur transition-refined hover:border-white hover:bg-white/20"
               >
                 {secondaryCta}
               </Link>

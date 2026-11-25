@@ -61,7 +61,7 @@ export default async function SchedulePage() {
             {items.map((item) => (
               <article
                 key={item.type}
-                className="flex items-start gap-4 rounded-xl bg-pebble-5 p-4 transition-colors duration-200 hover:bg-pebble-8"
+                className="flex items-start gap-4 rounded-xl bg-pebble-5 p-4 transition-refined hover:bg-pebble-8"
               >
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-f1red-15 text-lg">
                   <item.icon className="h-5 w-5 text-f1red" aria-hidden="true" />

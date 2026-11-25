@@ -228,7 +228,7 @@ export default function RaceCountdown({
                 <DropdownMenuTrigger asChild>
                   <button
                     type="button"
-                    className="flex cursor-pointer items-center gap-2 rounded-lg border border-pebble-40 bg-card py-1.5 pl-2.5 pr-2.5 text-[13px] font-medium text-pebble shadow-sm outline-none transition-colors hover:border-f1red/60 focus-visible:border-f1red/60"
+                    className="pressable flex cursor-pointer items-center gap-2 rounded-lg border border-pebble-40 bg-card py-1.5 pl-2.5 pr-2.5 text-[13px] font-medium text-pebble shadow-sm outline-none transition-refined hover:border-f1red/60 focus-visible:border-f1red/60"
                   >
                     <span>
                       Rd {active.round} · {active.raceName}
@@ -260,7 +260,7 @@ export default function RaceCountdown({
               key={u.key}
               className="flex min-w-[64px] flex-col items-center gap-1 rounded-xl bg-pebble-5 px-3 py-3 md:min-w-[78px] md:px-4 md:py-4"
             >
-              <span className="font-f1-display text-[clamp(26px,4vw,42px)] font-bold uppercase leading-none tracking-tight tabular-nums text-pebble">
+              <span className="font-[family-name:var(--font-space-grotesk)] text-[clamp(26px,4vw,42px)] font-bold uppercase leading-none tracking-tight tabular-nums text-pebble">
                 {remaining
                   ? String(remaining[u.key]).padStart(2, "0")
                   : "--"}

@@ -53,19 +53,6 @@ export default function FbChatWidget() {
     return () => clearInterval(id);
   }, [refresh]);
 
-  useEffect(() => {
-    if (open) {
-      scroller.current?.scrollTo({ top: 0 });
-    }
-  }, [open]);
-
-  useEffect(() => {
-    if (open && lastUpdate) {
-      scroller.current?.scrollTo({ top: 999999 });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [threads.length]);
-
   const totalComments = threads.reduce(
     (acc, t) => acc + t.comments.length,
     0,
@@ -271,7 +258,7 @@ export default function FbChatWidget() {
                 : "Connecting…"}
             </span>
             <Link
-              href="https://www.facebook.com/"
+              href="https://web.facebook.com/f1paddockslr/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 font-medium text-f1red hover:underline"
@@ -288,7 +275,7 @@ export default function FbChatWidget() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close live chat" : "Open live chat"}
-        className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full bg-f1red text-white shadow-xl shadow-black/30 transition-transform hover:scale-105 active:scale-95"
+        className="relative flex h-[52px] w-[52px] items-center justify-center rounded-full bg-f1red text-white shadow-xl shadow-black/30 transition-[transform,box-shadow] duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.04] active:scale-[0.96]"
       >
         {!open && (
           <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500 text-[9px] font-bold text-white ring-2 ring-background">
